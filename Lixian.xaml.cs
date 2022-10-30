@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using static MCL_Dev.LauncherClasses;
 
 namespace MCL_Dev
 {
@@ -12,6 +13,10 @@ namespace MCL_Dev
             InitializeComponent();
         }
 
-        
+        private void start_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            offlineName = NameCombo.Text;
+            start.Visibility = System.Windows.Visibility.Hidden;
+        }
     }
 }

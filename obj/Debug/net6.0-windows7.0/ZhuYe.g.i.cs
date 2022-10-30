@@ -134,7 +134,7 @@ namespace MCL_Dev {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/MCL-Dev;V1.0.0.0;component/zhuye.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/MCL-Dev;component/zhuye.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\ZhuYe.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

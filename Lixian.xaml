@@ -9,8 +9,9 @@
       Title="Lixian">
 
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="10,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0096FF" FontSize="16"><Run Language="zh-cn" Text="用户名："/></TextBlock>
-        <TextBox x:Name="NameCombo" HorizontalAlignment="Left" Margin="74,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Foreground="#FF0096FF"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF" FontSize="16"><Run Language="zh-cn" Text="用户名："/></TextBlock>
+        <TextBox x:FieldModifier="public" x:Name="NameCombo" HorizontalAlignment="Left" Margin="74,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Foreground="#FF0096FF"/>
+        <Button Content="确定" x:Name="start" Margin="86,0,0,0" FontSize="14" Background="{x:Null}" Foreground="#FF0067FF" BorderBrush="#FF0096FF" HorizontalAlignment="Left" Width="96" Height="30" VerticalAlignment="Center" Click="start_Click"/>
 
     </Grid>
 </Page>

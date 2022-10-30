@@ -10,18 +10,19 @@ namespace MCL_Dev
 {
     internal class LauncherClasses
     {
+        public static string offlineName;
         public static bool IsRegeditItemExist()
         {
             string[] subkeyNames;
             RegistryKey hkml = Registry.LocalMachine;
-            RegistryKey software = hkml.OpenSubKey("SOFTWARE");
+            RegistryKey software = hkml.OpenSubKey("SOFTWARE\\ModernCraftLauncher");
             //RegistryKey software = hkml.OpenSubKey("SOFTWARE", true);  
             subkeyNames = software.GetSubKeyNames();
             //取得该项下所有子项的名称的序列，并传递给预定的数组中  
             foreach (string keyName in subkeyNames)
             //遍历整个数组  
             {
-                if (keyName == "ModernCraftLauncher")
+                if (keyName == "firstTime")
                 //判断子项的名称  
                 {
                     hkml.Close();
