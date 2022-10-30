@@ -1,0 +1,16 @@
+﻿<Page x:Class="MCL_Dev.Lixian"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MCL_Dev"
+      mc:Ignorable="d" 
+      d:DesignHeight="181" d:DesignWidth="295"
+      Title="Lixian">
+
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="10,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0096FF" FontSize="16"><Run Language="zh-cn" Text="用户名："/></TextBlock>
+        <TextBox x:Name="NameCombo" HorizontalAlignment="Left" Margin="74,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Foreground="#FF0096FF"/>
+
+    </Grid>
+</Page>

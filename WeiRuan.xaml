@@ -1,0 +1,17 @@
+﻿<Page x:Class="MCL_Dev.WeiRuan"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MCL_Dev"
+      mc:Ignorable="d" 
+      d:DesignHeight="181" d:DesignWidth="295"
+      Title="WeiRuan">
+
+    <Grid>
+        <TextBlock HorizontalAlignment="Center" Margin="0,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="请输入获取到的code：" Foreground="#FF0067FF"/>
+        <Button Content="确定" x:Name="start" Margin="0,63,0,0" FontSize="14" Background="{x:Null}" Foreground="#FF0067FF" BorderBrush="#FF0096FF" HorizontalAlignment="Center" Width="96" Height="30" VerticalAlignment="Top" Click="start_Click"/>
+        <TextBox x:FieldModifier="public" HorizontalAlignment="Center" TextWrapping="Wrap" x:Name="codeInput" Text="" VerticalAlignment="Top" Width="275" Foreground="#FF0067FF" Height="34" Margin="0,24,0,0" Cursor="IBeam"/>
+        <TextBlock x:Name="nameBox" HorizontalAlignment="Left" Margin="10,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF"><Run Language="zh-cn" Text="玩家名称："/></TextBlock>
+    </Grid>
+</Page>
