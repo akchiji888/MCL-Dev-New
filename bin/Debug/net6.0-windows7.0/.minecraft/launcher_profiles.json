@@ -1,13 +1,41 @@
 {
-    "profiles":  {
-        "PCL2": {
-            "icon": "Grass",
-            "name": "PCL2",
-            "lastVersionId": "latest-release",
-            "type": "latest-release",
-            "lastUsed": "2022-10-28T22:59:58.0000Z"
-        }
+  "profiles": {
+    "pcL2": {
+      "name": "PCL2",
+      "created": "0001-01-01T00:00:00",
+      "icon": "Grass",
+      "lastVersionId": "latest-release",
+      "lastUsed": "2022-09-10T21:53:59Z",
+      "type": "latest-release"
     },
-    "selectedProfile": "PCL2",
-    "clientToken": "23323323323323323323323323323333"
+    "caeb371b15a39311e91d19ed55808a12": {
+      "name": "1.16.5",
+      "gameDir": "C:\\Users\\wodes\\source\\repos\\MCL-Dev\\bin\\Debug\\net6.0-windows7.0\\.minecraft\\versions\\1.16.5",
+      "created": "2022-11-04T23:10:37.7253284+08:00",
+      "lastVersionId": "1.16.5",
+      "lastUsed": "0001-01-01T00:00:00"
+    },
+    "91cdfe98d0603642a92f273d12450e10": {
+      "name": "1.16.5-OptiFine_G8",
+      "gameDir": "C:\\Users\\wodes\\source\\repos\\MCL-Dev\\bin\\Debug\\net6.0-windows7.0\\.minecraft\\versions\\1.16.5-OptiFine_G8",
+      "created": "2022-11-04T23:10:37.858862+08:00",
+      "lastVersionId": "1.16.5-OptiFine_G8",
+      "lastUsed": "0001-01-01T00:00:00"
+    },
+    "f50c3d2428b9a027d98bde20c2d907d7": {
+      "name": "1.19.2",
+      "gameDir": "C:\\Users\\wodes\\source\\repos\\MCL-Dev\\bin\\Debug\\net6.0-windows7.0\\.minecraft\\versions\\1.19.2",
+      "created": "2022-11-04T23:10:37.8751312+08:00",
+      "lastVersionId": "1.19.2",
+      "lastUsed": "0001-01-01T00:00:00"
+    },
+    "375cd701e2b9b52db1904834d54000f0": {
+      "name": "1.16.5-123test",
+      "gameDir": "C:\\Users\\wodes\\source\\repos\\MCL-Dev\\bin\\Debug\\net6.0-windows7.0\\.minecraft\\versions\\1.16.5-123test",
+      "created": "2022-11-05T16:06:01.4249765+08:00",
+      "lastVersionId": "1.16.5-123test",
+      "lastUsed": "0001-01-01T00:00:00"
+    }
+  },
+  "clientToken": "23323323323323323323323323323333"
 }

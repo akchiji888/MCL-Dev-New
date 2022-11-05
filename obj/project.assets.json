@@ -231,6 +231,46 @@
           "lib/net6.0/ModuleLauncher.NET.dll": {}
         }
       },
+      "Natsurainko.FluentCore/2.0.2": {
+        "type": "package",
+        "dependencies": {
+          "Natsurainko.Toolkits": "1.0.2",
+          "Newtonsoft.Json": "13.0.1",
+          "System.Threading.Tasks.Dataflow": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Natsurainko.FluentCore.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Natsurainko.FluentCore.dll": {}
+        }
+      },
+      "Natsurainko.FluentCore.Extension.Windows/2.0.2": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Win32.Registry": "5.0.0",
+          "Natsurainko.FluentCore": "2.0.2"
+        },
+        "compile": {
+          "lib/net6.0/Natsurainko.FluentCore.Extension.Windows.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Natsurainko.FluentCore.Extension.Windows.dll": {}
+        }
+      },
+      "Natsurainko.Toolkits/1.0.2": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.1",
+          "System.Threading.Tasks.Dataflow": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Natsurainko.Toolkits.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Natsurainko.Toolkits.dll": {}
+        }
+      },
       "Newtonsoft.Json/13.0.1": {
         "type": "package",
         "compile": {
@@ -400,6 +440,18 @@
             "assetType": "runtime",
             "rid": "win"
           }
+        }
+      },
+      "System.Threading.Tasks.Dataflow/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/System.Threading.Tasks.Dataflow.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/System.Threading.Tasks.Dataflow.dll": {}
+        },
+        "build": {
+          "buildTransitive/netcoreapp3.1/_._": {}
         }
       }
     }
@@ -802,6 +854,45 @@
         "modulelauncher.re.nuspec"
       ]
     },
+    "Natsurainko.FluentCore/2.0.2": {
+      "sha512": "JvD6mO7W+4yVIz0ZB3nLU5wOhL6tMcSieFPwoZHYJYemz5XxdogWDxvNSPff42XB4BgKJ5A1rI3ZQi5LVRW9gw==",
+      "type": "package",
+      "path": "natsurainko.fluentcore/2.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net6.0/Natsurainko.FluentCore.dll",
+        "lib/netstandard2.0/Natsurainko.FluentCore.dll",
+        "natsurainko.fluentcore.2.0.2.nupkg.sha512",
+        "natsurainko.fluentcore.nuspec"
+      ]
+    },
+    "Natsurainko.FluentCore.Extension.Windows/2.0.2": {
+      "sha512": "uj74rPLPCgX/Bkk/VnqQM2Om3T50bOGKJLodwWwTWtrnMYf1AsSrSge3ePBc1jZVXSmLJ8dnU4E8EVKrCq8JBw==",
+      "type": "package",
+      "path": "natsurainko.fluentcore.extension.windows/2.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net6.0/Natsurainko.FluentCore.Extension.Windows.dll",
+        "natsurainko.fluentcore.extension.windows.2.0.2.nupkg.sha512",
+        "natsurainko.fluentcore.extension.windows.nuspec"
+      ]
+    },
+    "Natsurainko.Toolkits/1.0.2": {
+      "sha512": "AuHxfQDqa4ARNyaibdCGRkLNFwVpLbW0/k8nW92hfLR96Pi4JvkOWtOLimkDcRfuc5LDUKV4wk4Yj1vnDoTpCA==",
+      "type": "package",
+      "path": "natsurainko.toolkits/1.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/Natsurainko.Toolkits.dll",
+        "natsurainko.toolkits.1.0.2.nupkg.sha512",
+        "natsurainko.toolkits.nuspec"
+      ]
+    },
     "Newtonsoft.Json/13.0.1": {
       "sha512": "ppPFpBcvxdsfUonNcvITKqLl3bqxWbDCZIzDWHzjpdAHRFfZe0Dw9HmA0+za13IdyrgJwpkDTDA9fHaxOrt20A==",
       "type": "package",
@@ -1117,11 +1208,38 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "System.Threading.Tasks.Dataflow/6.0.0": {
+      "sha512": "+tyDCU3/B1lDdOOAJywHQoFwyXIUghIaP2BxG79uvhfTnO+D9qIgjVlL/JV2NTliYbMHpd6eKDmHp2VHpij7MA==",
+      "type": "package",
+      "path": "system.threading.tasks.dataflow/6.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/netcoreapp2.0/System.Threading.Tasks.Dataflow.targets",
+        "buildTransitive/netcoreapp3.1/_._",
+        "lib/net461/System.Threading.Tasks.Dataflow.dll",
+        "lib/net461/System.Threading.Tasks.Dataflow.xml",
+        "lib/net6.0/System.Threading.Tasks.Dataflow.dll",
+        "lib/net6.0/System.Threading.Tasks.Dataflow.xml",
+        "lib/netstandard2.0/System.Threading.Tasks.Dataflow.dll",
+        "lib/netstandard2.0/System.Threading.Tasks.Dataflow.xml",
+        "lib/netstandard2.1/System.Threading.Tasks.Dataflow.dll",
+        "lib/netstandard2.1/System.Threading.Tasks.Dataflow.xml",
+        "system.threading.tasks.dataflow.6.0.0.nupkg.sha512",
+        "system.threading.tasks.dataflow.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
     }
   },
   "projectFileDependencyGroups": {
     "net6.0-windows7.0": [
       "ModuleLauncher.Re >= 4.0.6",
+      "Natsurainko.FluentCore >= 2.0.2",
+      "Natsurainko.FluentCore.Extension.Windows >= 2.0.2",
       "Panuon.UI.Silver >= 1.1.3.4",
       "ProjBobcat >= 1.16.0"
     ]
@@ -1169,6 +1287,14 @@
           "ModuleLauncher.Re": {
             "target": "Package",
             "version": "[4.0.6, )"
+          },
+          "Natsurainko.FluentCore": {
+            "target": "Package",
+            "version": "[2.0.2, )"
+          },
+          "Natsurainko.FluentCore.Extension.Windows": {
+            "target": "Package",
+            "version": "[2.0.2, )"
           },
           "Panuon.UI.Silver": {
             "target": "Package",

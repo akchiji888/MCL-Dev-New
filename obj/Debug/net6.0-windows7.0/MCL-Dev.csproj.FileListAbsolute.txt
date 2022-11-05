@@ -49,3 +49,6 @@ C:\Users\wodes\source\repos\MCL-Dev\obj\Debug\net6.0-windows7.0\MCL-Dev.genrunti
 C:\Users\wodes\source\repos\MCL-Dev\obj\Debug\net6.0-windows7.0\ref\MCL-Dev.dll
 C:\Users\wodes\source\repos\MCL-Dev\obj\Debug\net6.0-windows7.0\WeiRuan.g.cs
 C:\Users\wodes\source\repos\MCL-Dev\obj\Debug\net6.0-windows7.0\WeiRuan.baml
+C:\Users\wodes\source\repos\MCL-Dev\bin\Debug\net6.0-windows7.0\Natsurainko.FluentCore.dll
+C:\Users\wodes\source\repos\MCL-Dev\bin\Debug\net6.0-windows7.0\Natsurainko.FluentCore.Extension.Windows.dll
+C:\Users\wodes\source\repos\MCL-Dev\bin\Debug\net6.0-windows7.0\Natsurainko.Toolkits.dll
