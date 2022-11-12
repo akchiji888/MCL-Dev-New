@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using Microsoft.Win32;
-using Natsurainko.FluentCore.Class.Model.Launch;
-using Natsurainko.FluentCore.Module.Authenticator;
-using Natsurainko.FluentCore.Module.Launcher;
-using Natsurainko.FluentCore.Wrapper;
-using Natsurainko.FluentCore.Extension.Windows.Module.Authenticator;
 using static MCL_Dev.LauncherClasses;
-using Natsurainko.FluentCore.Class.Model.Auth;
-using Natsurainko.FluentCore.Service;
+using MinecraftLaunch.Modules.Toolkits;
+using MinecraftLaunch.Launch;
+using MinecaftOAuth;
+using MinecraftLaunch.Modules.Models.Auth;
+using System;
+using MinecraftLaunch.Modules.Models.Launch;
+using Panuon.UI.Silver;
+using Panuon.UI.Silver.Core;
 
 namespace MCL_Dev
 {
@@ -20,6 +17,9 @@ namespace MCL_Dev
     /// </summary>
     public partial class ZhuYe : Page
     {
+        public static string name;
+        public static string uuid;
+        public static string accessToken;
         public static string gameFolder;
         int mode = 114514;//homo特有的变量（喜）
 
@@ -27,12 +27,8 @@ namespace MCL_Dev
         {
             InitializeComponent();
             gameFolder = System.AppDomain.CurrentDomain.BaseDirectory + ".minecraft";
-            var gameLocator = new GameCoreLocator(gameFolder);
-            var gameList = gameLocator.GetGameCores();
-            foreach (var game in gameList)
-            {
-                versionCombo.Items.Add(game.Id);
-            }
+            var core = new GameCoreToolkit(gameFolder);
+            versionCombo.ItemsSource = core.GetGameCores();
             javaCombo.ItemsSource = GetJavaPath();
 
         }
@@ -44,61 +40,71 @@ namespace MCL_Dev
         {
             if (javaCombo.Text != null && maxMem.Text != null && mode != 114514 && versionCombo.Text != null)
             {
-                var gameLocator = new GameCoreLocator(gameFolder);
-                string javaPath = javaCombo.Text;
-                string core = versionCombo.Text;
-                var launchSetting = new LaunchSetting()
-                {
-                    Account = Account.Default,
-                    GameWindowSetting = new GameWindowSetting
-                    {
-                        Width = 854,
-                        Height = 480,
-                        IsFullscreen = false
-                    },
-                    IsDemoUser = false,
-                    JvmSetting = new JvmSetting(javaPath)
-                    {
-                        MaxMemory = Convert.ToInt32(maxMem.Text),
-                        MinMemory = 256,
-                        AdvancedArguments = DefaultSettings.DefaultAdvancedArguments,
-                        GCArguments = DefaultSettings.DefaultGCArguments
-                    },
-                    NativesFolder = null,
-                    XmlOutputSetting = new XmlOutputSetting
-                    {
-                        Enable = false
-                    }
-                };
-                var locator = new GameCoreLocator(gameFolder); // 初始化核心定位器
-                if (mode == 0)
+                if(mode == 0) // offline
                 {
                     if (offlineName != null)
                     {
-                        var authenticator = new OfflineAuthenticator(offlineName);
-                        var launcher = new MinecraftLauncher(launchSetting, gameLocator);
-                        using var launchResponse = launcher.LaunchMinecraft(core);
-                        
+                        Lixian lixian = new Lixian();
+                        var core = new GameCoreToolkit(gameFolder);
+                        OfflineAccount offline = new OfflineAccount()
+                        {                            
+                            Name = lixian.NameCombo.Text,
+                            Uuid = Guid.NewGuid(),
+                            AccessToken = Guid.NewGuid().ToString("N"),
+                            ClientToken = Guid.NewGuid().ToString("N")
+                        };
+                        JavaClientLauncher javaClientLauncher = new(new(offline,new(javaCombo.Text)), core);
+                        await javaClientLauncher.LaunchTaskAsync(versionCombo.Text);
                     }
                     else
                     {
-                        MessageBox.Show("无法启动游戏！\n错误原因：参数缺失\n请检查您是否输入了用户名以及“确定”键是否按下", "MCL启动器");
+                        MessageBoxX.Show("无法启动游戏！\n错误原因：参数缺失\n请检查是否设置了用户名以及确定键是否按下", "MCL启动器");
                     }
                 }
-                else
+                else if(mode == 1) // microsoft
                 {
-                    var microsoftAuthenticator = new MicrosoftAuthenticator();
-                    await microsoftAuthenticator.GetAccessCode(); // 调用系统默认浏览器取回验证令牌 需要 Natsurainko.FluentCore 的 Windows 扩展
-                    var account = await microsoftAuthenticator.AuthenticateAsync(); // 验证账户
-                    // 将验证得到的账户 添加到启动 方法 1
-                    var setting = new LaunchSetting(new JvmSetting(javaPath));
-                    setting.Account = account;
-                    var launcher = new MinecraftLauncher(setting, locator);
+                    progressBar.IsIndeterminate = true;
+                    var auth = new MinecaftOAuth.MicrosoftAuthenticator();
+                    auth.ClientId = "dd09ec86-031b-4429-adb8-7fec6bc1fd79";
+                    var code_1 = await auth.GetDeviceInfo();
+                    System.Diagnostics.Process p = new System.Diagnostics.Process();
+                    p.StartInfo.FileName = "cmd.exe";
+                    p.StartInfo.UseShellExecute = false;    //是否使用操作系统shell启动
+                    p.StartInfo.RedirectStandardInput = true;//接受来自调用程序的输入信息
+                    p.StartInfo.RedirectStandardOutput = true;//由调用程序获取输出信息
+                    p.StartInfo.RedirectStandardError = true;//重定向标准错误输出
+                    p.StartInfo.CreateNoWindow = true;//不显示程序窗口
+                    p.Start();//启动程序
+
+                    //向cmd窗口发送输入信息
+                    p.StandardInput.WriteLine("start https://www.microsoft.com/link" + "&exit");
+                    p.StandardInput.AutoFlush = true;
+                    p.WaitForExit();//等待程序执行完退出进程
+                    p.Close();
+                    string usrCode = code_1.UserCode;
+                    MessageBoxX.MessageBoxXConfigurations.Add("standard", new Panuon.UI.Silver.Core.MessageBoxXConfigurations()
+                    {
+                        YesButton = "我已完成登录",
+                        OKButton = "我已完成登录"
+                    });
+                    var a = MessageBoxX.Show(usrCode + "\n请输入这串字符到弹出的网页中进行登录，完成后再关闭此弹窗", "MCL启动器", configKey: "standard");
+                    var Code_2 = await auth.GetTokenResponse(code_1);
+                    accessToken = Code_2.AccessToken;
+                    var result = await auth.AuthAsync(x => { });
+                    progressBar.IsIndeterminate = false;
+                    var core = new GameCoreToolkit(gameFolder);
+                    JavaClientLauncher javaClientLauncher = new(new(result, new(javaCombo.Text)), core);
+                    await javaClientLauncher.LaunchTaskAsync(versionCombo.Text);
                 }
+                else //外置登录
+                {
+
+                }
+
             }
             else
             {
-                MessageBox.Show("无法启动游戏！\n错误原因：参数缺失\n请检查Java、最大内存、登录方式等选项是否为空", "MCL启动器");
+                MessageBoxX.Show("无法启动游戏！\n错误原因：参数缺失\n请检查Java、最大内存、登录方式等选项是否为空", "MCL启动器");
             }
         }
         // 启动游戏（按钮事件）

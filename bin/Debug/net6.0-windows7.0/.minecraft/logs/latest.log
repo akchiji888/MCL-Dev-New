@@ -1,35 +1,336 @@
-[22:56:48] [Render thread/INFO]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
-[22:56:54] [Render thread/ERROR]: Failed to verify authentication
-com.mojang.authlib.exceptions.AuthenticationUnavailableException: Cannot contact authentication server
-	at com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService.makeRequest(YggdrasilAuthenticationService.java:125) ~[authlib-2.1.28.jar:?]
-	at com.mojang.authlib.yggdrasil.YggdrasilSocialInteractionsService.checkPrivileges(YggdrasilSocialInteractionsService.java:94) ~[authlib-2.1.28.jar:?]
-	at com.mojang.authlib.yggdrasil.YggdrasilSocialInteractionsService.<init>(YggdrasilSocialInteractionsService.java:40) ~[authlib-2.1.28.jar:?]
-	at com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService.createSocialInteractionsService(YggdrasilAuthenticationService.java:152) ~[authlib-2.1.28.jar:?]
-	at djz.a(SourceFile:625) [1.16.5.jar:?]
-	at djz.<init>(SourceFile:409) [1.16.5.jar:?]
-	at net.minecraft.client.main.Main.main(SourceFile:177) [1.16.5.jar:?]
-Caused by: java.io.IOException: Server returned HTTP response code: 401 for URL: https://api.minecraftservices.com/privileges
-	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(Unknown Source) ~[?:1.8.0_202]
-	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(Unknown Source) ~[?:1.8.0_202]
-	at sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(Unknown Source) ~[?:1.8.0_202]
-	at com.mojang.authlib.HttpAuthenticationService.performGetRequest(HttpAuthenticationService.java:140) ~[authlib-2.1.28.jar:?]
-	at com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService.makeRequest(YggdrasilAuthenticationService.java:104) ~[authlib-2.1.28.jar:?]
-	... 6 more
-[22:56:54] [Render thread/INFO]: Setting user: Steve
-[22:56:55] [Render thread/INFO]: Backend library: LWJGL version 3.2.2 build 10
-[22:57:00] [Render thread/INFO]: Narrator library for x64 successfully loaded
-[22:57:01] [Render thread/INFO]: Reloading ResourceManager: Default
-[22:57:02] [Realms Notification Availability checker #1/INFO]: Could not authorize you against Realms server: Invalid session id
-[22:57:11] [Render thread/INFO]: OpenAL initialized.
-[22:57:11] [Render thread/INFO]: Sound engine started
-[22:57:13] [Render thread/INFO]: Created: 1024x1024x4 minecraft:textures/atlas/blocks.png-atlas
-[22:57:13] [Render thread/INFO]: Created: 256x128x4 minecraft:textures/atlas/signs.png-atlas
-[22:57:13] [Render thread/INFO]: Created: 1024x512x4 minecraft:textures/atlas/banner_patterns.png-atlas
-[22:57:13] [Render thread/INFO]: Created: 1024x512x4 minecraft:textures/atlas/shield_patterns.png-atlas
-[22:57:14] [Render thread/INFO]: Created: 256x256x4 minecraft:textures/atlas/chest.png-atlas
-[22:57:14] [Render thread/INFO]: Created: 512x256x4 minecraft:textures/atlas/beds.png-atlas
-[22:57:14] [Render thread/INFO]: Created: 512x256x4 minecraft:textures/atlas/shulker_boxes.png-atlas
-[22:57:18] [Render thread/INFO]: Created: 256x256x0 minecraft:textures/atlas/particles.png-atlas
-[22:57:19] [Render thread/INFO]: Created: 256x256x0 minecraft:textures/atlas/paintings.png-atlas
-[22:57:19] [Render thread/INFO]: Created: 256x128x0 minecraft:textures/atlas/mob_effects.png-atlas
-[22:57:20] [Render thread/INFO]: Stopping!
+[23:04:16] [main/INFO]: Loading tweak class name optifine.OptiFineTweaker
+[23:04:16] [main/INFO]: Using primary tweak class name optifine.OptiFineTweaker
+[23:04:16] [main/INFO]: Calling tweak class optifine.OptiFineTweaker
+[23:04:16] [main/INFO]: Launching wrapped minecraft {net.minecraft.client.main.Main}
+[23:04:17] [main/INFO]: [OptiFine] (Reflector) Field not found: World.tileEntitiesToBeRemoved
+[23:04:17] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.eventbus.api.Event$Result
+[23:04:17] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraftforge.common.extensions.IForgeBlockState.hasTileEntity
+[23:04:17] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.extensions.IForgeEntity
+[23:04:17] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.CrashReportExtender
+[23:04:18] [main/INFO]: [OptiFine] (Reflector) Method not present: aeg.createOptional
+[23:04:24] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.ForgeHooksClient
+[23:04:25] [main/INFO]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[23:04:26] [main/INFO]: Setting user: akchiji888
+[23:04:27] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.settings.KeyConflictContext
+[23:04:27] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.settings.KeyModifier
+[23:04:27] [main/INFO]: Backend library: LWJGL version 3.2.2 build 10
+[23:04:28] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraftforge.fml.loading.progress.EarlyProgressVisualization.handOffWindow
+[23:04:29] [main/INFO]: [OptiFine] 
+[23:04:29] [main/INFO]: [OptiFine] OptiFine_1.16.5_HD_U_G8
+[23:04:29] [main/INFO]: [OptiFine] Build: 20210515-161946
+[23:04:29] [main/INFO]: [OptiFine] OS: Windows 10 (amd64) version 10.0
+[23:04:29] [main/INFO]: [OptiFine] Java: 1.8.0_202, Oracle Corporation
+[23:04:29] [main/INFO]: [OptiFine] VM: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+[23:04:29] [main/INFO]: [OptiFine] LWJGL: 3.3.0 Win32 WGL EGL OSMesa VisualC DLL
+[23:04:29] [main/INFO]: [OptiFine] OpenGL: Intel(R) HD Graphics 620, version 4.6.0 - Build 27.20.100.8682, Intel
+[23:04:29] [main/INFO]: [OptiFine] OpenGL Version: 4.6.0
+[23:04:29] [main/INFO]: [OptiFine] OpenGL Fancy fog: Not available (GL_NV_fog_distance)
+[23:04:29] [main/INFO]: [OptiFine] Maximum texture size: 16384x16384
+[23:04:29] [main/INFO]: [Shaders] OpenGL Version: 4.6.0 - Build 27.20.100.8682
+[23:04:29] [main/INFO]: [Shaders] Vendor:  Intel
+[23:04:29] [main/INFO]: [Shaders] Renderer: Intel(R) HD Graphics 620
+[23:04:29] [main/INFO]: [Shaders] Capabilities:  2.0  2.1  3.0  3.2  4.0 
+[23:04:29] [main/INFO]: [Shaders] GL_MAX_DRAW_BUFFERS: 8
+[23:04:29] [main/INFO]: [Shaders] GL_MAX_COLOR_ATTACHMENTS_EXT: 8
+[23:04:29] [main/INFO]: [Shaders] GL_MAX_TEXTURE_IMAGE_UNITS: 32
+[23:04:29] [main/INFO]: [Shaders] Load shaders configuration.
+[23:04:29] [main/INFO]: [Shaders] Save shaders configuration.
+[23:04:29] [main/INFO]: [Shaders] No shaderpack loaded.
+[23:04:29] [VersionCheck/INFO]: [OptiFine] Checking for new version
+[23:04:29] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.common.Loader
+[23:04:30] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.ItemModelMesherForge
+[23:04:30] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.model.pipeline.ForgeBlockModelRenderer
+[23:04:30] [VersionCheck/INFO]: [OptiFine] Version found: G7
+[23:04:31] [main/INFO]: Narrator library for x64 successfully loaded
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.client.gui.screen.ModListScreen
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.gui.NotificationModUpdateScreen
+[23:04:31] [main/INFO]: Reloading ResourceManager: Default
+[23:04:31] [main/INFO]: [OptiFine] *** Reloading textures ***
+[23:04:31] [main/INFO]: [OptiFine] Resource packs: Default
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Method not present: eab.canRenderInLayer
+[23:04:31] [main/INFO]: [OptiFine] *** Reflector Forge ***
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: mods.betterfoliage.client.BetterFoliageClient
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.BrandingControl
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.capabilities.ICapabilityProvider
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.capabilities.CapabilityProvider
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.client.ClientModLoader
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.event.world.ChunkDataEvent$Save
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.event.world.ChunkEvent$Load
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.event.world.ChunkEvent$Unload
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.client.ClientHooks
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.GuiScreenEvent$DrawScreenEvent$Pre
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.GuiScreenEvent$DrawScreenEvent$Post
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.event.entity.EntityLeaveWorldEvent
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.EntityViewRenderEvent$CameraSetup
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.EntityViewRenderEvent$FogColors
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.EntityViewRenderEvent$RenderFogEvent
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.event.entity.EntityJoinWorldEvent
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraftforge.eventbus.api.Event.isCanceled
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraftforge.eventbus.api.Event.getResult
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.eventbus.api.IEventBus
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.extensions.IForgeBlock
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Method not present: eaw.getTexture
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraftforge.common.extensions.IForgeBlockState.addDestroyEffects
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraftforge.common.extensions.IForgeBlockState.addHitEffects
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraftforge.common.extensions.IForgeBlockState.getLightValue
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraftforge.common.extensions.IForgeBlockState.getSoundType
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraftforge.common.extensions.IForgeBlockState.getStateAtViewpoint
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraftforge.common.extensions.IForgeBlockState.isAir
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraftforge.common.extensions.IForgeBlockState.shouldDisplayFluidOverlay
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.extensions.IForgeFluid
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fluids.FluidAttributes
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Method not present: aqe.getTags
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.event.ForgeEventFactory
+[23:04:31] [Worker-Main-5/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.model.ModelLoaderRegistry
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Method not present: cuw.getTags
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.ForgeHooks
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.ForgeConfig
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.ForgeConfig$Client
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.ForgeConfigSpec
+[23:04:31] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.ForgeConfigSpec$ConfigValue
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Method not present: cfw.getWorldForge
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.extensions.IForgeItem
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.extensions.IForgeItemStack
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.ForgeI18n
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Method not present: djw.setKeyConflictContext
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Method not present: djw.setKeyModifierAndCode
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Method not present: djw.getKeyModifier
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.extensions.IForgeEffectInstance
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.registries.ForgeRegistryEntry
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Method not present: eab.canRenderInLayer
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Constructor not present: aak, params: class aal, int, class java.lang.Object, boolean
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Method not present: aak.isForceTicks
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.extensions.IForgeTileEntity
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Method not present: dzv.getCloudRenderHandler
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Method not present: dzv.getSkyRenderHandler
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Method not present: dzv.getWeatherParticleRenderHandler
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Method not present: dzv.getWeatherRenderHandler
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.IRenderHandler
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.model.pipeline.LightUtil
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.MinecraftForge
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.MinecraftForgeClient
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.common.ModContainer
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.entity.PartEntity
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.event.entity.PlaySoundAtEntityEvent
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.RenderBlockOverlayEvent$OverlayType
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.client.registry.RenderingRegistry
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.RenderGameOverlayEvent$BossInfo
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.RenderItemInFrameEvent
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.RenderLivingEvent$Pre
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.RenderLivingEvent$Post
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.RenderNameplateEvent
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.ScreenshotEvent
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.server.ServerLifecycleHooks
+[23:04:32] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.event.world.WorldEvent$Load
+[23:04:32] [main/INFO]: [OptiFine] *** Reflector Vanilla ***
+[23:04:32] [Worker-Main-4/INFO]: [OptiFine] Multitexture: false
+[23:04:34] [Worker-Main-6/INFO]: [OptiFine] Multitexture: false
+[23:04:34] [main/INFO]: Stopping!
+[23:04:35] [Worker-Main-5/INFO]: [OptiFine] Multitexture: false
+[23:04:35] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/00_glass_white/glass_pane_white.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/00_glass_white/glass_white.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/01_glass_orange/glass_orange.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/01_glass_orange/glass_pane_orange.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/02_glass_magenta/glass_magenta.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/02_glass_magenta/glass_pane_magenta.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/03_glass_light_blue/glass_light_blue.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/03_glass_light_blue/glass_pane_light_blue.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/04_glass_yellow/glass_pane_yellow.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/04_glass_yellow/glass_yellow.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/05_glass_lime/glass_lime.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/05_glass_lime/glass_pane_lime.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/06_glass_pink/glass_pane_pink.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/06_glass_pink/glass_pink.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/07_glass_gray/glass_gray.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/07_glass_gray/glass_pane_gray.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/08_glass_light_gray/glass_light_gray.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/08_glass_light_gray/glass_pane_light_gray.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/09_glass_cyan/glass_cyan.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/09_glass_cyan/glass_pane_cyan.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/10_glass_purple/glass_pane_purple.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/10_glass_purple/glass_purple.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/11_glass_blue/glass_blue.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/11_glass_blue/glass_pane_blue.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/12_glass_brown/glass_brown.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/12_glass_brown/glass_pane_brown.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/13_glass_green/glass_green.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/13_glass_green/glass_pane_green.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/14_glass_red/glass_pane_red.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/14_glass_red/glass_red.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/15_glass_black/glass_black.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/15_glass_black/glass_pane_black.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/20_glass/glass.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/20_glass/glass_pane.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/30_bookshelf/bookshelf.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/40_sandstone/sandstone.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/41_red_sandstone/red_sandstone.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] Multipass connected textures: false
+[23:04:36] [Worker-Main-5/WARN]: [OptiFine] Error reading: optifine/bettergrass.properties, java.io.FileNotFoundException: minecraft:optifine/bettergrass.properties
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] Mipmap levels: 4
+[23:04:36] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/big_smoke_11.png : java.io.FileNotFoundException: minecraft:textures/particle/big_smoke_11.png
+[23:04:36] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/big_smoke_10.png : java.io.FileNotFoundException: minecraft:textures/particle/big_smoke_10.png
+[23:04:36] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/enchanted_hit.png : java.io.FileNotFoundException: minecraft:textures/particle/enchanted_hit.png
+[23:04:36] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/spell_3.png : java.io.FileNotFoundException: minecraft:textures/particle/spell_3.png
+[23:04:36] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/aztec.png : java.io.FileNotFoundException: minecraft:textures/painting/aztec.png
+[23:04:36] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/bubble.png : java.io.FileNotFoundException: minecraft:textures/particle/bubble.png
+[23:04:36] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/spell_4.png : java.io.FileNotFoundException: minecraft:textures/particle/spell_4.png
+[23:04:36] [Worker-Main-5/INFO]: [OptiFine] Multitexture: false
+[23:04:36] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/spell_1.png : java.io.FileNotFoundException: minecraft:textures/particle/spell_1.png
+[23:04:36] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/pointer.png : java.io.FileNotFoundException: minecraft:textures/painting/pointer.png
+[23:04:36] [Worker-Main-5/WARN]: Failed to load GPU warnlist
+[23:04:36] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/spell_2.png : java.io.FileNotFoundException: minecraft:textures/particle/spell_2.png
+[23:04:36] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/spell_0.png : java.io.FileNotFoundException: minecraft:textures/particle/spell_0.png
+[23:04:36] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/spell_7.png : java.io.FileNotFoundException: minecraft:textures/particle/spell_7.png
+[23:04:36] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/spell_5.png : java.io.FileNotFoundException: minecraft:textures/particle/spell_5.png
+[23:04:36] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/spell_6.png : java.io.FileNotFoundException: minecraft:textures/particle/spell_6.png
+[23:04:36] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/nautilus.png : java.io.FileNotFoundException: minecraft:textures/particle/nautilus.png
+[23:04:36] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/glint.png : java.io.FileNotFoundException: minecraft:textures/particle/glint.png
+[23:04:36] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/soul_fire_flame.png : java.io.FileNotFoundException: minecraft:textures/particle/soul_fire_flame.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/angry.png : java.io.FileNotFoundException: minecraft:textures/particle/angry.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/heart.png : java.io.FileNotFoundException: minecraft:textures/particle/heart.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/generic_7.png : java.io.FileNotFoundException: minecraft:textures/particle/generic_7.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/donkey_kong.png : java.io.FileNotFoundException: minecraft:textures/painting/donkey_kong.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/generic_6.png : java.io.FileNotFoundException: minecraft:textures/particle/generic_6.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/flash.png : java.io.FileNotFoundException: minecraft:textures/particle/flash.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/generic_1.png : java.io.FileNotFoundException: minecraft:textures/particle/generic_1.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/generic_0.png : java.io.FileNotFoundException: minecraft:textures/particle/generic_0.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/generic_5.png : java.io.FileNotFoundException: minecraft:textures/particle/generic_5.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/generic_4.png : java.io.FileNotFoundException: minecraft:textures/particle/generic_4.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/generic_3.png : java.io.FileNotFoundException: minecraft:textures/particle/generic_3.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/generic_2.png : java.io.FileNotFoundException: minecraft:textures/particle/generic_2.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sweep_0.png : java.io.FileNotFoundException: minecraft:textures/particle/sweep_0.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sweep_6.png : java.io.FileNotFoundException: minecraft:textures/particle/sweep_6.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sweep_5.png : java.io.FileNotFoundException: minecraft:textures/particle/sweep_5.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sweep_7.png : java.io.FileNotFoundException: minecraft:textures/particle/sweep_7.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/skeleton.png : java.io.FileNotFoundException: minecraft:textures/painting/skeleton.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sweep_2.png : java.io.FileNotFoundException: minecraft:textures/particle/sweep_2.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/courbet.png : java.io.FileNotFoundException: minecraft:textures/painting/courbet.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sweep_1.png : java.io.FileNotFoundException: minecraft:textures/particle/sweep_1.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/skull_and_roses.png : java.io.FileNotFoundException: minecraft:textures/painting/skull_and_roses.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/burning_skull.png : java.io.FileNotFoundException: minecraft:textures/painting/burning_skull.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sweep_4.png : java.io.FileNotFoundException: minecraft:textures/particle/sweep_4.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/sea.png : java.io.FileNotFoundException: minecraft:textures/painting/sea.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sweep_3.png : java.io.FileNotFoundException: minecraft:textures/particle/sweep_3.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/soul_9.png : java.io.FileNotFoundException: minecraft:textures/particle/soul_9.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/wither.png : java.io.FileNotFoundException: minecraft:textures/painting/wither.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/aztec2.png : java.io.FileNotFoundException: minecraft:textures/painting/aztec2.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/pool.png : java.io.FileNotFoundException: minecraft:textures/painting/pool.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/soul_8.png : java.io.FileNotFoundException: minecraft:textures/particle/soul_8.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/soul_7.png : java.io.FileNotFoundException: minecraft:textures/particle/soul_7.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/match.png : java.io.FileNotFoundException: minecraft:textures/painting/match.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/soul_6.png : java.io.FileNotFoundException: minecraft:textures/particle/soul_6.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/soul_5.png : java.io.FileNotFoundException: minecraft:textures/particle/soul_5.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/soul_4.png : java.io.FileNotFoundException: minecraft:textures/particle/soul_4.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/soul_3.png : java.io.FileNotFoundException: minecraft:textures/particle/soul_3.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/soul_2.png : java.io.FileNotFoundException: minecraft:textures/particle/soul_2.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/soul_1.png : java.io.FileNotFoundException: minecraft:textures/particle/soul_1.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/soul_0.png : java.io.FileNotFoundException: minecraft:textures/particle/soul_0.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/flame.png : java.io.FileNotFoundException: minecraft:textures/particle/flame.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/drip_land.png : java.io.FileNotFoundException: minecraft:textures/particle/drip_land.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sga_f.png : java.io.FileNotFoundException: minecraft:textures/particle/sga_f.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sga_g.png : java.io.FileNotFoundException: minecraft:textures/particle/sga_g.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sga_d.png : java.io.FileNotFoundException: minecraft:textures/particle/sga_d.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sga_e.png : java.io.FileNotFoundException: minecraft:textures/particle/sga_e.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sga_b.png : java.io.FileNotFoundException: minecraft:textures/particle/sga_b.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sga_c.png : java.io.FileNotFoundException: minecraft:textures/particle/sga_c.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/damage.png : java.io.FileNotFoundException: minecraft:textures/particle/damage.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sga_a.png : java.io.FileNotFoundException: minecraft:textures/particle/sga_a.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/effect_2.png : java.io.FileNotFoundException: minecraft:textures/particle/effect_2.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/effect_3.png : java.io.FileNotFoundException: minecraft:textures/particle/effect_3.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/effect_4.png : java.io.FileNotFoundException: minecraft:textures/particle/effect_4.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/effect_5.png : java.io.FileNotFoundException: minecraft:textures/particle/effect_5.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/pigscene.png : java.io.FileNotFoundException: minecraft:textures/painting/pigscene.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/effect_6.png : java.io.FileNotFoundException: minecraft:textures/particle/effect_6.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/effect_7.png : java.io.FileNotFoundException: minecraft:textures/particle/effect_7.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/spark_0.png : java.io.FileNotFoundException: minecraft:textures/particle/spark_0.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/spark_1.png : java.io.FileNotFoundException: minecraft:textures/particle/spark_1.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/void.png : java.io.FileNotFoundException: minecraft:textures/painting/void.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/spark_2.png : java.io.FileNotFoundException: minecraft:textures/particle/spark_2.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/wasteland.png : java.io.FileNotFoundException: minecraft:textures/painting/wasteland.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/spark_3.png : java.io.FileNotFoundException: minecraft:textures/particle/spark_3.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/spark_4.png : java.io.FileNotFoundException: minecraft:textures/particle/spark_4.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/spark_5.png : java.io.FileNotFoundException: minecraft:textures/particle/spark_5.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/spark_6.png : java.io.FileNotFoundException: minecraft:textures/particle/spark_6.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/spark_7.png : java.io.FileNotFoundException: minecraft:textures/particle/spark_7.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/big_smoke_0.png : java.io.FileNotFoundException: minecraft:textures/particle/big_smoke_0.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/fighters.png : java.io.FileNotFoundException: minecraft:textures/painting/fighters.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/creebet.png : java.io.FileNotFoundException: minecraft:textures/painting/creebet.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/big_smoke_3.png : java.io.FileNotFoundException: minecraft:textures/particle/big_smoke_3.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/big_smoke_4.png : java.io.FileNotFoundException: minecraft:textures/particle/big_smoke_4.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/big_smoke_1.png : java.io.FileNotFoundException: minecraft:textures/particle/big_smoke_1.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/big_smoke_2.png : java.io.FileNotFoundException: minecraft:textures/particle/big_smoke_2.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/bomb.png : java.io.FileNotFoundException: minecraft:textures/painting/bomb.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sga_z.png : java.io.FileNotFoundException: minecraft:textures/particle/sga_z.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/effect_0.png : java.io.FileNotFoundException: minecraft:textures/particle/effect_0.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sga_x.png : java.io.FileNotFoundException: minecraft:textures/particle/sga_x.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/effect_1.png : java.io.FileNotFoundException: minecraft:textures/particle/effect_1.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sga_y.png : java.io.FileNotFoundException: minecraft:textures/particle/sga_y.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sga_v.png : java.io.FileNotFoundException: minecraft:textures/particle/sga_v.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/wanderer.png : java.io.FileNotFoundException: minecraft:textures/painting/wanderer.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/sunset.png : java.io.FileNotFoundException: minecraft:textures/painting/sunset.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sga_w.png : java.io.FileNotFoundException: minecraft:textures/particle/sga_w.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sga_t.png : java.io.FileNotFoundException: minecraft:textures/particle/sga_t.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/note.png : java.io.FileNotFoundException: minecraft:textures/particle/note.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sga_u.png : java.io.FileNotFoundException: minecraft:textures/particle/sga_u.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sga_r.png : java.io.FileNotFoundException: minecraft:textures/particle/sga_r.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sga_s.png : java.io.FileNotFoundException: minecraft:textures/particle/sga_s.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sga_p.png : java.io.FileNotFoundException: minecraft:textures/particle/sga_p.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/explosion_9.png : java.io.FileNotFoundException: minecraft:textures/particle/explosion_9.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sga_q.png : java.io.FileNotFoundException: minecraft:textures/particle/sga_q.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/explosion_8.png : java.io.FileNotFoundException: minecraft:textures/particle/explosion_8.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sga_n.png : java.io.FileNotFoundException: minecraft:textures/particle/sga_n.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/big_smoke_7.png : java.io.FileNotFoundException: minecraft:textures/particle/big_smoke_7.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/explosion_7.png : java.io.FileNotFoundException: minecraft:textures/particle/explosion_7.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sga_o.png : java.io.FileNotFoundException: minecraft:textures/particle/sga_o.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/big_smoke_8.png : java.io.FileNotFoundException: minecraft:textures/particle/big_smoke_8.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/explosion_6.png : java.io.FileNotFoundException: minecraft:textures/particle/explosion_6.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/back.png : java.io.FileNotFoundException: minecraft:textures/painting/back.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sga_l.png : java.io.FileNotFoundException: minecraft:textures/particle/sga_l.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/big_smoke_5.png : java.io.FileNotFoundException: minecraft:textures/particle/big_smoke_5.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/explosion_5.png : java.io.FileNotFoundException: minecraft:textures/particle/explosion_5.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sga_m.png : java.io.FileNotFoundException: minecraft:textures/particle/sga_m.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/bust.png : java.io.FileNotFoundException: minecraft:textures/painting/bust.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/kebab.png : java.io.FileNotFoundException: minecraft:textures/painting/kebab.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/alban.png : java.io.FileNotFoundException: minecraft:textures/painting/alban.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/big_smoke_6.png : java.io.FileNotFoundException: minecraft:textures/particle/big_smoke_6.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/explosion_4.png : java.io.FileNotFoundException: minecraft:textures/particle/explosion_4.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sga_j.png : java.io.FileNotFoundException: minecraft:textures/particle/sga_j.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/explosion_3.png : java.io.FileNotFoundException: minecraft:textures/particle/explosion_3.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/critical_hit.png : java.io.FileNotFoundException: minecraft:textures/particle/critical_hit.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sga_k.png : java.io.FileNotFoundException: minecraft:textures/particle/sga_k.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/explosion_2.png : java.io.FileNotFoundException: minecraft:textures/particle/explosion_2.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sga_h.png : java.io.FileNotFoundException: minecraft:textures/particle/sga_h.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/big_smoke_9.png : java.io.FileNotFoundException: minecraft:textures/particle/big_smoke_9.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/graham.png : java.io.FileNotFoundException: minecraft:textures/painting/graham.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/explosion_1.png : java.io.FileNotFoundException: minecraft:textures/particle/explosion_1.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/sga_i.png : java.io.FileNotFoundException: minecraft:textures/particle/sga_i.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/explosion_0.png : java.io.FileNotFoundException: minecraft:textures/particle/explosion_0.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/drip_hang.png : java.io.FileNotFoundException: minecraft:textures/particle/drip_hang.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/stage.png : java.io.FileNotFoundException: minecraft:textures/painting/stage.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/lava.png : java.io.FileNotFoundException: minecraft:textures/particle/lava.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/bubble_pop_0.png : java.io.FileNotFoundException: minecraft:textures/particle/bubble_pop_0.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/painting/plant.png : java.io.FileNotFoundException: minecraft:textures/painting/plant.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/glitter_3.png : java.io.FileNotFoundException: minecraft:textures/particle/glitter_3.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/drip_fall.png : java.io.FileNotFoundException: minecraft:textures/particle/drip_fall.png
+[23:04:37] [Worker-Main-6/ERROR]: Using missing texture, unable to load minecraft:textures/particle/glitter_1.png : java.io.FileNotFoundException: minecraft:textures/particle/glitter_1.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/glitter_2.png : java.io.FileNotFoundException: minecraft:textures/particle/glitter_2.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/bubble_pop_4.png : java.io.FileNotFoundException: minecraft:textures/particle/bubble_pop_4.png
+[23:04:37] [Worker-Main-6/ERROR]: Using missing texture, unable to load minecraft:textures/particle/glitter_0.png : java.io.FileNotFoundException: minecraft:textures/particle/glitter_0.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/bubble_pop_3.png : java.io.FileNotFoundException: minecraft:textures/particle/bubble_pop_3.png
+[23:04:37] [Worker-Main-6/ERROR]: Using missing texture, unable to load minecraft:textures/particle/bubble_pop_2.png : java.io.FileNotFoundException: minecraft:textures/particle/bubble_pop_2.png
+[23:04:37] [Worker-Main-6/ERROR]: Using missing texture, unable to load minecraft:textures/particle/glitter_7.png : java.io.FileNotFoundException: minecraft:textures/particle/glitter_7.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/bubble_pop_1.png : java.io.FileNotFoundException: minecraft:textures/particle/bubble_pop_1.png
+[23:04:37] [Worker-Main-6/ERROR]: Using missing texture, unable to load minecraft:textures/particle/glitter_6.png : java.io.FileNotFoundException: minecraft:textures/particle/glitter_6.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/glitter_5.png : java.io.FileNotFoundException: minecraft:textures/particle/glitter_5.png
+[23:04:37] [Worker-Main-6/ERROR]: Using missing texture, unable to load minecraft:textures/particle/glitter_4.png : java.io.FileNotFoundException: minecraft:textures/particle/glitter_4.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/soul_10.png : java.io.FileNotFoundException: minecraft:textures/particle/soul_10.png
+[23:04:37] [Worker-Main-6/ERROR]: Using missing texture, unable to load minecraft:textures/particle/explosion_12.png : java.io.FileNotFoundException: minecraft:textures/particle/explosion_12.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/explosion_11.png : java.io.FileNotFoundException: minecraft:textures/particle/explosion_11.png
+[23:04:37] [Worker-Main-6/ERROR]: Using missing texture, unable to load minecraft:textures/particle/explosion_10.png : java.io.FileNotFoundException: minecraft:textures/particle/explosion_10.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/explosion_15.png : java.io.FileNotFoundException: minecraft:textures/particle/explosion_15.png
+[23:04:37] [Worker-Main-6/ERROR]: Using missing texture, unable to load minecraft:textures/particle/explosion_14.png : java.io.FileNotFoundException: minecraft:textures/particle/explosion_14.png
+[23:04:37] [Worker-Main-6/ERROR]: Using missing texture, unable to load minecraft:textures/particle/splash_3.png : java.io.FileNotFoundException: minecraft:textures/particle/splash_3.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/explosion_13.png : java.io.FileNotFoundException: minecraft:textures/particle/explosion_13.png
+[23:04:37] [Worker-Main-6/ERROR]: Using missing texture, unable to load minecraft:textures/particle/splash_2.png : java.io.FileNotFoundException: minecraft:textures/particle/splash_2.png
+[23:04:37] [Worker-Main-5/ERROR]: Using missing texture, unable to load minecraft:textures/particle/splash_1.png : java.io.FileNotFoundException: minecraft:textures/particle/splash_1.png
+[23:04:37] [Worker-Main-6/ERROR]: Using missing texture, unable to load minecraft:textures/particle/splash_0.png : java.io.FileNotFoundException: minecraft:textures/particle/splash_0.png

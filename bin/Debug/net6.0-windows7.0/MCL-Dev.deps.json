@@ -8,207 +8,41 @@
     ".NETCoreApp,Version=v6.0": {
       "MCL-Dev/1.0.0": {
         "dependencies": {
-          "ModuleLauncher.Re": "4.0.6",
-          "Natsurainko.FluentCore": "2.0.2",
-          "Natsurainko.FluentCore.Extension.Windows": "2.0.2",
+          "MinecraftLaunch": "1.1.0",
+          "MinecraftOAuth": "1.2.0",
           "Panuon.UI.Silver": "1.1.3.4",
-          "ProjBobcat": "1.16.0"
+          "System.Management": "7.0.0"
         },
         "runtime": {
           "MCL-Dev.dll": {}
         }
       },
-      "Flurl/3.0.6": {
-        "runtime": {
-          "lib/netstandard2.0/Flurl.dll": {
-            "assemblyVersion": "3.0.6.0",
-            "fileVersion": "3.0.6.0"
-          }
-        }
-      },
-      "Flurl.Http/4.0.0-pre2": {
-        "dependencies": {
-          "Flurl": "3.0.6"
-        },
-        "runtime": {
-          "lib/net6.0/Flurl.Http.dll": {
-            "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.0.0.0"
-          }
-        }
-      },
-      "Manganese/1.2.8": {
-        "dependencies": {
-          "Newtonsoft.Json": "13.0.1"
-        },
-        "runtime": {
-          "lib/net6.0/Manganese.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
-        }
-      },
-      "Microsoft.Extensions.Configuration/6.0.0": {
-        "dependencies": {
-          "Microsoft.Extensions.Configuration.Abstractions": "6.0.0",
-          "Microsoft.Extensions.Primitives": "6.0.0"
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.Configuration.dll": {
-            "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.21.52210"
-          }
-        }
-      },
-      "Microsoft.Extensions.Configuration.Abstractions/6.0.0": {
-        "dependencies": {
-          "Microsoft.Extensions.Primitives": "6.0.0"
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.dll": {
-            "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.21.52210"
-          }
-        }
-      },
-      "Microsoft.Extensions.Configuration.EnvironmentVariables/6.0.1": {
-        "dependencies": {
-          "Microsoft.Extensions.Configuration": "6.0.0",
-          "Microsoft.Extensions.Configuration.Abstractions": "6.0.0"
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.Configuration.EnvironmentVariables.dll": {
-            "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.222.6406"
-          }
-        }
-      },
-      "Microsoft.Extensions.DependencyInjection/6.0.0": {
-        "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
-        },
-        "runtime": {
-          "lib/net6.0/Microsoft.Extensions.DependencyInjection.dll": {
-            "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.21.52210"
-          }
-        }
-      },
-      "Microsoft.Extensions.DependencyInjection.Abstractions/6.0.0": {
-        "runtime": {
-          "lib/net6.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {
-            "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.21.52210"
-          }
-        }
-      },
-      "Microsoft.Extensions.Http/6.0.0": {
-        "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
-          "Microsoft.Extensions.Logging": "6.0.0",
-          "Microsoft.Extensions.Logging.Abstractions": "6.0.0",
-          "Microsoft.Extensions.Options": "6.0.0"
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.Http.dll": {
-            "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.21.52210"
-          }
-        }
-      },
-      "Microsoft.Extensions.Logging/6.0.0": {
-        "dependencies": {
-          "Microsoft.Extensions.DependencyInjection": "6.0.0",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
-          "Microsoft.Extensions.Logging.Abstractions": "6.0.0",
-          "Microsoft.Extensions.Options": "6.0.0",
-          "System.Diagnostics.DiagnosticSource": "6.0.0"
-        },
-        "runtime": {
-          "lib/netstandard2.1/Microsoft.Extensions.Logging.dll": {
-            "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.21.52210"
-          }
-        }
-      },
-      "Microsoft.Extensions.Logging.Abstractions/6.0.0": {
-        "runtime": {
-          "lib/net6.0/Microsoft.Extensions.Logging.Abstractions.dll": {
-            "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.21.52210"
-          }
-        }
-      },
-      "Microsoft.Extensions.Options/6.0.0": {
-        "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
-          "Microsoft.Extensions.Primitives": "6.0.0"
-        },
-        "runtime": {
-          "lib/netstandard2.1/Microsoft.Extensions.Options.dll": {
-            "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.21.52210"
-          }
-        }
-      },
-      "Microsoft.Extensions.Primitives/6.0.0": {
-        "dependencies": {
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
-        },
-        "runtime": {
-          "lib/net6.0/Microsoft.Extensions.Primitives.dll": {
-            "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.21.52210"
-          }
-        }
-      },
       "Microsoft.NETCore.Platforms/5.0.0": {},
-      "Microsoft.Win32.Registry/5.0.0": {
-        "dependencies": {
-          "System.Security.AccessControl": "5.0.0",
-          "System.Security.Principal.Windows": "5.0.0"
-        }
-      },
       "Microsoft.Win32.SystemEvents/5.0.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "5.0.0"
         }
       },
-      "ModuleLauncher.Re/4.0.6": {
-        "dependencies": {
-          "Flurl.Http": "4.0.0-pre2",
-          "Manganese": "1.2.8"
-        },
-        "runtime": {
-          "lib/net6.0/ModuleLauncher.NET.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
-        }
-      },
-      "Natsurainko.FluentCore/2.0.2": {
+      "MinecraftLaunch/1.1.0": {
         "dependencies": {
           "Natsurainko.Toolkits": "1.0.2",
-          "Newtonsoft.Json": "13.0.1",
-          "System.Threading.Tasks.Dataflow": "6.0.0"
+          "Newtonsoft.Json": "13.0.1"
         },
         "runtime": {
-          "lib/net6.0/Natsurainko.FluentCore.dll": {
-            "assemblyVersion": "2.0.2.0",
-            "fileVersion": "2.0.2.0"
+          "lib/net6.0/MinecraftLaunch.dll": {
+            "assemblyVersion": "1.1.0.0",
+            "fileVersion": "1.1.0.0"
           }
         }
       },
-      "Natsurainko.FluentCore.Extension.Windows/2.0.2": {
+      "MinecraftOAuth/1.2.0": {
         "dependencies": {
-          "Microsoft.Win32.Registry": "5.0.0",
-          "Natsurainko.FluentCore": "2.0.2"
+          "MinecraftLaunch": "1.1.0"
         },
         "runtime": {
-          "lib/net6.0/Natsurainko.FluentCore.Extension.Windows.dll": {
-            "assemblyVersion": "2.0.2.0",
-            "fileVersion": "2.0.2.0"
+          "lib/net6.0/MinecaftOAuth.dll": {
+            "assemblyVersion": "1.2.0.0",
+            "fileVersion": "1.2.0.0"
           }
         }
       },
@@ -243,35 +77,12 @@
           }
         }
       },
-      "ProjBobcat/1.16.0": {
-        "dependencies": {
-          "Microsoft.Extensions.Configuration.EnvironmentVariables": "6.0.1",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
-          "Microsoft.Extensions.Http": "6.0.0",
-          "Microsoft.Win32.Registry": "5.0.0",
-          "Newtonsoft.Json": "13.0.1",
-          "SharpCompress": "0.31.0",
-          "System.Management": "6.0.0"
-        },
+      "System.CodeDom/7.0.0": {
         "runtime": {
-          "lib/net6.0/ProjBobcat.dll": {
-            "assemblyVersion": "1.16.0.0",
-            "fileVersion": "1.16.0.0"
+          "lib/net6.0/System.CodeDom.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.0.22.51805"
           }
-        }
-      },
-      "SharpCompress/0.31.0": {
-        "runtime": {
-          "lib/net5.0/SharpCompress.dll": {
-            "assemblyVersion": "0.31.0.0",
-            "fileVersion": "0.31.0.0"
-          }
-        }
-      },
-      "System.CodeDom/6.0.0": {},
-      "System.Diagnostics.DiagnosticSource/6.0.0": {
-        "dependencies": {
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
         }
       },
       "System.Drawing.Common/5.0.0": {
@@ -279,14 +90,14 @@
           "Microsoft.Win32.SystemEvents": "5.0.0"
         }
       },
-      "System.Management/6.0.0": {
+      "System.Management/7.0.0": {
         "dependencies": {
-          "System.CodeDom": "6.0.0"
+          "System.CodeDom": "7.0.0"
         },
         "runtime": {
           "lib/net6.0/System.Management.dll": {
             "assemblyVersion": "4.0.0.0",
-            "fileVersion": "6.0.21.52210"
+            "fileVersion": "7.0.22.51805"
           }
         },
         "runtimeTargets": {
@@ -294,18 +105,10 @@
             "rid": "win",
             "assetType": "runtime",
             "assemblyVersion": "4.0.0.0",
-            "fileVersion": "6.0.21.52210"
+            "fileVersion": "7.0.22.51805"
           }
         }
       },
-      "System.Runtime.CompilerServices.Unsafe/6.0.0": {},
-      "System.Security.AccessControl/5.0.0": {
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "5.0.0",
-          "System.Security.Principal.Windows": "5.0.0"
-        }
-      },
-      "System.Security.Principal.Windows/5.0.0": {},
       "System.Threading.Tasks.Dataflow/6.0.0": {}
     }
   },
@@ -315,110 +118,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Flurl/3.0.6": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-XMIlB/tJ4nTYF2+79xDsnnlgbXHpKyizKX2fffrECekI6pEsa9MSLzf5tPVMdLy4k4AcJPLs356Sa2Le5VRDCw==",
-      "path": "flurl/3.0.6",
-      "hashPath": "flurl.3.0.6.nupkg.sha512"
-    },
-    "Flurl.Http/4.0.0-pre2": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-ArHsL5V1YQyY2ji0U5YkffYL9h7Xbbe9p+Sbluwbh4o10CwDHU1VnDumEMkYln0MDOldP8uIjFFKYQtKHXfeFg==",
-      "path": "flurl.http/4.0.0-pre2",
-      "hashPath": "flurl.http.4.0.0-pre2.nupkg.sha512"
-    },
-    "Manganese/1.2.8": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-0kv1Hfv9v7bGsi8qSW7b20jmaptBhoYsgvFUzJWieKpc5YDXt/E9iSVCQVPkn6izDruRd/DgQvw9bgcD0rFykg==",
-      "path": "manganese/1.2.8",
-      "hashPath": "manganese.1.2.8.nupkg.sha512"
-    },
-    "Microsoft.Extensions.Configuration/6.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-tq2wXyh3fL17EMF2bXgRhU7JrbO3on93MRKYxzz4JzzvuGSA1l0W3GI9/tl8EO89TH+KWEymP7bcFway6z9fXg==",
-      "path": "microsoft.extensions.configuration/6.0.0",
-      "hashPath": "microsoft.extensions.configuration.6.0.0.nupkg.sha512"
-    },
-    "Microsoft.Extensions.Configuration.Abstractions/6.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-qWzV9o+ZRWq+pGm+1dF+R7qTgTYoXvbyowRoBxQJGfqTpqDun2eteerjRQhq5PQ/14S+lqto3Ft4gYaRyl4rdQ==",
-      "path": "microsoft.extensions.configuration.abstractions/6.0.0",
-      "hashPath": "microsoft.extensions.configuration.abstractions.6.0.0.nupkg.sha512"
-    },
-    "Microsoft.Extensions.Configuration.EnvironmentVariables/6.0.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-pnyXV1LFOsYjGveuC07xp0YHIyGq7jRq5Ncb5zrrIieMLWVwgMyYxcOH0jTnBedDT4Gh1QinSqsjqzcieHk1og==",
-      "path": "microsoft.extensions.configuration.environmentvariables/6.0.1",
-      "hashPath": "microsoft.extensions.configuration.environmentvariables.6.0.1.nupkg.sha512"
-    },
-    "Microsoft.Extensions.DependencyInjection/6.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-k6PWQMuoBDGGHOQTtyois2u4AwyVcIwL2LaSLlTZQm2CYcJ1pxbt6jfAnpWmzENA/wfrYRI/X9DTLoUkE4AsLw==",
-      "path": "microsoft.extensions.dependencyinjection/6.0.0",
-      "hashPath": "microsoft.extensions.dependencyinjection.6.0.0.nupkg.sha512"
-    },
-    "Microsoft.Extensions.DependencyInjection.Abstractions/6.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-xlzi2IYREJH3/m6+lUrQlujzX8wDitm4QGnUu6kUXTQAWPuZY8i+ticFJbzfqaetLA6KR/rO6Ew/HuYD+bxifg==",
-      "path": "microsoft.extensions.dependencyinjection.abstractions/6.0.0",
-      "hashPath": "microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512"
-    },
-    "Microsoft.Extensions.Http/6.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-15+pa2G0bAMHbHewaQIdr/y6ag2H3yh4rd9hTXavtWDzQBkvpe2RMqFg8BxDpcQWssmjmBApGPcw93QRz6YcMg==",
-      "path": "microsoft.extensions.http/6.0.0",
-      "hashPath": "microsoft.extensions.http.6.0.0.nupkg.sha512"
-    },
-    "Microsoft.Extensions.Logging/6.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-eIbyj40QDg1NDz0HBW0S5f3wrLVnKWnDJ/JtZ+yJDFnDj90VoPuoPmFkeaXrtu+0cKm5GRAwoDf+dBWXK0TUdg==",
-      "path": "microsoft.extensions.logging/6.0.0",
-      "hashPath": "microsoft.extensions.logging.6.0.0.nupkg.sha512"
-    },
-    "Microsoft.Extensions.Logging.Abstractions/6.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-/HggWBbTwy8TgebGSX5DBZ24ndhzi93sHUBDvP1IxbZD7FDokYzdAr6+vbWGjw2XAfR2EJ1sfKUotpjHnFWPxA==",
-      "path": "microsoft.extensions.logging.abstractions/6.0.0",
-      "hashPath": "microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512"
-    },
-    "Microsoft.Extensions.Options/6.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-dzXN0+V1AyjOe2xcJ86Qbo233KHuLEY0njf/P2Kw8SfJU+d45HNS2ctJdnEnrWbM9Ye2eFgaC5Mj9otRMU6IsQ==",
-      "path": "microsoft.extensions.options/6.0.0",
-      "hashPath": "microsoft.extensions.options.6.0.0.nupkg.sha512"
-    },
-    "Microsoft.Extensions.Primitives/6.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-9+PnzmQFfEFNR9J2aDTfJGGupShHjOuGw4VUv+JB044biSHrnmCIMD+mJHmb2H7YryrfBEXDurxQ47gJZdCKNQ==",
-      "path": "microsoft.extensions.primitives/6.0.0",
-      "hashPath": "microsoft.extensions.primitives.6.0.0.nupkg.sha512"
-    },
     "Microsoft.NETCore.Platforms/5.0.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-VyPlqzH2wavqquTcYpkIIAQ6WdenuKoFN0BdYBbCWsclXacSOHNQn66Gt4z5NBqEYW0FAPm5rlvki9ZiCij5xQ==",
       "path": "microsoft.netcore.platforms/5.0.0",
       "hashPath": "microsoft.netcore.platforms.5.0.0.nupkg.sha512"
-    },
-    "Microsoft.Win32.Registry/5.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-dDoKi0PnDz31yAyETfRntsLArTlVAVzUzCIvvEDsDsucrl33Dl8pIJG06ePTJTI3tGpeyHS9Cq7Foc/s4EeKcg==",
-      "path": "microsoft.win32.registry/5.0.0",
-      "hashPath": "microsoft.win32.registry.5.0.0.nupkg.sha512"
     },
     "Microsoft.Win32.SystemEvents/5.0.0": {
       "type": "package",
@@ -427,26 +132,19 @@
       "path": "microsoft.win32.systemevents/5.0.0",
       "hashPath": "microsoft.win32.systemevents.5.0.0.nupkg.sha512"
     },
-    "ModuleLauncher.Re/4.0.6": {
+    "MinecraftLaunch/1.1.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-MWPaxfKXBytl5ZF+KXgGFXVoWUAYCI0VWrX1euvd3NkLGQ1mayGiazbwiYuN1lOr5vBY8nnM6C4wjuncjqoWaw==",
-      "path": "modulelauncher.re/4.0.6",
-      "hashPath": "modulelauncher.re.4.0.6.nupkg.sha512"
+      "sha512": "sha512-XFi6oTLGCWOu2Dek4bj9Z3RseiTwhHeMCy+x4kEoDa7eBjJuD31vmG5bVTWI6EM4EPEak9MT7Tff3k8u5YHHXQ==",
+      "path": "minecraftlaunch/1.1.0",
+      "hashPath": "minecraftlaunch.1.1.0.nupkg.sha512"
     },
-    "Natsurainko.FluentCore/2.0.2": {
+    "MinecraftOAuth/1.2.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-JvD6mO7W+4yVIz0ZB3nLU5wOhL6tMcSieFPwoZHYJYemz5XxdogWDxvNSPff42XB4BgKJ5A1rI3ZQi5LVRW9gw==",
-      "path": "natsurainko.fluentcore/2.0.2",
-      "hashPath": "natsurainko.fluentcore.2.0.2.nupkg.sha512"
-    },
-    "Natsurainko.FluentCore.Extension.Windows/2.0.2": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-uj74rPLPCgX/Bkk/VnqQM2Om3T50bOGKJLodwWwTWtrnMYf1AsSrSge3ePBc1jZVXSmLJ8dnU4E8EVKrCq8JBw==",
-      "path": "natsurainko.fluentcore.extension.windows/2.0.2",
-      "hashPath": "natsurainko.fluentcore.extension.windows.2.0.2.nupkg.sha512"
+      "sha512": "sha512-hYa+gjN1mrIvnG+titmI7q7GuLllf2eFYAx+ZYXY9kPSiHirOzhmE38ziJFXNY3aMCWu2vRtGTf4uGaO9l8Cxg==",
+      "path": "minecraftoauth/1.2.0",
+      "hashPath": "minecraftoauth.1.2.0.nupkg.sha512"
     },
     "Natsurainko.Toolkits/1.0.2": {
       "type": "package",
@@ -469,33 +167,12 @@
       "path": "panuon.ui.silver/1.1.3.4",
       "hashPath": "panuon.ui.silver.1.1.3.4.nupkg.sha512"
     },
-    "ProjBobcat/1.16.0": {
+    "System.CodeDom/7.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-cqx8H1L1N0iorJVAy3q3vRJS0ueVj/7Wwl0dBlYZxCbNkKARXClXFhI+FYLjOZlItk0XbAFK/O0mPSW7dfwQkQ==",
-      "path": "projbobcat/1.16.0",
-      "hashPath": "projbobcat.1.16.0.nupkg.sha512"
-    },
-    "SharpCompress/0.31.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-wFf5N0ysnlKbG54beDDm4Z1uqM0EAKTupEkTxyG4EGVE1uZgTtohuBd2BhTHR2gNweJ6agxKbMFzmzk181qqjw==",
-      "path": "sharpcompress/0.31.0",
-      "hashPath": "sharpcompress.0.31.0.nupkg.sha512"
-    },
-    "System.CodeDom/6.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-CPc6tWO1LAer3IzfZufDBRL+UZQcj5uS207NHALQzP84Vp/z6wF0Aa0YZImOQY8iStY0A2zI/e3ihKNPfUm8XA==",
-      "path": "system.codedom/6.0.0",
-      "hashPath": "system.codedom.6.0.0.nupkg.sha512"
-    },
-    "System.Diagnostics.DiagnosticSource/6.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-frQDfv0rl209cKm1lnwTgFPzNigy2EKk1BS3uAvHvlBVKe5cymGyHO+Sj+NLv5VF/AhHsqPIUUwya5oV4CHMUw==",
-      "path": "system.diagnostics.diagnosticsource/6.0.0",
-      "hashPath": "system.diagnostics.diagnosticsource.6.0.0.nupkg.sha512"
+      "sha512": "sha512-GLltyqEsE5/3IE+zYRP5sNa1l44qKl9v+bfdMcwg+M9qnQf47wK3H0SUR/T+3N4JEQXF3vV4CSuuo0rsg+nq2A==",
+      "path": "system.codedom/7.0.0",
+      "hashPath": "system.codedom.7.0.0.nupkg.sha512"
     },
     "System.Drawing.Common/5.0.0": {
       "type": "package",
@@ -504,33 +181,12 @@
       "path": "system.drawing.common/5.0.0",
       "hashPath": "system.drawing.common.5.0.0.nupkg.sha512"
     },
-    "System.Management/6.0.0": {
+    "System.Management/7.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-sHsESYMmPDhQuOC66h6AEOs/XowzKsbT9srMbX71TCXP58hkpn1BqBjdmKj1+DCA/WlBETX1K5WjQHwmV0Txrg==",
-      "path": "system.management/6.0.0",
-      "hashPath": "system.management.6.0.0.nupkg.sha512"
-    },
-    "System.Runtime.CompilerServices.Unsafe/6.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-/iUeP3tq1S0XdNNoMz5C9twLSrM/TH+qElHkXWaPvuNOt+99G75NrV0OS2EqHx5wMN7popYjpc8oTjC1y16DLg==",
-      "path": "system.runtime.compilerservices.unsafe/6.0.0",
-      "hashPath": "system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
-    },
-    "System.Security.AccessControl/5.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-dagJ1mHZO3Ani8GH0PHpPEe/oYO+rVdbQjvjJkBRNQkX4t0r1iaeGn8+/ybkSLEan3/slM0t59SVdHzuHf2jmw==",
-      "path": "system.security.accesscontrol/5.0.0",
-      "hashPath": "system.security.accesscontrol.5.0.0.nupkg.sha512"
-    },
-    "System.Security.Principal.Windows/5.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-t0MGLukB5WAVU9bO3MGzvlGnyJPgUlcwerXn1kzBRjwLKixT96XV0Uza41W49gVd8zEMFu9vQEFlv0IOrytICA==",
-      "path": "system.security.principal.windows/5.0.0",
-      "hashPath": "system.security.principal.windows.5.0.0.nupkg.sha512"
+      "sha512": "sha512-A4jed4QUviDOm7fJNKAJObEAEkEUXmkGL/w0iyCYTzrl1rezTj8LGFHfsVst4Vb9JwFcTpboiDrvdST48avBpw==",
+      "path": "system.management/7.0.0",
+      "hashPath": "system.management.7.0.0.nupkg.sha512"
     },
     "System.Threading.Tasks.Dataflow/6.0.0": {
       "type": "package",
