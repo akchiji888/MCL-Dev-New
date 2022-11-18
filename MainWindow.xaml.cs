@@ -46,11 +46,27 @@ namespace MCL_Dev
             {
                 Content = zhuye
             };
+            Color color = (Color)ColorConverter.ConvertFromString("#FF0067FF");
+            #region 主页版图颜色
+            zhuye.start.BorderBrush = new SolidColorBrush(color);
+            zhuye.start.Foreground = new SolidColorBrush(color);
+            zhuye.versionCombo.Foreground = new SolidColorBrush(color);
+            zhuye.gameVersion.Foreground = new SolidColorBrush(color);
+            #endregion
+            #region 设置主题色
+            zhuye.javaBanBen.Foreground = new SolidColorBrush(color);
+            zhuye.javaCombo.Foreground = new SolidColorBrush(color);
+            zhuye.ZuiDaRAM.Foreground = new SolidColorBrush(color);
+            zhuye.maxMem.Foreground = new SolidColorBrush(color);
+            #endregion
         }
-        private void Button_Click_setting(object sender, RoutedEventArgs e)
+        private void Button_Click_setting(object sender, RoutedEventArgs e) //实际是下载
         {
-            
-
+            XiaZai xiazai = new XiaZai();
+            page.Content = new Frame()
+            {
+                Content = xiazai
+            };
         }
     }
 }

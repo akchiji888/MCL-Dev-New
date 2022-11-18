@@ -37,3 +37,5 @@ C:\Users\wodes\source\repos\MCL-Dev\bin\Debug\net6.0-windows7.0\Natsurainko.Tool
 C:\Users\wodes\source\repos\MCL-Dev\bin\Debug\net6.0-windows7.0\MinecraftLaunch.dll
 C:\Users\wodes\source\repos\MCL-Dev\bin\Debug\net6.0-windows7.0\System.CodeDom.dll
 C:\Users\wodes\source\repos\MCL-Dev\bin\Debug\net6.0-windows7.0\MinecaftOAuth.dll
+C:\Users\wodes\source\repos\MCL-Dev\obj\Debug\net6.0-windows7.0\XiaZai.g.cs
+C:\Users\wodes\source\repos\MCL-Dev\obj\Debug\net6.0-windows7.0\XiaZai.baml

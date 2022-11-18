@@ -1,58 +1,24 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Management;
-using System.Windows;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace MCL_Dev
 {
     internal class LauncherClasses
-    {
-
-        public static string offlineName;
-        public static bool IsRegeditItemExist()
+    {        
+        public static string? offlineName;
+        public async Task<string> getHtmlAsync(string html)//传入网址
         {
-            string[] subkeyNames;
-            RegistryKey key = Registry.LocalMachine;
-            RegistryKey soft = key.OpenSubKey("software");
-            subkeyNames = soft.GetSubKeyNames();
-            foreach (string keyName in subkeyNames)
-            //遍历整个数组  
-            {
-                if (keyName == "ModernCraftLauncher")
-                //判断子项的名称  
-                {
-                    RegistryKey mcl = key.OpenSubKey("software\\ModernCraftLauncher");
-                    subkeyNames = mcl.GetSubKeyNames();
-                    //取得该项下所有子项的名称的序列，并传递给预定的数组中  
-                    foreach (string keyName_1 in subkeyNames)
-                    //遍历整个数组  
-                    {
-                        if (keyName_1 == "firstTime")
-                        //判断子项的名称  
-                        {
-                            key.Close();
-                            return true;
-                        }
-                    }
-                    key.Close();
-                    return false;
-                }
-            }
-            key.Close();
-            return false;
-            
-        }
-        public static long ConvertLocalDateTimeToUtcTimestamp(System.DateTime localTime)
-        {
-            DateTime utcTime = TimeZoneInfo.ConvertTimeToUtc(localTime);
-            DateTime utcStartTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            TimeSpan ts = utcTime - utcStartTime;
-            return Convert.ToInt64(ts.TotalMilliseconds);
-        }
+            string apiUrl = html;
 
+            HttpClient client = new HttpClient();
+            string jsonResponse = await client.GetStringAsync(apiUrl);
+            return jsonResponse;
+        }
         public class JavaVersion
         {
             public string Version { get; internal set; }

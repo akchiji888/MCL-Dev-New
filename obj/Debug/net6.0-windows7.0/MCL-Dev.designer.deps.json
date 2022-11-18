@@ -26,21 +26,21 @@
           }
         }
       },
-      "MinecraftLaunch/1.0.2": {
+      "MinecraftLaunch/1.1.0": {
         "dependencies": {
           "Natsurainko.Toolkits": "1.0.2",
           "Newtonsoft.Json": "13.0.1"
         },
         "runtime": {
           "lib/net6.0/MinecraftLaunch.dll": {
-            "assemblyVersion": "1.0.2.0",
-            "fileVersion": "1.0.2.0"
+            "assemblyVersion": "1.1.0.0",
+            "fileVersion": "1.1.0.0"
           }
         }
       },
       "MinecraftOAuth/1.2.0": {
         "dependencies": {
-          "MinecraftLaunch": "1.0.2"
+          "MinecraftLaunch": "1.1.0"
         },
         "runtime": {
           "lib/net6.0/MinecaftOAuth.dll": {
@@ -157,12 +157,12 @@
       "path": "microsoft.win32.systemevents/5.0.0",
       "hashPath": "microsoft.win32.systemevents.5.0.0.nupkg.sha512"
     },
-    "MinecraftLaunch/1.0.2": {
+    "MinecraftLaunch/1.1.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-34SxL0qYgl2+kloQYZMTaMRO7z3Krap1ykGypnhspCFrijs77gE6PNNPlA1JOobi9DYCDzG0BAx2yj9szZNpuA==",
-      "path": "minecraftlaunch/1.0.2",
-      "hashPath": "minecraftlaunch.1.0.2.nupkg.sha512"
+      "sha512": "sha512-XFi6oTLGCWOu2Dek4bj9Z3RseiTwhHeMCy+x4kEoDa7eBjJuD31vmG5bVTWI6EM4EPEak9MT7Tff3k8u5YHHXQ==",
+      "path": "minecraftlaunch/1.1.0",
+      "hashPath": "minecraftlaunch.1.1.0.nupkg.sha512"
     },
     "MinecraftOAuth/1.2.0": {
       "type": "package",

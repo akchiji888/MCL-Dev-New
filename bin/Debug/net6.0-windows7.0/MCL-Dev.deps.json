@@ -10,6 +10,7 @@
         "dependencies": {
           "MinecraftLaunch": "1.1.0",
           "MinecraftOAuth": "1.2.0",
+          "Newtonsoft.Json": "13.0.1",
           "Panuon.UI.Silver": "1.1.3.4",
           "System.Management": "7.0.0"
         },

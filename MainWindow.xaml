@@ -16,7 +16,12 @@
             pu:ButtonHelper.HoverBrush="{x:Null}"
             pu:ButtonHelper.ClickStyle="Sink"
             pu:ButtonHelper.ButtonStyle="Outline"
-            pu:ButtonHelper.Icon="https://s1.328888.xyz/2022/05/21/ddfU1.png"
-            pu:ButtonHelper.CornerRadius="5,5,5,5" Margin="306,12,330,0" Foreground="White" BorderBrush="{x:Null}" FontSize="24" Height="34" VerticalAlignment="Top" Background="{x:Null}" Click="Button_Click"/>
+            pu:ButtonHelper.CornerRadius="5,5,5,5" Margin="214,10,422,0" Foreground="White" BorderBrush="{x:Null}" FontSize="24" Height="34" VerticalAlignment="Top" Background="{x:Null}" Click="Button_Click"/>
+        <Button
+            Content="下载"
+            pu:ButtonHelper.HoverBrush="{x:Null}"
+            pu:ButtonHelper.ClickStyle="Sink"
+            pu:ButtonHelper.ButtonStyle="Outline"
+            pu:ButtonHelper.CornerRadius="5,5,5,5" Margin="383,10,253,0" Foreground="White" BorderBrush="{x:Null}" FontSize="24" Height="34" VerticalAlignment="Top" Background="{x:Null}" Click="Button_Click_setting"/>
     </Grid>
 </pu:WindowX>

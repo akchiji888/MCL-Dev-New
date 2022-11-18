@@ -20,6 +20,6 @@
         <TextBlock x:Name="ZuiDaRAM" HorizontalAlignment="Left" Margin="43,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0096FF" FontSize="18"><Run Text="最大内存"/><Run Language="zh-cn" Text="(MB)"/><Run Text="："/></TextBlock>
         <TextBox x:Name="maxMem" HorizontalAlignment="Left" Margin="179,37,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="124" Height="23" Foreground="#FF0078D7" Cursor="IBeam"/>
         <Button Content="微软登录" x:Name="start_Copy1" pu:ButtonHelper.CornerRadius="1,1,1,1" pu:ButtonHelper.HoverBrush="{x:Null}" pu:ButtonHelper.ButtonStyle="Hollow" pu:ButtonHelper.ClickStyle="Sink" Margin="201,94,0,0" FontSize="14" Background="{x:Null}" Foreground="#FF0096FF" BorderBrush="{x:Null}" HorizontalAlignment="Left" Width="106" Height="27" VerticalAlignment="Top" Click="start_Copy1_Click"/>
-        <ProgressBar x:Name="progressBar" HorizontalAlignment="Left" Height="10" Margin="45,310,0,0" VerticalAlignment="Top" Width="295"/>
+        <ProgressBar Minimum="0" Maximum="1" pu:ProgressBarHelper.IsPercentVisible="False"  x:Name="progressBar" HorizontalAlignment="Left" Height="10" Margin="45,310,0,0" VerticalAlignment="Top" Width="295" Foreground="#FF0067FF"/>
     </Grid>
 </Page>
