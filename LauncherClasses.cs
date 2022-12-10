@@ -9,8 +9,12 @@ using System.Threading.Tasks;
 namespace MCL_Dev
 {
     internal class LauncherClasses
-    {        
+    {
+        public static string waizhi_email;
+        public static string waizhi_password;
+        public static string waizhi_apiUri;
         public static string? offlineName;
+        /*
         public async Task<string> getHtmlAsync(string html)//传入网址
         {
             string apiUrl = html;
@@ -19,6 +23,7 @@ namespace MCL_Dev
             string jsonResponse = await client.GetStringAsync(apiUrl);
             return jsonResponse;
         }
+        */
         public class JavaVersion
         {
             public string Version { get; internal set; }

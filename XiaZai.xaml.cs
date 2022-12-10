@@ -9,6 +9,10 @@ using Newtonsoft.Json;
 using static MCL_Dev.LauncherClasses;
 using static MCL_Dev.ZhuYe;
 using System.Collections;
+using System.Net;
+using System.IO;
+using System.Text;
+using Panuon.UI.Silver;
 
 namespace MCL_Dev
 {
@@ -17,29 +21,46 @@ namespace MCL_Dev
     /// </summary>
     public partial class XiaZai : Page
     {
-        public GameCoreInstaller installer;        
+        private async void GetMcVersionList()
+        {
+            var v = new GameCoreToolkit(gameFolder);
+            await Task.Run(async () =>
+            {
+                installer = new(v,"1.19.2");//其实这个1.19.2改成114514都行
+            });
+            var MCList = await installer.GetGameCoresAsync();
+            verBox.ItemsSource = MCList.Cores;
+        }
+        public GameCoreInstaller installer;
         public XiaZai()
         {
             InitializeComponent();
+            GetMcVersionList();
         }
-        
+
 
         private async void start_Click(object sender, RoutedEventArgs e)
         {
-            
-            progress.IsIndeterminate = true;
-            string version = verBox.Text;
-            var v = new GameCoreToolkit(gameFolder);
-            await Task.Run(async() =>
+            if(verBox.Text != null)
             {
-                installer = new(v, version);
-            });
-            await installer.InstallAsync((e) =>
+                progress.IsIndeterminate = true;
+                string version = verBox.Text;
+                var v = new GameCoreToolkit(gameFolder);
+                await Task.Run(async () =>
+                {
+                    installer = new(v, version);
+                });
+                await installer.InstallAsync((e) =>
+                {
+                    downloadLog.AppendText($"[{DateTime.Now}]{e.Item2} 进度:{e.Item1.ToString("P")}\n");
+                    downloadLog.ScrollToEnd();
+                });
+                progress.IsIndeterminate = false;
+            }
+            else
             {
-                downloadLog.AppendText($"[{DateTime.Now}]{e.Item2} 进度:{e.Item1.ToString("P")}\n");
-                downloadLog.ScrollToEnd();
-            });
-            progress.IsIndeterminate = false;
+                MessageBoxX.Show("下载版本未输入！", "MCL启动器");
+            }
         }
     }
 }

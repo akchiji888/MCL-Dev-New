@@ -188,10 +188,58 @@ namespace MCL_Dev
                         progressBar.IsIndeterminate = false;
                     }
                 }
-                else //外置登录
+                /*else //外置登录
                 {
+                    progressBar.IsIndeterminate = true;
+                    string filePath = System.AppDomain.CurrentDomain.BaseDirectory + "MCL";
+                    string accessPath = filePath + "\\YggdrasilAccessToken.txt";
+                    string ClientPath = filePath + "\\YggdrasilClientToken.txt";
+                    bool file = System.IO.File.Exists(accessPath)&&System.IO.File.Exists(ClientPath);
+                    var auth = new MinecaftOAuth.YggdrasilAuthenticator(true,"你想看我邮箱地址？","想看密码？想得美！");
+                    if(file != true)//无相关文件
+                    {
+                        var result = await auth.AuthAsync(x => { });
+                        string configPath = System.AppDomain.CurrentDomain.BaseDirectory + "MCL";
+                        if (!Directory.Exists(configPath))
+                        {
+                            Directory.CreateDirectory(configPath);
+                        }
+                        string fname = accessPath;
+                        string fname_cli = ClientPath;
+                        System.IO.File.WriteAllText(fname, string.Empty);
+                        FileInfo finfo = new FileInfo(fname);
+                        FileInfo cliInfo = new FileInfo(fname_cli);
+                        if (!finfo.Exists)
+                        {
+                            FileStream fs;
+                            fs = File.Create(fname);
+                            fs.Close();
+                            finfo = new FileInfo(fname);
+                        }                        
+                        using (FileStream fs = finfo.OpenWrite())
+                        {
+                            //根据上面创建的文件流创建写数据流
+                            StreamWriter w = new StreamWriter(fs);
 
-                }
+                            //设置写数据流的起始位置为文件流的末尾
+                            w.BaseStream.Seek(0, SeekOrigin.End);
+
+                            //写入内容
+                            w.Write(result);
+
+                            //清空缓冲区内容，并把缓冲区内容写入基础流
+                            w.Flush();
+
+                            //关闭写数据流
+                            w.Close();
+                        }
+                    }
+                    else//相关文件存在
+                    {
+
+                    };
+                    
+                };*/
 
             }
             else
@@ -200,7 +248,7 @@ namespace MCL_Dev
             }
         }
         // 启动游戏（按钮事件）
-        private async void start_Click(object sender, RoutedEventArgs e)
+        private void start_Click(object sender, RoutedEventArgs e)
         {
             startGame();
         }
@@ -215,9 +263,22 @@ namespace MCL_Dev
             };
         }
         //微软登录
-        private async void start_Copy1_Click(object sender, RoutedEventArgs e)
+        private void start_Copy1_Click(object sender, RoutedEventArgs e)
         {
             mode = 1;
+        }
+
+        private void start_Copy2_Click(object sender, RoutedEventArgs e) //暂时注释
+        {
+            MessageBoxX.Show("外置登录功能将于下一个版本对其进行支持", "MCL启动器");
+            /*
+            mode = 2;
+            WaiZhi waizhi = new();
+            login.Content = new Frame()
+            {
+                Content = waizhi
+            };
+            */ 
         }
     }
 }
