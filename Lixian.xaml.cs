@@ -13,10 +13,11 @@ namespace MCL_Dev
             InitializeComponent();
         }
 
-        private void start_Click(object sender, System.Windows.RoutedEventArgs e)
+        
+
+        private void NameCombo_TextChanged(object sender, TextChangedEventArgs e)
         {
             offlineName = NameCombo.Text;
-            start.Visibility = System.Windows.Visibility.Hidden;
         }
     }
 }

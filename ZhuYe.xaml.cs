@@ -23,7 +23,6 @@ namespace MCL_Dev
         public static string accessToken;
         public static string gameFolder;
         int mode = 114514;//homo特有的变量（喜）
-
         public ZhuYe()
         {
             InitializeComponent();
@@ -146,10 +145,12 @@ namespace MCL_Dev
                         {
                             string line;
                             // 从文件读取并显示行，直到文件的末尾 
+#pragma warning disable CS8600 // 将 null 字面量或可能为 null 的值转换为非 null 类型。
                             while ((line = sr.ReadLine()) != null)
                             {
                                 strCon += line + " ";
                             }
+#pragma warning restore CS8600 // 将 null 字面量或可能为 null 的值转换为非 null 类型。
                         }
                         auth.AuthType = MinecaftOAuth.Module.Enum.AuthType.Refresh;
                         auth.RefreshToken = strCon;
@@ -188,59 +189,23 @@ namespace MCL_Dev
                         progressBar.IsIndeterminate = false;
                     }
                 }
-                /*else //外置登录
+                else //外置登录
                 {
-                    progressBar.IsIndeterminate = true;
-                    string filePath = System.AppDomain.CurrentDomain.BaseDirectory + "MCL";
-                    string accessPath = filePath + "\\YggdrasilAccessToken.txt";
-                    string ClientPath = filePath + "\\YggdrasilClientToken.txt";
-                    bool file = System.IO.File.Exists(accessPath)&&System.IO.File.Exists(ClientPath);
-                    var auth = new MinecaftOAuth.YggdrasilAuthenticator(true,"你想看我邮箱地址？","想看密码？想得美！");
-                    if(file != true)//无相关文件
+                    if(waizhi_selectedplayer != 114514)
                     {
-                        var result = await auth.AuthAsync(x => { });
-                        string configPath = System.AppDomain.CurrentDomain.BaseDirectory + "MCL";
-                        if (!Directory.Exists(configPath))
-                        {
-                            Directory.CreateDirectory(configPath);
-                        }
-                        string fname = accessPath;
-                        string fname_cli = ClientPath;
-                        System.IO.File.WriteAllText(fname, string.Empty);
-                        FileInfo finfo = new FileInfo(fname);
-                        FileInfo cliInfo = new FileInfo(fname_cli);
-                        if (!finfo.Exists)
-                        {
-                            FileStream fs;
-                            fs = File.Create(fname);
-                            fs.Close();
-                            finfo = new FileInfo(fname);
-                        }                        
-                        using (FileStream fs = finfo.OpenWrite())
-                        {
-                            //根据上面创建的文件流创建写数据流
-                            StreamWriter w = new StreamWriter(fs);
-
-                            //设置写数据流的起始位置为文件流的末尾
-                            w.BaseStream.Seek(0, SeekOrigin.End);
-
-                            //写入内容
-                            w.Write(result);
-
-                            //清空缓冲区内容，并把缓冲区内容写入基础流
-                            w.Flush();
-
-                            //关闭写数据流
-                            w.Close();
-                        }
+                        progressBar.IsIndeterminate = true;
+                        MinecaftOAuth.YggdrasilAuthenticator waizhiAuth = new(true, waizhi_email, waizhi_password);
+                        var result = await waizhiAuth.AuthAsync(x => { });
+                        var core = new GameCoreToolkit(gameFolder);
+                        JavaClientLauncher javaClientLauncher = new(new(result[waizhi_selectedplayer], new(javaCombo.Text)), core);
+                        await javaClientLauncher.LaunchTaskAsync(versionCombo.Text);
+                        progressBar.IsIndeterminate = false;
                     }
-                    else//相关文件存在
+                    else
                     {
-
-                    };
-                    
-                };*/
-
+                        MessageBoxX.Show("无法启动游戏！\n错误原因：参数缺失\n请检查外置登录——角色一栏是否选择", "MCL启动器");
+                    }
+                };
             }
             else
             {
@@ -271,14 +236,21 @@ namespace MCL_Dev
         private void start_Copy2_Click(object sender, RoutedEventArgs e) //暂时注释
         {
             MessageBoxX.Show("外置登录功能将于下一个版本对其进行支持", "MCL启动器");
-            /*
-            mode = 2;
-            WaiZhi waizhi = new();
-            login.Content = new Frame()
+            DirectoryInfo dirInfo = new DirectoryInfo(System.AppDomain.CurrentDomain.BaseDirectory + "MCL\\waizhi");//查看Debug文件夹的信息
+            if (dirInfo.Exists == true)//曾经登陆过
             {
-                Content = waizhi
-            };
-            */ 
+                mode = 2;
+                MessageBoxX.Show("您可以直接启动游戏，无需登录！", "MCL启动器");
+            }
+            else
+            {
+                mode = 2;
+                WaiZhi waizhi = new();
+                login.Content = new Frame()
+                {
+                    Content = waizhi
+                };
+            }          
         }
     }
 }

@@ -12,18 +12,8 @@ namespace MCL_Dev
     {
         public static string waizhi_email;
         public static string waizhi_password;
-        public static string waizhi_apiUri;
-        public static string? offlineName;
-        /*
-        public async Task<string> getHtmlAsync(string html)//传入网址
-        {
-            string apiUrl = html;
-
-            HttpClient client = new HttpClient();
-            string jsonResponse = await client.GetStringAsync(apiUrl);
-            return jsonResponse;
-        }
-        */
+        public static string offlineName;
+        public static int waizhi_selectedplayer;
         public class JavaVersion
         {
             public string Version { get; internal set; }
@@ -42,6 +32,7 @@ namespace MCL_Dev
                     {
                         DirectoryInfo directoryInfo = new DirectoryInfo(t + "\\" + i);
                         FileInfo[] j;
+#pragma warning disable CS0168 // 声明了变量，但从未使用过
                         try
                         {
                             j = directoryInfo.GetFiles("javaw.exe", SearchOption.AllDirectories);
@@ -50,6 +41,7 @@ namespace MCL_Dev
                         {
                             continue;
                         }
+#pragma warning restore CS0168 // 声明了变量，但从未使用过
                         foreach (var y in j)
                         {
                             bool s = false;
@@ -72,7 +64,9 @@ namespace MCL_Dev
             private string GetProductVersion(string path)
             {
                 FileVersionInfo info = FileVersionInfo.GetVersionInfo(path);
+#pragma warning disable CS8603 // 可能返回 null 引用。
                 return info.ProductName;
+#pragma warning restore CS8603 // 可能返回 null 引用。
             }
 
 
@@ -83,7 +77,9 @@ namespace MCL_Dev
                 ManagementObjectCollection queryCollection = query.Get();
                 foreach (ManagementObject mo in queryCollection)
                 {
+#pragma warning disable CS8604 // 引用类型参数可能为 null。
                     deviceIDs.Add(mo["DeviceID"].ToString());
+#pragma warning restore CS8604 // 引用类型参数可能为 null。
                 }
                 return deviceIDs;
             }

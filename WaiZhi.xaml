@@ -9,14 +9,14 @@
       Title="WaiZhi">
 
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="10,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF"><Run Text="Yggdrasil API"/><Run Text=" URI"/><Run Language="zh-cn" Text=":"/></TextBlock>
-        <TextBox x:Name="apiUri" x:FieldModifier="public"  HorizontalAlignment="Left" Margin="118,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="167" Foreground="#FF0096FF" FontSize="10"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF"><Run Language="zh-cn" Text="电子邮箱地址:"/></TextBlock>
-        <TextBox x:Name="email" x:FieldModifier="public" HorizontalAlignment="Left" Margin="90,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="195" Foreground="#FF0096FF" FontSize="10"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF"><Run Language="zh-cn" Text="密码:"/></TextBlock>
-        <PasswordBox x:Name="passwd" HorizontalAlignment="Left" Margin="42,76,0,0" VerticalAlignment="Top" Width="243" Cursor="IBeam" Foreground="#FF0078D7" FontSize="10"/>
-        <Button Content="确定" x:Name="start" Margin="0,94,0,0" FontSize="14" Background="{x:Null}" Foreground="#FF0067FF" BorderBrush="#FF0096FF" HorizontalAlignment="Center" Width="96" Height="30" VerticalAlignment="Top" Click="start_Click"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,146,0,0" TextWrapping="Wrap" Text="PS:启动器不会保存您的关键信息（如密码、email地址等)仅会保存您的部分Token数据以用于下一次的自动登录" VerticalAlignment="Top" Foreground="#FF0067FF" FontSize="10"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,9,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF"><Run Language="zh-cn" Text="电子邮箱地址:"/></TextBlock>
+        <TextBox x:Name="email" x:FieldModifier="public" HorizontalAlignment="Left" Margin="90,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="195" Foreground="#FF0096FF" FontSize="10"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF"><Run Language="zh-cn" Text="密码:"/></TextBlock>
+        <PasswordBox x:Name="passwd" HorizontalAlignment="Left" Margin="42,33,0,0" VerticalAlignment="Top" Width="243" Cursor="IBeam" Foreground="#FF0078D7" FontSize="10"/>
+        <Button Content="确定" x:Name="start" FontSize="14" Background="{x:Null}" Foreground="#FF0067FF" BorderBrush="#FF0096FF" HorizontalAlignment="Center" Width="96" Height="30" VerticalAlignment="Top" Click="start_Click" Margin="0,50,0,0"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF" FontSize="9"><Run Text="PS:"/><Run Language="zh-cn" Text="目前仅支持littleskin的外置登录"/><LineBreak/><Run Language="zh-cn"/><Run Text="启动器不会保存您的关键信息（如密码、email地址等)仅会保存您的部分Token数据以用于下一次的自动登录"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="10,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF"><Run Language="zh-cn" Text="角色:"/></TextBlock>
+        <ComboBox DisplayMemberPath="Name" x:Name="players" HorizontalAlignment="Left" Margin="42,104,0,0" VerticalAlignment="Top" FontSize="10" Width="106" Height="15" Foreground="#FF0078D7" BorderBrush="{x:Null}" SelectionChanged="players_SelectionChanged"/>
 
     </Grid>
 </Page>
