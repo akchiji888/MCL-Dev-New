@@ -10,6 +10,7 @@ using MinecraftLaunch.Modules.Models.Launch;
 using Panuon.UI.Silver;
 using Panuon.UI.Silver.Core;
 using System.IO;
+using MinecaftOAuth.Module.Enum;
 
 namespace MCL_Dev
 {
@@ -18,10 +19,12 @@ namespace MCL_Dev
     /// </summary>
     public partial class ZhuYe : Page
     {
+        public static bool waizhi_refresh_exists;
         public static string name;
         public static string uuid;
         public static string accessToken;
         public static string gameFolder;
+        public AuthType waizhi_authType = MinecaftOAuth.Module.Enum.AuthType.Access;
         int mode = 114514;//homo特有的变量（喜）
         public ZhuYe()
         {
@@ -193,8 +196,13 @@ namespace MCL_Dev
                 {
                     if(waizhi_selectedplayer != 114514)
                     {
+                        string[] Waizhi_accessToken = File.ReadAllLines($"{System.AppDomain.CurrentDomain.BaseDirectory}MCL\\waizhi\\WaiZhi_Access_{waizhi_selectedplayer}.txt");
+                        string[] Waizhi_clientToken = File.ReadAllLines($"{System.AppDomain.CurrentDomain.BaseDirectory}MCL\\waizhi\\WaiZhi_Client_{waizhi_selectedplayer}.txt");
                         progressBar.IsIndeterminate = true;
-                        MinecaftOAuth.YggdrasilAuthenticator waizhiAuth = new(true, waizhi_email, waizhi_password);
+                        MinecaftOAuth.YggdrasilAuthenticator waizhiAuth = new();
+                        waizhiAuth.AccessToken = Waizhi_accessToken.ToString();
+                        waizhiAuth.ClientToken = Waizhi_clientToken.ToString();
+                        waizhiAuth.AuthType = AuthType.Refresh;
                         var result = await waizhiAuth.AuthAsync(x => { });
                         var core = new GameCoreToolkit(gameFolder);
                         JavaClientLauncher javaClientLauncher = new(new(result[waizhi_selectedplayer], new(javaCombo.Text)), core);
@@ -236,7 +244,7 @@ namespace MCL_Dev
         private void start_Copy2_Click(object sender, RoutedEventArgs e) //暂时注释
         {
             MessageBoxX.Show("外置登录功能将于下一个版本对其进行支持", "MCL启动器");
-            DirectoryInfo dirInfo = new DirectoryInfo(System.AppDomain.CurrentDomain.BaseDirectory + "MCL\\waizhi");//查看Debug文件夹的信息
+            DirectoryInfo dirInfo = new DirectoryInfo(System.AppDomain.CurrentDomain.BaseDirectory + "MCL\\waizhi");//查看WaiZhi文件夹是否存在
             if (dirInfo.Exists == true)//曾经登陆过
             {
                 mode = 2;

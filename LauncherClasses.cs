@@ -13,7 +13,8 @@ namespace MCL_Dev
         public static string waizhi_email;
         public static string waizhi_password;
         public static string offlineName;
-        public static int waizhi_selectedplayer;
+        public static int waizhi_selectedplayer = 114514;
+        public static string waizhi_selectedUsr;
         public class JavaVersion
         {
             public string Version { get; internal set; }
