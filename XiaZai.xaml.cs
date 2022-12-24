@@ -43,7 +43,7 @@ namespace MCL_Dev
 
         private async void start_Click(object sender, RoutedEventArgs e)
         {
-            if(verBox.Text != null)
+            if(verBox.Text != "")
             {
                 progress.IsIndeterminate = true;
                 string version = verBox.Text;
@@ -58,6 +58,7 @@ namespace MCL_Dev
                     downloadLog.ScrollToEnd();
                 });
                 progress.IsIndeterminate = false;
+                MessageBoxX.Show("下载完成！", "MCL启动器");
             }
             else
             {

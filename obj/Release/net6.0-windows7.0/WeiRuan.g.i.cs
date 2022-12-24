@@ -81,7 +81,7 @@ namespace MCL_Dev {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/MCL-Dev;component/weiruan.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/MCL-Dev;V1.0.0.0;component/weiruan.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\WeiRuan.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

@@ -21,8 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MinecraftLaunch" Version="1.3.0" />
-    <PackageReference Include="MinecraftOAuth" Version="1.2.0" />
+    <PackageReference Include="MinecraftLaunch" Version="1.5.0" />
+    <PackageReference Include="MinecraftOAuth" Version="1.3.0" />
     <PackageReference Include="Panuon.UI.Silver" Version="1.1.3.4" />
     <PackageReference Include="System.Management" Version="7.0.0" />
   </ItemGroup>

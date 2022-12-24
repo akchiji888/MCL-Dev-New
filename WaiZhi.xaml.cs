@@ -5,6 +5,10 @@ using static MCL_Dev.LauncherClasses;
 using MinecaftOAuth;
 using System.Linq;
 using System.IO;
+using MinecraftLaunch.Modules.Models.Auth;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System;
 
 namespace MCL_Dev
 {
@@ -16,6 +20,7 @@ namespace MCL_Dev
         public WaiZhi()
         {
             InitializeComponent();
+            MessageBoxX.Show("在登录前请确保输入了正确的邮箱与密码，否则可能会导致启动器崩溃！","MCL启动器");
         }
 
         private async void start_Click(object sender, RoutedEventArgs e)
@@ -25,12 +30,14 @@ namespace MCL_Dev
                 waizhi_email = email.Text;
                 waizhi_password = passwd.Password;
                 MinecaftOAuth.YggdrasilAuthenticator auth = new(true,waizhi_email,waizhi_password);
-                var result = await auth.AuthAsync(x => { });
+                IList<YggdrasilAccount>? result = new List<YggdrasilAccount>();
+                result = auth.AuthAsync(x => { } ).ToList();
                 int a = result.Count();
-                for(int i = 0; i < a; i++)
+                for (int i = 0; i < a; i++)
                 {
                     players.Items.Add(result[i]);
                 }
+                /*
                 #region 保存RefreshToken
                 DirectoryInfo dirInfo = new DirectoryInfo(System.AppDomain.CurrentDomain.BaseDirectory + "MCL\\waizhi");//查看Debug文件夹的信息
                 bool file = dirInfo.Exists;
@@ -62,6 +69,7 @@ namespace MCL_Dev
                     }
                 }
                 #endregion
+                */
                 MessageBoxX.Show("已完成登录", "MCL启动器");
             }
             else

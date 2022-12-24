@@ -15,6 +15,7 @@
         <TextBox x:Name="downloadLog" HorizontalAlignment="Left" Margin="26,76,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="224" Height="205" Foreground="#FF0067FF" Cursor="IBeam"/>
         <ProgressBar x:Name="progress" HorizontalAlignment="Left" Height="10" Margin="26,61,0,0" VerticalAlignment="Top" Width="224" Foreground="#FF0067FF"/>
         <ComboBox x:Name="verBox" HorizontalAlignment="Left" Margin="62,10,0,0" VerticalAlignment="Top" Width="142" Foreground="#FF0067FF" FontSize="14" Height="18" DisplayMemberPath="Id" Cursor="IBeam"/>
+        <TextBlock HorizontalAlignment="Left" Margin="26,286,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF" FontSize="14" Text="tips:若下拉框中无任何版本，请再次打开下拉框"></TextBlock>
 
     </Grid>
 </Page>

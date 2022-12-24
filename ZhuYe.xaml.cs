@@ -11,6 +11,7 @@ using Panuon.UI.Silver;
 using Panuon.UI.Silver.Core;
 using System.IO;
 using MinecaftOAuth.Module.Enum;
+using MinecraftLaunch.Modules.Installer;
 
 namespace MCL_Dev
 {
@@ -32,7 +33,8 @@ namespace MCL_Dev
             gameFolder = System.AppDomain.CurrentDomain.BaseDirectory + ".minecraft";
             var core = new GameCoreToolkit(gameFolder);
             versionCombo.ItemsSource = core.GetGameCores();
-            javaCombo.ItemsSource = GetJavaPath();
+            javaCombo.ItemsSource = JavaToolkit.GetJavas();
+            javaCombo.SelectedItem = 0;
         }
 
         /// <summary>
@@ -40,7 +42,7 @@ namespace MCL_Dev
         /// </summary>
         private async void startGame()
         {
-            if (javaCombo.Text != null && maxMem.Text != null && mode != 114514 && versionCombo.Text != null)
+            if (javaCombo.Text != "" && maxMem.Text != "" && mode != 114514 && versionCombo.Text != "")
             {
                 if (mode == 0) // offline
                 {
@@ -48,16 +50,23 @@ namespace MCL_Dev
                     if (offlineName != null)
                     {
                         Lixian lixian = new Lixian();
-                        var core = new GameCoreToolkit(gameFolder);
-                        OfflineAccount offline = new OfflineAccount()
+                        LaunchConfig lc = new(lixian.NameCombo.Text, javaCombo.Text, GameCoreToolkit.GetGameCore(gameFolder, versionCombo.Text));
+                        lc.JvmConfig.MaxMemory = Convert.ToInt32(maxMem.Text);
+                        JavaClientLauncher clientLauncher = new(lc);
+                        launchLog.Text = "";
+                        GameCoreToolkit toolkit = new();
+                        await new ResourceInstaller(toolkit.GetGameCore(versionCombo.Text)).DownloadAsync((a, e) =>
                         {
-                            Name = lixian.NameCombo.Text,
-                            Uuid = Guid.NewGuid(),
-                            AccessToken = Guid.NewGuid().ToString("N"),
-                            ClientToken = Guid.NewGuid().ToString("N")
-                        };
-                        JavaClientLauncher javaClientLauncher = new(new(offline, new(javaCombo.Text)), core);
-                        await javaClientLauncher.LaunchTaskAsync(versionCombo.Text);
+                            launchLog.Text = "补全资源中";
+                            launchLog.Text = "补全资源中.";
+                            launchLog.Text = "补全资源中..";
+                            launchLog.Text = "补全资源中..";
+                        });
+                        await clientLauncher.LaunchTaskAsync(x =>
+                        {
+                            launchLog.AppendText($"[{DateTime.Now}]{x.Item2} 进度:{x.Item1.ToString("P")}\n");
+                            launchLog.ScrollToEnd();
+                        });
                         progressBar.IsIndeterminate = false;
                     }
                     else
@@ -75,7 +84,7 @@ namespace MCL_Dev
                     bool file = System.IO.File.Exists(refreshPath);
                     if (file != true)//无RefreshToken存在
                     {
-                        auth.AuthType = MinecaftOAuth.Module.Enum.AuthType.Access;                        
+                        auth.AuthType = MinecaftOAuth.Module.Enum.AuthType.Access;
                         var code_1 = await auth.GetDeviceInfo();
                         System.Diagnostics.Process p = new System.Diagnostics.Process();
                         p.StartInfo.FileName = "cmd.exe";
@@ -194,16 +203,15 @@ namespace MCL_Dev
                 }
                 else //外置登录
                 {
-                    if(waizhi_selectedplayer != 114514)
+                    if (waizhi_selectedplayer != 114514)
                     {
-                        string[] Waizhi_accessToken = File.ReadAllLines($"{System.AppDomain.CurrentDomain.BaseDirectory}MCL\\waizhi\\WaiZhi_Access_{waizhi_selectedplayer}.txt");
-                        string[] Waizhi_clientToken = File.ReadAllLines($"{System.AppDomain.CurrentDomain.BaseDirectory}MCL\\waizhi\\WaiZhi_Client_{waizhi_selectedplayer}.txt");
+                        // string[] Waizhi_accessToken = File.ReadAllLines($"{System.AppDomain.CurrentDomain.BaseDirectory}MCL\\waizhi\\WaiZhi_Access_{waizhi_selectedplayer}.txt");
+                        // string[] Waizhi_clientToken = File.ReadAllLines($"{System.AppDomain.CurrentDomain.BaseDirectory}MCL\\waizhi\\WaiZhi_Client_{waizhi_selectedplayer}.txt");
                         progressBar.IsIndeterminate = true;
-                        MinecaftOAuth.YggdrasilAuthenticator waizhiAuth = new();
-                        waizhiAuth.AccessToken = Waizhi_accessToken.ToString();
-                        waizhiAuth.ClientToken = Waizhi_clientToken.ToString();
-                        waizhiAuth.AuthType = AuthType.Refresh;
-                        var result = await waizhiAuth.AuthAsync(x => { });
+                        MinecaftOAuth.YggdrasilAuthenticator waizhiAuth = new(true, waizhi_email, waizhi_password);
+                        // waizhiAuth.AccessToken = Waizhi_accessToken.ToString();
+                        // waizhiAuth.ClientToken = Waizhi_clientToken.ToString();
+                        var result = waizhiAuth.AuthAsync(x => { }).ToList();
                         var core = new GameCoreToolkit(gameFolder);
                         JavaClientLauncher javaClientLauncher = new(new(result[waizhi_selectedplayer], new(javaCombo.Text)), core);
                         await javaClientLauncher.LaunchTaskAsync(versionCombo.Text);
@@ -243,12 +251,12 @@ namespace MCL_Dev
 
         private void start_Copy2_Click(object sender, RoutedEventArgs e) //暂时注释
         {
-            MessageBoxX.Show("外置登录功能将于下一个版本对其进行支持", "MCL启动器");
-            DirectoryInfo dirInfo = new DirectoryInfo(System.AppDomain.CurrentDomain.BaseDirectory + "MCL\\waizhi");//查看WaiZhi文件夹是否存在
-            if (dirInfo.Exists == true)//曾经登陆过
+            bool a = false;
+            //DirectoryInfo dirInfo = new DirectoryInfo(System.AppDomain.CurrentDomain.BaseDirectory + "MCL\\waizhi");//查看WaiZhi文件夹是否存在
+            if (a == true)//曾经登陆过
             {
-                mode = 2;
-                MessageBoxX.Show("您可以直接启动游戏，无需登录！", "MCL启动器");
+                //mode = 2;
+                //MessageBoxX.Show("您可以直接启动游戏，无需登录！", "MCL启动器");
             }
             else
             {
@@ -258,7 +266,7 @@ namespace MCL_Dev
                 {
                     Content = waizhi
                 };
-            }          
+            }
         }
     }
 }
