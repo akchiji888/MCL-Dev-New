@@ -10,9 +10,10 @@
       Title="WeiRuan">
 
     <Grid>
-        <TextBlock HorizontalAlignment="Center" Margin="0,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF"><Run Text="请输入"/><Run Language="zh-cn" Text="回调URI"/><Run Text="："/></TextBlock>
-        <Button Content="确定" x:Name="start" Margin="0,49,0,0" FontSize="14" Background="{x:Null}" Foreground="#FF0067FF" BorderBrush="#FF0096FF" HorizontalAlignment="Center" Width="96" Height="30" VerticalAlignment="Top" Click="start_Click"/>
-        <TextBox x:FieldModifier="public" HorizontalAlignment="Center" TextWrapping="Wrap" x:Name="codeInput" Text="" VerticalAlignment="Top" Width="275" Foreground="#FF0067FF" Height="20" Margin="0,24,0,0" Cursor="IBeam"/>
-        <TextBlock x:Name="nameBox" HorizontalAlignment="Left" Margin="10,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FF0067FF" FontSize="14"><Run Language="zh-cn" Text="玩家名称："/></TextBlock>
+        <pu:Loading
+                LoadingStyle="Ring2"
+                IsRunning="True" x:Name="loadRing" Foreground="#FF004AFF" Margin="54,74,207,73"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Center" Foreground="#FF004AFF" TextWrapping="Wrap" Text="正在登录中，请稍后" VerticalAlignment="Center"/>
     </Grid>
+
 </Page>

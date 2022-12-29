@@ -12,6 +12,7 @@ using Panuon.UI.Silver.Core;
 using System.IO;
 using MinecaftOAuth.Module.Enum;
 using MinecraftLaunch.Modules.Installer;
+using System.Diagnostics;
 
 namespace MCL_Dev
 {
@@ -33,7 +34,13 @@ namespace MCL_Dev
             gameFolder = System.AppDomain.CurrentDomain.BaseDirectory + ".minecraft";
             var core = new GameCoreToolkit(gameFolder);
             versionCombo.ItemsSource = core.GetGameCores();
-            javaCombo.ItemsSource = JavaToolkit.GetJavas();
+            javaCombo.Items.Add("自动选择Java");
+            javaCombo.SelectedItem = 0;
+            var java = JavaToolkit.GetJavas();
+            foreach (var j in java)
+            {
+                javaCombo.Items.Add(j.JavaPath);
+            }
             javaCombo.SelectedItem = 0;
         }
 
@@ -42,7 +49,7 @@ namespace MCL_Dev
         /// </summary>
         private async void startGame()
         {
-            if (javaCombo.Text != "" && maxMem.Text != "" && mode != 114514 && versionCombo.Text != "")
+            if (maxMem.Text != "" && mode != 114514 && versionCombo.Text != "")
             {
                 if (mode == 0) // offline
                 {
@@ -50,23 +57,33 @@ namespace MCL_Dev
                     if (offlineName != null)
                     {
                         Lixian lixian = new Lixian();
-                        LaunchConfig lc = new(lixian.NameCombo.Text, javaCombo.Text, GameCoreToolkit.GetGameCore(gameFolder, versionCombo.Text));
-                        lc.JvmConfig.MaxMemory = Convert.ToInt32(maxMem.Text);
-                        JavaClientLauncher clientLauncher = new(lc);
-                        launchLog.Text = "";
-                        GameCoreToolkit toolkit = new();
-                        await new ResourceInstaller(toolkit.GetGameCore(versionCombo.Text)).DownloadAsync((a, e) =>
+                        if (javaCombo.SelectedIndex != 0)
                         {
-                            launchLog.Text = "补全资源中";
-                            launchLog.Text = "补全资源中.";
-                            launchLog.Text = "补全资源中..";
-                            launchLog.Text = "补全资源中..";
-                        });
-                        await clientLauncher.LaunchTaskAsync(x =>
+                            LaunchConfig lc = new(offlineName, javaCombo.Text, GameCoreToolkit.GetGameCore(gameFolder, versionCombo.Text));
+                            lc.JvmConfig.MaxMemory = Convert.ToInt32(maxMem.Text);
+                            JavaClientLauncher clientLauncher = new(lc);
+                            launchLog.Text = "";
+                            await clientLauncher.LaunchTaskAsync(x =>
+                            {
+                                launchLog.AppendText($"[{DateTime.Now}]{x.Item2} 进度:{x.Item1.ToString("P")}\n");
+                                launchLog.ScrollToEnd();
+                            });
+                        }
+                        else
                         {
-                            launchLog.AppendText($"[{DateTime.Now}]{x.Item2} 进度:{x.Item1.ToString("P")}\n");
-                            launchLog.ScrollToEnd();
-                        });
+                            var javaList = JavaToolkit.GetJavas();
+                            var gCore = GameCoreToolkit.GetGameCore(gameFolder, versionCombo.Text);
+                            var java = JavaToolkit.GetCorrectOfGameJava(javaList, gCore);
+                            LaunchConfig lc = new(offlineName, java.JavaPath, GameCoreToolkit.GetGameCore(gameFolder, versionCombo.Text));
+                            lc.JvmConfig.MaxMemory = Convert.ToInt32(maxMem.Text);
+                            JavaClientLauncher clientLauncher = new(lc);
+                            launchLog.Text = "";
+                            await clientLauncher.LaunchTaskAsync(x =>
+                            {
+                                launchLog.AppendText($"[{DateTime.Now}]{x.Item2} 进度:{x.Item1.ToString("P")}\n");
+                                launchLog.ScrollToEnd();
+                            });
+                        }
                         progressBar.IsIndeterminate = false;
                     }
                     else
@@ -78,129 +95,31 @@ namespace MCL_Dev
                 {
                     var auth = new MinecaftOAuth.MicrosoftAuthenticator();
                     progressBar.IsIndeterminate = true;
-                    string filePath = System.AppDomain.CurrentDomain.BaseDirectory + "MCL";
-                    string refreshPath = filePath + "\\RefreshToken.txt";
-                    auth.ClientId = "dd09ec86-031b-4429-adb8-7fec6bc1fd79";
-                    bool file = System.IO.File.Exists(refreshPath);
-                    if (file != true)//无RefreshToken存在
-                    {
-                        auth.AuthType = MinecaftOAuth.Module.Enum.AuthType.Access;
-                        var code_1 = await auth.GetDeviceInfo();
-                        System.Diagnostics.Process p = new System.Diagnostics.Process();
-                        p.StartInfo.FileName = "cmd.exe";
-                        p.StartInfo.UseShellExecute = false;    //是否使用操作系统shell启动
-                        p.StartInfo.RedirectStandardInput = true;//接受来自调用程序的输入信息
-                        p.StartInfo.RedirectStandardOutput = true;//由调用程序获取输出信息
-                        p.StartInfo.RedirectStandardError = true;//重定向标准错误输出
-                        p.StartInfo.CreateNoWindow = true;//不显示程序窗口
-                        p.Start();//启动程序
 
-                        //向cmd窗口发送输入信息
-                        p.StandardInput.WriteLine("start " + code_1.VerificationUrl + "&exit");
-                        p.StandardInput.AutoFlush = true;
-                        p.WaitForExit();//等待程序执行完退出进程
-                        p.Close();
-                        string usrCode = code_1.UserCode;
-                        MessageBoxX.MessageBoxXConfigurations.Add("standard", new Panuon.UI.Silver.Core.MessageBoxXConfigurations()
+                    var core = new GameCoreToolkit(gameFolder);
+                    if (javaCombo.SelectedIndex != 0)
+                    {
+                        JavaClientLauncher javaClientLauncher = new(new(microsoftaccount, new(javaCombo.Text)), core);
+                        await javaClientLauncher.LaunchTaskAsync(versionCombo.Text, x =>
                         {
-                            YesButton = "我已完成登录",
-                            OKButton = "我已完成登录"
+                            launchLog.AppendText($"[{DateTime.Now}]{x.Item2} 进度:{x.Item1.ToString("P")}\n");
+                            launchLog.ScrollToEnd();
                         });
-                        var a = MessageBoxX.Show(usrCode + "\n请输入这串字符到弹出的网页中进行登录，完成后再关闭此弹窗", "MCL启动器", configKey: "standard");
-                        var Code_2 = await auth.GetTokenResponse(code_1);
-                        accessToken = Code_2.AccessToken;
-                        var result = await auth.AuthAsync(x => { });
-                        string configPath = System.AppDomain.CurrentDomain.BaseDirectory + "MCL";
-                        if (!Directory.Exists(configPath))
-                        {
-                            Directory.CreateDirectory(configPath);
-                        }
-                        string fname = refreshPath;
-                        System.IO.File.WriteAllText(fname, string.Empty);
-                        FileInfo finfo = new FileInfo(fname);
-
-                        if (!finfo.Exists)
-                        {
-                            FileStream fs;
-                            fs = File.Create(fname);
-                            fs.Close();
-                            finfo = new FileInfo(fname);
-                        }
-                        using (FileStream fs = finfo.OpenWrite())
-                        {
-                            //根据上面创建的文件流创建写数据流
-                            StreamWriter w = new StreamWriter(fs);
-
-                            //设置写数据流的起始位置为文件流的末尾
-                            w.BaseStream.Seek(0, SeekOrigin.End);
-
-                            //写入内容
-                            w.Write(result.RefreshToken);
-
-                            //清空缓冲区内容，并把缓冲区内容写入基础流
-                            w.Flush();
-
-                            //关闭写数据流
-                            w.Close();
-                        }
-                        var core = new GameCoreToolkit(gameFolder);
-                        JavaClientLauncher javaClientLauncher = new(new(result, new(javaCombo.Text)), core);
-                        await javaClientLauncher.LaunchTaskAsync(versionCombo.Text);
-                        progressBar.IsIndeterminate = false;
                     }
-                    else//存在RefreshToken
+                    else
                     {
-                        string strCon = string.Empty;
-                        // 创建一个 StreamReader 的实例来读取文件
-                        // using 语句也能关闭 StreamReader
-                        using (StreamReader sr = new StreamReader(refreshPath))
+                        var javaList = JavaToolkit.GetJavas();
+                        var gameCore = GameCoreToolkit.GetGameCore(gameFolder, versionCombo.Text);
+                        JavaClientLauncher javaClientLauncher = new(new(microsoftaccount, new(JavaToolkit.GetCorrectOfGameJava(javaList, gameCore).JavaPath)), core);
+                        await javaClientLauncher.LaunchTaskAsync(versionCombo.Text, x =>
                         {
-                            string line;
-                            // 从文件读取并显示行，直到文件的末尾 
-#pragma warning disable CS8600 // 将 null 字面量或可能为 null 的值转换为非 null 类型。
-                            while ((line = sr.ReadLine()) != null)
-                            {
-                                strCon += line + " ";
-                            }
-#pragma warning restore CS8600 // 将 null 字面量或可能为 null 的值转换为非 null 类型。
-                        }
-                        auth.AuthType = MinecaftOAuth.Module.Enum.AuthType.Refresh;
-                        auth.RefreshToken = strCon;
-                        var result = await auth.AuthAsync(x => { });
-                        string fname = refreshPath;
-                        System.IO.File.WriteAllText(fname, string.Empty);
-                        FileInfo finfo = new FileInfo(fname);
-
-                        if (!finfo.Exists)
-                        {
-                            FileStream fs;
-                            fs = File.Create(fname);
-                            fs.Close();
-                            finfo = new FileInfo(fname);
-                        }
-                        using (FileStream fs = finfo.OpenWrite())
-                        {
-                            //根据上面创建的文件流创建写数据流
-                            StreamWriter w = new StreamWriter(fs);
-
-                            //设置写数据流的起始位置为文件流的末尾
-                            w.BaseStream.Seek(0, SeekOrigin.End);
-
-                            //写入内容
-                            w.Write(result.RefreshToken);
-
-                            //清空缓冲区内容，并把缓冲区内容写入基础流
-                            w.Flush();
-
-                            //关闭写数据流
-                            w.Close();
-                        }
-                        var core = new GameCoreToolkit(gameFolder);
-                        JavaClientLauncher javaClientLauncher = new(new(result, new(javaCombo.Text)), core);
-                        await javaClientLauncher.LaunchTaskAsync(versionCombo.Text);
-                        progressBar.IsIndeterminate = false;
+                            launchLog.AppendText($"[{DateTime.Now}]{x.Item2} 进度:{x.Item1.ToString("P")}\n");
+                            launchLog.ScrollToEnd();
+                        });
                     }
+                    progressBar.IsIndeterminate = false;
                 }
+
                 else //外置登录
                 {
                     if (waizhi_selectedplayer != 114514)
@@ -213,21 +132,40 @@ namespace MCL_Dev
                         // waizhiAuth.ClientToken = Waizhi_clientToken.ToString();
                         var result = waizhiAuth.AuthAsync(x => { }).ToList();
                         var core = new GameCoreToolkit(gameFolder);
-                        JavaClientLauncher javaClientLauncher = new(new(result[waizhi_selectedplayer], new(javaCombo.Text)), core);
-                        await javaClientLauncher.LaunchTaskAsync(versionCombo.Text);
-                        progressBar.IsIndeterminate = false;
+                        if (javaCombo.SelectedIndex != 0)
+                        {
+                            JavaClientLauncher javaClientLauncher = new(new(result[waizhi_selectedplayer], new(javaCombo.Text)), core);
+                            await javaClientLauncher.LaunchTaskAsync(versionCombo.Text, x =>
+                            {
+                                launchLog.AppendText($"[{DateTime.Now}]{x.Item2} 进度:{x.Item1.ToString("P")}\n");
+                                launchLog.ScrollToEnd();
+                            });
+                        }
+                        else
+                        {
+                            var javaList = JavaToolkit.GetJavas();
+                            var gameCore = GameCoreToolkit.GetGameCore(gameFolder, versionCombo.Text);
+                            JavaClientLauncher javaClientLauncher = new(new(result[waizhi_selectedplayer], new(JavaToolkit.GetCorrectOfGameJava(javaList, gameCore).JavaPath)), core);
+                            await javaClientLauncher.LaunchTaskAsync(versionCombo.Text, x =>
+                            {
+                                launchLog.AppendText($"[{DateTime.Now}]{x.Item2} 进度:{x.Item1.ToString("P")}\n");
+                                launchLog.ScrollToEnd();
+                            });
+                            progressBar.IsIndeterminate = false;
+                        }
                     }
                     else
                     {
                         MessageBoxX.Show("无法启动游戏！\n错误原因：参数缺失\n请检查外置登录——角色一栏是否选择", "MCL启动器");
                     }
-                };
+                }
             }
             else
             {
                 MessageBoxX.Show("无法启动游戏！\n错误原因：参数缺失\n请检查Java、最大内存、登录方式等选项是否为空", "MCL启动器");
             }
         }
+
         // 启动游戏（按钮事件）
         private void start_Click(object sender, RoutedEventArgs e)
         {
@@ -244,9 +182,134 @@ namespace MCL_Dev
             };
         }
         //微软登录
-        private void start_Copy1_Click(object sender, RoutedEventArgs e)
+        private async void start_Copy1_Click(object sender, RoutedEventArgs e)
         {
-            mode = 1;
+            var message = MessageBoxX.Show("确认开始验证微软账户", "MCL启动器", null,MessageBoxButton.OKCancel);
+            if (message == MessageBoxResult.OK)
+            {
+                mode = 1;
+                WeiRuan weiRuan = new();
+                login.Content = new Frame()
+                {
+                    Content = weiRuan
+                };
+                #region 登录
+                MicrosoftAccount result = new();
+                var auth = new MinecaftOAuth.MicrosoftAuthenticator();
+                progressBar.IsIndeterminate = true;
+                string filePath = System.AppDomain.CurrentDomain.BaseDirectory + "MCL";
+                string refreshPath = filePath + "\\RefreshToken.txt";
+                auth.ClientId = "dd09ec86-031b-4429-adb8-7fec6bc1fd79";
+                bool file = System.IO.File.Exists(refreshPath);
+                if (file != true)//无RefreshToken存在
+                {
+                    auth.AuthType = MinecaftOAuth.Module.Enum.AuthType.Access;
+                    var code_1 = await auth.GetDeviceInfo();
+                    string usrCode = code_1.UserCode;
+                    Clipboard.SetDataObject(usrCode);
+                    MessageBoxX.Show(usrCode + "\n已复制该串字符到剪切板，请粘贴这串字符到弹出的网页中进行登录，完成后再关闭此弹窗", "MCL启动器");
+                    #region 打开网页
+                    Process.Start(new ProcessStartInfo(code_1.VerificationUrl)
+                    {
+                        UseShellExecute = true,
+                        CreateNoWindow = true
+                    }) ;
+                    #endregion         
+                    var Code_2 = await auth.GetTokenResponse(code_1);
+                    result = await auth.AuthAsync(x => { });
+                    #region 保存数据
+                    string configPath = System.AppDomain.CurrentDomain.BaseDirectory + "MCL";
+                    if (!Directory.Exists(configPath))
+                    {
+                        Directory.CreateDirectory(configPath);
+                    }
+                    string fname = refreshPath;
+                    System.IO.File.WriteAllText(fname, string.Empty);
+                    FileInfo finfo = new FileInfo(fname);
+                    if (!finfo.Exists)
+                    {
+                        FileStream fs;
+                        fs = File.Create(fname);
+                        fs.Close();
+                        finfo = new FileInfo(fname);
+                    }
+                    using (FileStream fs = finfo.OpenWrite())
+                    {
+                        //根据上面创建的文件流创建写数据流
+                        StreamWriter w = new StreamWriter(fs);
+
+                        //设置写数据流的起始位置为文件流的末尾
+                        w.BaseStream.Seek(0, SeekOrigin.End);
+
+                        //写入内容
+                        w.Write(result.RefreshToken);
+
+                        //清空缓冲区内容，并把缓冲区内容写入基础流
+                        w.Flush();
+
+                        //关闭写数据流
+                        w.Close();
+                    }
+                    #endregion
+                    progressBar.IsIndeterminate = false;
+                }
+                else//存在RefreshToken
+                {
+                    string strCon = string.Empty;
+                    // 创建一个 StreamReader 的实例来读取文件
+                    // using 语句也能关闭 StreamReader
+                    using (StreamReader sr = new StreamReader(refreshPath))
+                    {
+                        string line;
+                        // 从文件读取并显示行，直到文件的末尾 
+#pragma warning disable CS8600 // 将 null 字面量或可能为 null 的值转换为非 null 类型。
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            strCon += line + " ";
+                        }
+#pragma warning restore CS8600 // 将 null 字面量或可能为 null 的值转换为非 null 类型。
+                    }
+                    auth.AuthType = MinecaftOAuth.Module.Enum.AuthType.Refresh;
+                    auth.RefreshToken = strCon;
+                    result = await auth.AuthAsync(x => { });
+                    #region 保存数据
+                    string fname = refreshPath;
+                    System.IO.File.WriteAllText(fname, string.Empty);
+                    FileInfo finfo = new FileInfo(fname);
+
+                    if (!finfo.Exists)
+                    {
+                        FileStream fs;
+                        fs = File.Create(fname);
+                        fs.Close();
+                        finfo = new FileInfo(fname);
+                    }
+                    using (FileStream fs = finfo.OpenWrite())
+                    {
+                        //根据上面创建的文件流创建写数据流
+                        StreamWriter w = new StreamWriter(fs);
+
+                        //设置写数据流的起始位置为文件流的末尾
+                        w.BaseStream.Seek(0, SeekOrigin.End);
+
+                        //写入内容
+                        w.Write(result.RefreshToken);
+
+                        //清空缓冲区内容，并把缓冲区内容写入基础流
+                        w.Flush();
+
+                        //关闭写数据流
+                        w.Close();
+                    }
+                    #endregion
+                }
+                #endregion
+                weiRuan.loadRing.Visibility = Visibility.Hidden;
+                weiRuan.textBlock.Text = "用户名：" + result.Name;
+                progressBar.IsIndeterminate = false;
+                microsoftaccount = result;
+            }
+            
         }
 
         private void start_Copy2_Click(object sender, RoutedEventArgs e) //暂时注释

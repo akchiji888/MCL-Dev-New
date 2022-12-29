@@ -13,7 +13,6 @@ namespace MCL_Dev
         public MainWindow()
         {
             InitializeComponent();
-            test test = new test();
 
             ZhuYe zhuye = new ZhuYe();
             

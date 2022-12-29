@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\wodes\\source\\repos\\MCL-Dev\\MCL-Dev.csproj": {}
+    "E:\\repos\\MCL-Dev\\MCL-Dev.csproj": {}
   },
   "projects": {
-    "C:\\Users\\wodes\\source\\repos\\MCL-Dev\\MCL-Dev.csproj": {
+    "E:\\repos\\MCL-Dev\\MCL-Dev.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\wodes\\source\\repos\\MCL-Dev\\MCL-Dev.csproj",
+        "projectUniqueName": "E:\\repos\\MCL-Dev\\MCL-Dev.csproj",
         "projectName": "MCL-Dev",
-        "projectPath": "C:\\Users\\wodes\\source\\repos\\MCL-Dev\\MCL-Dev.csproj",
-        "packagesPath": "C:\\Users\\wodes\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\wodes\\source\\repos\\MCL-Dev\\obj\\",
+        "projectPath": "E:\\repos\\MCL-Dev\\MCL-Dev.csproj",
+        "packagesPath": "C:\\Users\\2\\.nuget\\packages\\",
+        "outputPath": "E:\\repos\\MCL-Dev\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\wodes\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\2\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "D:\\嘉嘉\\8-编程\\visual studio编程\\dll文件": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -47,7 +46,7 @@
             },
             "MinecraftOAuth": {
               "target": "Package",
-              "version": "[1.3.0, )"
+              "version": "[1.4.0, )"
             },
             "Panuon.UI.Silver": {
               "target": "Package",

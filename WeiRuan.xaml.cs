@@ -12,8 +12,5 @@ namespace MCL_Dev
         {
             InitializeComponent();
         }
-        private  void start_Click(object sender, RoutedEventArgs e)
-        {                      
-        }
     }
 }

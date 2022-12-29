@@ -13,12 +13,16 @@
         <Label x:Name="banner" HorizontalAlignment="Center" VerticalAlignment="Top" Width="800" Height="57" Foreground="{x:Null}" BorderBrush="{x:Null}" Background="#FF0067FF"></Label>
         <Button
             Content="主页"
+            FontFamily="{StaticResource FontAwesome}"
+            pu:ButtonHelper.Icon="&#xf015;"
             pu:ButtonHelper.HoverBrush="{x:Null}"
             pu:ButtonHelper.ClickStyle="Sink"
             pu:ButtonHelper.ButtonStyle="Outline"
             pu:ButtonHelper.CornerRadius="5,5,5,5" Margin="214,10,422,0" Foreground="White" BorderBrush="{x:Null}" FontSize="24" Height="34" VerticalAlignment="Top" Background="{x:Null}" Click="Button_Click"/>
         <Button
             Content="下载"
+            FontFamily="{StaticResource FontAwesome}"
+            pu:ButtonHelper.Icon="&#xf0ed;"
             pu:ButtonHelper.HoverBrush="{x:Null}"
             pu:ButtonHelper.ClickStyle="Sink"
             pu:ButtonHelper.ButtonStyle="Outline"

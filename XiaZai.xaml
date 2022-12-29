@@ -4,18 +4,59 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MCL_Dev"
+    xmlns:pu="clr-namespace:Panuon.UI.Silver;assembly=Panuon.UI.Silver"
       xmlns:Silver="clr-namespace:Panuon.UI.Silver;assembly=Panuon.UI.Silver" x:Class="MCL_Dev.XiaZai"
       mc:Ignorable="d" 
       d:DesignHeight="413" d:DesignWidth="790"
       Title="XiaZai">
 
-    <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="26,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF" FontSize="14"><Run Text="版本"/><Run Language="zh-cn" Text=":"/></TextBlock>
-        <Button Content="下载" x:Name="start" Silver:ButtonHelper.CornerRadius="1,1,1,1" Silver:ButtonHelper.HoverBrush="{x:Null}" Silver:ButtonHelper.ButtonStyle="Hollow" Silver:ButtonHelper.ClickStyle="Sink" Margin="26,33,0,0" FontSize="14" Background="{x:Null}" Foreground="#FF0096FF" BorderBrush="#FF0096FF" HorizontalAlignment="Left" Width="84" Height="23" VerticalAlignment="Top" Click="start_Click"/>
-        <TextBox x:Name="downloadLog" HorizontalAlignment="Left" Margin="26,76,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="224" Height="205" Foreground="#FF0067FF" Cursor="IBeam"/>
-        <ProgressBar x:Name="progress" HorizontalAlignment="Left" Height="10" Margin="26,61,0,0" VerticalAlignment="Top" Width="224" Foreground="#FF0067FF"/>
-        <ComboBox x:Name="verBox" HorizontalAlignment="Left" Margin="62,10,0,0" VerticalAlignment="Top" Width="142" Foreground="#FF0067FF" FontSize="14" Height="18" DisplayMemberPath="Id" Cursor="IBeam"/>
-        <TextBlock HorizontalAlignment="Left" Margin="26,286,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF" FontSize="14" Text="tips:若下拉框中无任何版本，请再次打开下拉框"></TextBlock>
+    <Grid Margin="0,0,0,26">
+        <TabControl Height="30"
+             pu:TabControlHelper.SelectedForeground ="#FF0067FF"
+             pu:TabControlHelper.ItemsAlignment="Center"
+             pu:TabControlHelper.TabControlStyle="Standard" Margin="10,10,0,347" Foreground="#FF0067FF">
+            <TabItem Header="原版安装">
+                <Grid Margin="0,0,0,-373">
+                    <TextBlock HorizontalAlignment="Left" Margin="10,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF" FontSize="16"><Run Text="版本"/><Run Language="zh-cn" Text=":"/></TextBlock>
+                    <Button Content="下载" x:Name="start" Silver:ButtonHelper.CornerRadius="5,5,5,5" Silver:ButtonHelper.HoverBrush="{x:Null}" Silver:ButtonHelper.ButtonStyle="Hollow" Silver:ButtonHelper.ClickStyle="Sink" Margin="10,61,0,0" FontSize="18" Background="{x:Null}" Foreground="#FF0096FF" BorderBrush="#FF0096FF" HorizontalAlignment="Left" Width="97" Height="36" VerticalAlignment="Top" Click="start_Click"/>
+                    <TextBox x:Name="downloadLog" HorizontalAlignment="Left" Margin="10,117,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="224" Height="205" Foreground="#FF0067FF" Cursor="IBeam"/>
+                    <ProgressBar x:Name="progress" HorizontalAlignment="Left" Height="10" Margin="10,102,0,0" VerticalAlignment="Top" Width="224" Foreground="#FF0067FF"/>
+                    <ComboBox x:Name="verBox" HorizontalAlignment="Left" Margin="51,33,0,0" VerticalAlignment="Top" Width="156" Foreground="#FF0067FF" FontSize="16" Height="23" DisplayMemberPath="Id" Cursor="IBeam"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF" FontSize="16" Text="tips:若下拉框中无任何版本，请再次打开下拉框"></TextBlock>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Optfine安装">
+                <Grid Margin="0,0,0,-371">
+                    <TextBlock HorizontalAlignment="Left" Margin="10,73,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF" FontSize="16"><Run Text="Minecraft版本"/><Run Language="zh-cn" Text=": "/></TextBlock>
+                    <Button Content="下载" x:Name="optInstall_start" Silver:ButtonHelper.CornerRadius="5,5,5,5" Silver:ButtonHelper.HoverBrush="{x:Null}" Silver:ButtonHelper.ButtonStyle="Hollow" Silver:ButtonHelper.ClickStyle="Sink" Margin="10,130,0,0" FontSize="18" Background="{x:Null}" Foreground="#FF0096FF" BorderBrush="#FF0096FF" HorizontalAlignment="Left" Width="97" Height="36" VerticalAlignment="Top" Click="optInstall_start_Click"/>
+                    <TextBox x:Name="optDownLoadLog" HorizontalAlignment="Left" Margin="10,186,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="224" Height="142" Foreground="#FF0067FF" Cursor="IBeam"/>
+                    <ProgressBar x:Name="optInstallProgress" HorizontalAlignment="Left" Height="10" Margin="10,171,0,0" VerticalAlignment="Top" Width="224" Foreground="#FF0067FF"/>
+                    <ComboBox x:Name="opt_game_verBox" HorizontalAlignment="Left" Margin="129,72,0,0" VerticalAlignment="Top" Width="156" Foreground="#FF0067FF" FontSize="16" Height="23" DisplayMemberPath="Id" Cursor="IBeam" SelectionChanged="opt_game_verBox_SelectionChanged"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF" FontSize="16" Text="tips:若下拉框中无任何版本，请再次打开下拉框"></TextBlock>
+                    <TextBox x:Name="optInstallName" HorizontalAlignment="Left" Margin="104,46,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="181" Height="21" FontSize="16" Foreground="#FF0067FF"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF" FontSize="16"><Run Text ="自定义名称"/><Run Language="zh-cn" Text=": "/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF" FontSize="16"><Run Text="Optfine版本"/><Run Language="zh-cn" Text=": "/></TextBlock>
+                    <ComboBox x:Name="opt_game_verBox_Copy" HorizontalAlignment="Left" Margin="114,100,0,0" VerticalAlignment="Top" Width="204" Foreground="#FF0067FF" FontSize="14" Height="23" DisplayMemberPath="FileName" Cursor="IBeam" SelectionChanged="opt_game_verBox_Copy_SelectionChanged"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Forge与Optifine安装">
+                <Grid>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Fabric安装">
+                <Grid>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Java安装">
+                <Grid>
+
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+
 
     </Grid>
 </Page>
