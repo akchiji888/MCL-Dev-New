@@ -14,6 +14,7 @@ using System.IO;
 using System.Text;
 using Panuon.UI.Silver;
 using System.Threading;
+using MinecraftLaunch.Modules.Enum;
 
 namespace MCL_Dev
 {
@@ -22,14 +23,11 @@ namespace MCL_Dev
     /// </summary>
     public partial class XiaZai : Page
     {
+        int DoNotNeedToGet = 0;
         private async void GetMcVersionList()
         {
             var v = new GameCoreToolkit(gameFolder);
-            await Task.Run(() =>
-            {
-                installer = new(v, "1.19.2");//其实这个1.19.2改成114514都行
-            });
-            var MCList = await installer.GetGameCoresAsync();
+            var MCList = await GameCoreInstaller.GetGameCoresAsync();
             verBox.ItemsSource = MCList.Cores;
             opt_game_verBox.ItemsSource = MCList.Cores;
         }
@@ -40,9 +38,11 @@ namespace MCL_Dev
         {
             InitializeComponent();
             GetMcVersionList();
-        }
-
-
+            java_verBox.Items.Add(OpenJdkType.OpenJdk8);
+            java_verBox.Items.Add(OpenJdkType.OpenJdk11);
+            java_verBox.Items.Add(OpenJdkType.OpenJdk17);
+            java_verBox.Items.Add(OpenJdkType.OpenJdk18);
+        }       
         private async void start_Click(object sender, RoutedEventArgs e)
         {
             if (verBox.Text != "")
@@ -71,17 +71,15 @@ namespace MCL_Dev
 
         private void opt_game_verBox_Copy_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
         }
 
         private async void optInstall_start_Click(object sender, RoutedEventArgs e)
         {
-            if (opt_game_verBox_Copy.Text != "" && opt_game_verBox.Text != "" && optInstallName.Text != "")
+            if (opt_game_verBox_Copy.Text != "" && opt_game_verBox.Text != "")
             {
                 optInstallProgress.IsIndeterminate = true;
                 string version = opt_game_verBox.Text;
                 string opt_version = opt_game_verBox_Copy.Text;
-                string name = optInstallName.Text;
                 var javaList = JavaToolkit.GetJavas();
                 var v = new GameCoreToolkit(gameFolder);
                 MinecraftLaunch.Modules.Models.Install.OptiFineInstallEntity OPT = opt_game_verBox_Copy.SelectedItem as MinecraftLaunch.Modules.Models.Install.OptiFineInstallEntity;
@@ -95,11 +93,17 @@ namespace MCL_Dev
                 {
                     opt_installer = new OptiFineInstaller(v, OPT, javas[0], name);
                 });
-                await opt_installer.InstallAsync((e) =>
+                await Task.Run(async () =>
+                {
+                    await opt_installer.InstallAsync((e) =>
                     {
-                        optDownLoadLog.AppendText($"[{DateTime.Now}]{e.Item2} 进度:{e.Item1.ToString("P")}\n");
-                        optDownLoadLog.ScrollToEnd();
+                        this.Dispatcher.Invoke(new Action(() =>
+                        {
+                            optDownLoadLog.AppendText($"[{DateTime.Now}]{e.Item2} 进度:{e.Item1.ToString("P")}\n");
+                            optDownLoadLog.ScrollToEnd();
+                        }));
                     });
+                });
 
                 optInstallProgress.IsIndeterminate = false;
                 MessageBoxX.Show("下载完成！", "MCL启动器");
@@ -112,15 +116,37 @@ namespace MCL_Dev
             }
         }
 
-        private async void opt_game_verBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+        private async void opt_game_verBox_DropDownClosed(object sender, EventArgs e)
         {
             if (opt_game_verBox.Text != "")
             {
+                DoNotNeedToGet = 1;
                 string selectedGameV = (opt_game_verBox.SelectedItem as MinecraftLaunch.Modules.Models.Install.GameCoreEmtity).Id;
                 var OptList = await OptiFineInstaller.GetOptiFineBuildsFromMcVersionAsync(selectedGameV);
                 opt_game_verBox_Copy.ItemsSource = OptList;
             }
+        }
 
+        private async void javaInstall_start_Click(object sender, RoutedEventArgs e)
+        {
+            if(java_verBox.Text != "")
+            {
+                var jv = (OpenJdkType)java_verBox.SelectedItem;
+                JavaInstaller java = new(JdkDownloadSource.JdkJavaNet,jv, Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+                await Task.Run(async () =>
+                {
+                    await java.InstallAsync((e) =>
+                    {
+                        this.Dispatcher.Invoke(new Action(() =>
+                        {
+                            javaDownLoadLog.AppendText($"[{DateTime.Now}]{e.Item2} 进度:{e.Item1.ToString("P")}\n");
+                            javaDownLoadLog.ScrollToEnd();
+                        }));
+                    });
+                });
+                MessageBoxX.Show("安装完成！", "MCL启动器");
+            }
         }
     }
 }

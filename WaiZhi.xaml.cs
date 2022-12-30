@@ -31,15 +31,12 @@ namespace MCL_Dev
                     waizhi_email = email.Text;
                     waizhi_password = passwd.Password;
                     MinecaftOAuth.YggdrasilAuthenticator auth = new(true, waizhi_email, waizhi_password);
-                    IList<YggdrasilAccount>? result = new List<YggdrasilAccount>();
-                    await Task.Run(() =>
+                    IEnumerable<YggdrasilAccount>? result = new List<YggdrasilAccount>();
+                    await Task.Run(async () =>
                     {
-                        result = auth.AuthAsync(x => { }).ToList();                        
+                        result = await auth.AuthAsync(x => { });
                         int a = result.Count();
-                        for (int i = 0; i < a; i++)
-                        {
-                            players.Items.Add(result[i]);
-                        }
+                        players.ItemsSource = result;
                         MessageBoxX.Show("已完成登录", "MCL启动器");
                     });
                 }

@@ -64,7 +64,7 @@ namespace MCL_Dev {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/MCL-Dev;V1.0.0.0;component/lixian.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/MCL-Dev;component/lixian.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\Lixian.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

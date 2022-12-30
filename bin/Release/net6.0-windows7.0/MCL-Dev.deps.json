@@ -8,8 +8,8 @@
     ".NETCoreApp,Version=v6.0": {
       "MCL-Dev/1.0.0": {
         "dependencies": {
-          "MinecraftLaunch": "1.3.0",
-          "MinecraftOAuth": "1.2.0",
+          "MinecraftLaunch": "1.6.0",
+          "MinecraftOAuth": "1.7.0",
           "Panuon.UI.Silver": "1.1.3.4",
           "System.Management": "7.0.0"
         },
@@ -23,26 +23,26 @@
           "Microsoft.NETCore.Platforms": "5.0.0"
         }
       },
-      "MinecraftLaunch/1.3.0": {
+      "MinecraftLaunch/1.6.0": {
         "dependencies": {
           "Natsurainko.Toolkits": "1.0.2",
           "Newtonsoft.Json": "13.0.2"
         },
         "runtime": {
           "lib/net6.0/MinecraftLaunch.dll": {
-            "assemblyVersion": "1.3.0.0",
-            "fileVersion": "1.3.0.0"
+            "assemblyVersion": "1.6.0.0",
+            "fileVersion": "1.6.0.0"
           }
         }
       },
-      "MinecraftOAuth/1.2.0": {
+      "MinecraftOAuth/1.7.0": {
         "dependencies": {
-          "MinecraftLaunch": "1.3.0"
+          "MinecraftLaunch": "1.6.0"
         },
         "runtime": {
           "lib/net6.0/MinecaftOAuth.dll": {
-            "assemblyVersion": "1.2.0.0",
-            "fileVersion": "1.2.0.0"
+            "assemblyVersion": "1.7.0.0",
+            "fileVersion": "1.7.0.0"
           }
         }
       },
@@ -132,19 +132,19 @@
       "path": "microsoft.win32.systemevents/5.0.0",
       "hashPath": "microsoft.win32.systemevents.5.0.0.nupkg.sha512"
     },
-    "MinecraftLaunch/1.3.0": {
+    "MinecraftLaunch/1.6.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-BleX5k3rQyLWlCnvQx5B7EWIy7kT6/7mEmJUKRNGE/au4xrFB/xc/pDX7LjGAAsbHdvm4XtHXilfRay0vwKj8g==",
-      "path": "minecraftlaunch/1.3.0",
-      "hashPath": "minecraftlaunch.1.3.0.nupkg.sha512"
+      "sha512": "sha512-rU540bukyO3OBeuQb1qxB0hHLKIQUNtomCpISHm0EcTqwr9vAAba8y/qjn0CrTAj01lfV/uLseBpUHKHMA0eug==",
+      "path": "minecraftlaunch/1.6.0",
+      "hashPath": "minecraftlaunch.1.6.0.nupkg.sha512"
     },
-    "MinecraftOAuth/1.2.0": {
+    "MinecraftOAuth/1.7.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-hYa+gjN1mrIvnG+titmI7q7GuLllf2eFYAx+ZYXY9kPSiHirOzhmE38ziJFXNY3aMCWu2vRtGTf4uGaO9l8Cxg==",
-      "path": "minecraftoauth/1.2.0",
-      "hashPath": "minecraftoauth.1.2.0.nupkg.sha512"
+      "sha512": "sha512-X5lMvJnTsMRdIfAwOyLEXWweBwTyJA32lJRQvleRYDSkWl7kUpsqThMHcaHBwP0FA0HxWu9hxirGVpfea+yOxQ==",
+      "path": "minecraftoauth/1.7.0",
+      "hashPath": "minecraftoauth.1.7.0.nupkg.sha512"
     },
     "Natsurainko.Toolkits/1.0.2": {
       "type": "package",

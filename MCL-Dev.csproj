@@ -9,11 +9,17 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ApplicationManifest>app.manifest</ApplicationManifest>
 	 <AllowedReferenceRelatedFileExtensions>.allowedextension</AllowedReferenceRelatedFileExtensions>
+	 <ApplicationIcon>Resources\logo (1).ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="App.config" />
-    <None Remove="logo %281%29.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\logo (1).ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
@@ -21,18 +27,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MinecraftLaunch" Version="1.5.0" />
-    <PackageReference Include="MinecraftOAuth" Version="1.4.0" />
+    <PackageReference Include="MinecraftLaunch" Version="1.6.0" />
+    <PackageReference Include="MinecraftOAuth" Version="1.7.0" />
     <PackageReference Include="Panuon.UI.Silver" Version="1.1.3.4" />
     <PackageReference Include="System.Management" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Properties\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="logo (1).ico" />
   </ItemGroup>
 
 </Project>

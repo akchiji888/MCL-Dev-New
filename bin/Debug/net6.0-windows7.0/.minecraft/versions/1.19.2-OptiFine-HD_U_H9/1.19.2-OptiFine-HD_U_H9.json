@@ -1,0 +1,22 @@
+{
+  "arguments": {
+    "game": [
+      "--tweakClass",
+      "optifine.OptiFineTweaker"
+    ]
+  },
+  "id": "1.19.2-OptiFine-HD_U_H9",
+  "libraries": [
+    {
+      "name": "optifine:Optifine:1.19.2_HD_U_H9"
+    },
+    {
+      "name": "optifine:launchwrapper-of:2.3"
+    }
+  ],
+  "mainClass": "net.minecraft.launchwrapper.Launch",
+  "inheritsFrom": "1.19.2",
+  "releaseTime": "2022-12-30T19:17:21.6446433+08:00",
+  "time": "2022-12-30T19:17:21.6444861+08:00",
+  "type": "release"
+}
