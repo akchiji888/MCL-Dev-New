@@ -9,6 +9,7 @@ using MinecraftLaunch.Modules.Models.Auth;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
+using System.Diagnostics;
 
 namespace MCL_Dev
 {
@@ -25,20 +26,18 @@ namespace MCL_Dev
         private async void start_Click(object sender, RoutedEventArgs e)
         {
             if (email.Text != "" && passwd.Password != "")
-            {
+            {                
                 try
                 {
                     waizhi_email = email.Text;
                     waizhi_password = passwd.Password;
-                    MinecaftOAuth.YggdrasilAuthenticator auth = new(true, waizhi_email, waizhi_password);
-                    IEnumerable<YggdrasilAccount>? result = new List<YggdrasilAccount>();
-                    await Task.Run(async () =>
+                    MCL_Dev.LauncherClasses.YggdrasilAuthenticator ya = new(true,waizhi_email,waizhi_password);
+                    var res = await ya.AuthAsync( x =>
                     {
-                        result = await auth.AuthAsync(x => { });
-                        int a = result.Count();
-                        players.ItemsSource = result;
-                        MessageBoxX.Show("已完成登录", "MCL启动器");
+                        Debug.WriteLine(x);
                     });
+                    players.ItemsSource = res;
+                    MessageBoxX.Show("已完成登录", "MCL启动器");
                 }
                 catch
                 {
@@ -90,6 +89,7 @@ namespace MCL_Dev
         {
             waizhi_selectedplayer = players.SelectedIndex;
             waizhi_selectedUsr = players.Text;
+            yggdrasilAccount = players.SelectedItem as YggdrasilAccount;
         }
     }
 }

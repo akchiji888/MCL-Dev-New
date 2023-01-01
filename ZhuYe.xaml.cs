@@ -13,6 +13,7 @@ using System.IO;
 using MinecaftOAuth.Module.Enum;
 using MinecraftLaunch.Modules.Installer;
 using System.Diagnostics;
+using MinecraftLaunch.Modules.Enum;
 
 namespace MCL_Dev
 {
@@ -73,6 +74,7 @@ namespace MCL_Dev
                                     MaxMemory = Convert.ToInt32(maxMem.Text),
                                 },
                                 NativesFolder = null,//一般可以无视这个选项
+                                LauncherName = "ModernCraftLauncher"
                             };
                             JavaClientLauncher clientLauncher = new(lc, new(gameFolder));
                             launchLog.Text = "";
@@ -81,6 +83,17 @@ namespace MCL_Dev
                                 launchLog.AppendText($"[{DateTime.Now}]{x.Item2} 进度:{x.Item1.ToString("P")}\n");
                                 launchLog.ScrollToEnd();
                             });
+                            if (res.State is LaunchState.Succeess)
+                            {
+                                //启动成功的情况下会执行的代码块
+                                launchLog.AppendText("启动成功");
+                            }
+                            else
+                            {
+                                //启动失败的情况下会执行的代码块
+                                launchLog.AppendText("启动失败");
+                                launchLog.AppendText("详细异常信息：" + res.Exception);
+                            }
                         }
                         else
                         {
@@ -104,6 +117,7 @@ namespace MCL_Dev
                                         MaxMemory = Convert.ToInt32(maxMem.Text),
                                     },
                                     NativesFolder = null,//一般可以无视这个选项
+                                    LauncherName = "ModernCraftLauncher"
                                 };
                                 JavaClientLauncher clientLauncher = new(lc,gToolkit);
                                 launchLog.Text = "";
@@ -112,6 +126,17 @@ namespace MCL_Dev
                                     launchLog.AppendText($"[{DateTime.Now}]{x.Item2} 进度:{x.Item1.ToString("P")}\n");
                                     launchLog.ScrollToEnd();
                                 });
+                                if (res.State is LaunchState.Succeess)
+                                {
+                                    //启动成功的情况下会执行的代码块
+                                    launchLog.AppendText("启动成功");
+                                }
+                                else
+                                {
+                                    //启动失败的情况下会执行的代码块
+                                    launchLog.AppendText("启动失败");
+                                    launchLog.AppendText("详细异常信息：" + res.Exception);
+                                }
                             }
                             else
                             {
@@ -133,7 +158,23 @@ namespace MCL_Dev
                     var core = new GameCoreToolkit(gameFolder);
                     if (javaCombo.SelectedIndex != 0)
                     {
-                        JavaClientLauncher javaClientLauncher = new(new(microsoftaccount, new(javaCombo.Text)), core);
+                        var lc = new LaunchConfig()
+                        {
+                            Account = microsoftaccount,
+                            GameWindowConfig = new GameWindowConfig()
+                            {
+                                Width = 854,
+                                Height = 480,
+                                IsFullscreen = false
+                            },
+                            JvmConfig = new JvmConfig(javaCombo.Text)
+                            {
+                                MaxMemory = Convert.ToInt32(maxMem.Text),
+                            },
+                            NativesFolder = null,//一般可以无视这个选项
+                            LauncherName = "ModernCraftLauncher"
+                        };
+                        JavaClientLauncher javaClientLauncher = new(lc, core);
                         using var res = await javaClientLauncher.LaunchTaskAsync(versionCombo.Text, x =>
                         {
                             launchLog.AppendText($"[{DateTime.Now}]{x.Item2} 进度:{x.Item1.ToString("P")}\n");
@@ -151,12 +192,39 @@ namespace MCL_Dev
                         }
                         else
                         {
-                            JavaClientLauncher javaClientLauncher = new(new(microsoftaccount, new(java)), core);
+                            var lc = new LaunchConfig()
+                            {
+                                Account = microsoftaccount,
+                                GameWindowConfig = new GameWindowConfig()
+                                {
+                                    Width = 854,
+                                    Height = 480,
+                                    IsFullscreen = false
+                                },
+                                JvmConfig = new JvmConfig(java)
+                                {
+                                    MaxMemory = Convert.ToInt32(maxMem.Text),
+                                },
+                                NativesFolder = null,//一般可以无视这个选项
+                                LauncherName = "ModernCraftLauncher"
+                            };
+                            JavaClientLauncher javaClientLauncher = new(lc, core);
                             using var res = await javaClientLauncher.LaunchTaskAsync(versionCombo.Text, x =>
                             {
                                 launchLog.AppendText($"[{DateTime.Now}]{x.Item2} 进度:{x.Item1.ToString("P")}\n");
                                 launchLog.ScrollToEnd();
                             });
+                            if (res.State is LaunchState.Succeess)
+                            {
+                                //启动成功的情况下会执行的代码块
+                                launchLog.AppendText("启动成功");
+                            }
+                            else
+                            {
+                                //启动失败的情况下会执行的代码块
+                                launchLog.AppendText("启动失败");
+                                launchLog.AppendText("详细异常信息：" + res.Exception);
+                            }
                         }
 
                     }
@@ -170,22 +238,13 @@ namespace MCL_Dev
                         // string[] Waizhi_accessToken = File.ReadAllLines($"{System.AppDomain.CurrentDomain.BaseDirectory}MCL\\waizhi\\WaiZhi_Access_{waizhi_selectedplayer}.txt");
                         // string[] Waizhi_clientToken = File.ReadAllLines($"{System.AppDomain.CurrentDomain.BaseDirectory}MCL\\waizhi\\WaiZhi_Client_{waizhi_selectedplayer}.txt");
                         progressBar.IsIndeterminate = true;
-                        MinecaftOAuth.YggdrasilAuthenticator waizhiAuth = new(true, waizhi_email, waizhi_password);
                         // waizhiAuth.AccessToken = Waizhi_accessToken.ToString();
                         // waizhiAuth.ClientToken = Waizhi_clientToken.ToString();
-                        var result = await waizhiAuth.AuthAsync(x => { });
-                        var core = new GameCoreToolkit(gameFolder);
                         if (javaCombo.SelectedIndex != 0)
-                        {
-                            WaiZhi waizhi = new();
-                            YggdrasilAccount account = new();
-                            waizhi.Dispatcher.Invoke(new Action(() =>
-                            {
-                                account = waizhi.players.SelectedItem as YggdrasilAccount;
-                            }));
+                        {                            
                             var launchConfig = new LaunchConfig()
                             {
-                                Account = account,
+                                Account = yggdrasilAccount,
                                 GameWindowConfig = new GameWindowConfig()
                                 {
                                     Width = 854,
@@ -197,6 +256,7 @@ namespace MCL_Dev
                                     MaxMemory = Convert.ToInt32(maxMem.Text),
                                 },
                                 NativesFolder = null,//一般可以无视这个选项
+                                LauncherName = "ModernCraftLauncher"
                             };
                             JavaClientLauncher javaClientLauncher = new(launchConfig,new(gameFolder));
                             using var res =await javaClientLauncher.LaunchTaskAsync(versionCombo.Text, x =>
@@ -204,21 +264,27 @@ namespace MCL_Dev
                                 launchLog.AppendText($"[{DateTime.Now}]{x.Item2} 进度:{x.Item1.ToString("P")}\n");
                                 launchLog.ScrollToEnd();
                             });
+                            if (res.State is LaunchState.Succeess)
+                            {
+                                //启动成功的情况下会执行的代码块
+                                launchLog.AppendText("启动成功");
+                            }
+                            else
+                            {
+                                //启动失败的情况下会执行的代码块
+                                launchLog.AppendText("启动失败");
+                                launchLog.AppendText("详细异常信息：" + res.Exception);
+                            }
                         }
                         else
                         {
                             WaiZhi waizhi = new();
-                            YggdrasilAccount account = new();
-                            waizhi.Dispatcher.Invoke(new Action(() =>
-                            {
-                                account = waizhi.players.SelectedItem as YggdrasilAccount;
-                            }));
                             var javaList = JavaToolkit.GetJavas();
                             var gameCore = GameCoreToolkit.GetGameCore(gameFolder, versionCombo.Text);
                             var java = JavaToolkit.GetCorrectOfGameJava(javaList, gameCore).JavaPath;
                             var launchConfig = new LaunchConfig()
                             {
-                                Account = account,
+                                Account = yggdrasilAccount,
                                 GameWindowConfig = new GameWindowConfig()
                                 {
                                     Width = 854,
@@ -230,6 +296,7 @@ namespace MCL_Dev
                                     MaxMemory = Convert.ToInt32(maxMem.Text),
                                 },
                                 NativesFolder = null,//一般可以无视这个选项
+                                LauncherName = "ModernCraftLauncher"
                             };
                             JavaClientLauncher javaClientLauncher = new(launchConfig,new(gameFolder));
                             using var res = await javaClientLauncher.LaunchTaskAsync(versionCombo.Text, x =>
@@ -237,6 +304,17 @@ namespace MCL_Dev
                                 launchLog.AppendText($"[{DateTime.Now}]{x.Item2} 进度:{x.Item1.ToString("P")}\n");
                                 launchLog.ScrollToEnd();
                             });
+                            if (res.State is LaunchState.Succeess)
+                            {
+                                //启动成功的情况下会执行的代码块
+                                launchLog.AppendText("启动成功");
+                            }
+                            else
+                            {
+                                //启动失败的情况下会执行的代码块
+                                launchLog.AppendText("启动失败");
+                                launchLog.AppendText("详细异常信息：" + res.Exception);
+                            }
                             progressBar.IsIndeterminate = false;
                         }
                     }

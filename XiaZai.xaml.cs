@@ -15,6 +15,8 @@ using System.Text;
 using Panuon.UI.Silver;
 using System.Threading;
 using MinecraftLaunch.Modules.Enum;
+using System.Diagnostics;
+using MinecraftLaunch.Modules.Models.Install;
 
 namespace MCL_Dev
 {
@@ -23,13 +25,13 @@ namespace MCL_Dev
     /// </summary>
     public partial class XiaZai : Page
     {
-        int DoNotNeedToGet = 0;
         private async void GetMcVersionList()
         {
             var v = new GameCoreToolkit(gameFolder);
             var MCList = await GameCoreInstaller.GetGameCoresAsync();
             verBox.ItemsSource = MCList.Cores;
             opt_game_verBox.ItemsSource = MCList.Cores;
+            fabric_game_verBox.ItemsSource = MCList.Cores;
         }
         public GameCoreInstaller installer;
 #pragma warning disable CS8618 // 在退出构造函数时，不可为 null 的字段必须包含非 null 值。请考虑声明为可以为 null。
@@ -42,7 +44,7 @@ namespace MCL_Dev
             java_verBox.Items.Add(OpenJdkType.OpenJdk11);
             java_verBox.Items.Add(OpenJdkType.OpenJdk17);
             java_verBox.Items.Add(OpenJdkType.OpenJdk18);
-        }       
+        }
         private async void start_Click(object sender, RoutedEventArgs e)
         {
             if (verBox.Text != "")
@@ -88,13 +90,9 @@ namespace MCL_Dev
                 {
                     javas.Add(a.JavaPath);
                 }
-                MinecraftLaunch.Modules.Installer.OptiFineInstaller opt_installer = new();
-                await Task.Run(() =>
+                await Task.Run(async() =>
                 {
-                    opt_installer = new OptiFineInstaller(v, OPT, javas[0], name);
-                });
-                await Task.Run(async () =>
-                {
+                    var opt_installer = new OptiFineInstaller(v, OPT, javas[0], name);
                     await opt_installer.InstallAsync((e) =>
                     {
                         this.Dispatcher.Invoke(new Action(() =>
@@ -104,6 +102,7 @@ namespace MCL_Dev
                         }));
                     });
                 });
+                
 
                 optInstallProgress.IsIndeterminate = false;
                 MessageBoxX.Show("下载完成！", "MCL启动器");
@@ -112,7 +111,7 @@ namespace MCL_Dev
             else
             {
                 MessageBoxX.Show("尚有信息未输入！", "MCL启动器");
-                progress.IsIndeterminate = false;
+                optInstallProgress.IsIndeterminate = false;
             }
         }
 
@@ -121,7 +120,6 @@ namespace MCL_Dev
         {
             if (opt_game_verBox.Text != "")
             {
-                DoNotNeedToGet = 1;
                 string selectedGameV = (opt_game_verBox.SelectedItem as MinecraftLaunch.Modules.Models.Install.GameCoreEmtity).Id;
                 var OptList = await OptiFineInstaller.GetOptiFineBuildsFromMcVersionAsync(selectedGameV);
                 opt_game_verBox_Copy.ItemsSource = OptList;
@@ -130,13 +128,14 @@ namespace MCL_Dev
 
         private async void javaInstall_start_Click(object sender, RoutedEventArgs e)
         {
-            if(java_verBox.Text != "")
+            if (java_verBox.Text != "")
             {
+                javaInstallProgress.IsIndeterminate = true;
                 var jv = (OpenJdkType)java_verBox.SelectedItem;
-                JavaInstaller java = new(JdkDownloadSource.JdkJavaNet,jv, Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+                JavaInstaller java = new(JdkDownloadSource.JdkJavaNet, jv, Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
                 await Task.Run(async () =>
                 {
-                    await java.InstallAsync((e) =>
+                    var res = await java.InstallAsync((e) =>
                     {
                         this.Dispatcher.Invoke(new Action(() =>
                         {
@@ -147,6 +146,42 @@ namespace MCL_Dev
                 });
                 MessageBoxX.Show("安装完成！", "MCL启动器");
             }
+        }
+
+        private async void fabricInstall_start_Click(object sender, RoutedEventArgs e)
+        {
+            fabricInstallProgress.IsIndeterminate = true;
+            if (fabric_game_verBox.Text != "" && fabric_game_verBox_Copy.Text != "")
+            {
+                var FabricBuild = fabric_game_verBox_Copy.SelectedItem as FabricInstallBuild;
+                var v = new GameCoreToolkit(gameFolder);
+                var fi = new FabricInstaller(v,FabricBuild);
+                await Task.Run(async() =>
+                {
+                    await fi.InstallAsync((e) =>
+                    {
+                        this.Dispatcher.Invoke(new Action(() =>
+                        {
+                            fabricDownLoadLog.AppendText($"[{DateTime.Now}]{e.Item2} 进度:{e.Item1.ToString("P")}\n");
+                            fabricDownLoadLog.ScrollToEnd();
+                        }));
+                    });
+                });
+                fabricInstallProgress.IsIndeterminate = false;
+                MessageBoxX.Show("下载完成！", "MCL启动器");
+            }
+            else
+            {
+                MessageBoxX.Show("尚有信息未输入！", "MCL启动器");
+                fabricInstallProgress.IsIndeterminate = false;
+            }
+        }
+
+        private async void fabric_game_verBox_DropDownClosed_1(object sender, EventArgs e)
+        {
+            string selectedGameV = (fabric_game_verBox.SelectedItem as MinecraftLaunch.Modules.Models.Install.GameCoreEmtity).Id;
+            var FabricList = await FabricInstaller.GetFabricBuildsByVersionAsync(selectedGameV);
+            fabric_game_verBox_Copy.ItemsSource = FabricList;
         }
     }
 }
