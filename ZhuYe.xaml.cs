@@ -74,9 +74,11 @@ namespace MCL_Dev
                                     MaxMemory = Convert.ToInt32(maxMem.Text),
                                 },
                                 NativesFolder = null,//一般可以无视这个选项
-                                LauncherName = "ModernCraftLauncher"
+                                WorkingFolder = new("q"),
+                                LauncherName = "ModernCraftLauncher",
+                                
                             };
-                            JavaClientLauncher clientLauncher = new(lc, new(gameFolder));
+                            JavaClientLauncher clientLauncher = new(lc, new(gameFolder),true);
                             launchLog.Text = "";
                             using var res = await clientLauncher.LaunchTaskAsync(versionCombo.Text, x =>
                             {
@@ -91,7 +93,7 @@ namespace MCL_Dev
                             else
                             {
                                 //启动失败的情况下会执行的代码块
-                                launchLog.AppendText("启动失败");
+                                launchLog.AppendText("启动失败\n");
                                 launchLog.AppendText("详细异常信息：" + res.Exception);
                             }
                         }
@@ -101,11 +103,12 @@ namespace MCL_Dev
                             var gCore = GameCoreToolkit.GetGameCore(gameFolder, versionCombo.Text);
                             var gToolkit = new GameCoreToolkit(gameFolder);
                             var java = JavaToolkit.GetCorrectOfGameJava(javaList, gCore);
+                            OfflineAuthenticator offline = new(offlineName);
                             if (java != null)
                             {
                                 var lc = new LaunchConfig()
                                 {
-                                    Account = new OfflineAccount(offlineName, Guid.NewGuid().ToString(), Guid.NewGuid().ToString()),
+                                    Account = offline.Auth(),
                                     GameWindowConfig = new GameWindowConfig()
                                     {
                                         Width = 854,
@@ -116,6 +119,7 @@ namespace MCL_Dev
                                     {
                                         MaxMemory = Convert.ToInt32(maxMem.Text),
                                     },
+                                    WorkingFolder = new("q"),
                                     NativesFolder = null,//一般可以无视这个选项
                                     LauncherName = "ModernCraftLauncher"
                                 };
@@ -171,6 +175,7 @@ namespace MCL_Dev
                             {
                                 MaxMemory = Convert.ToInt32(maxMem.Text),
                             },
+                            WorkingFolder = new("q"),
                             NativesFolder = null,//一般可以无视这个选项
                             LauncherName = "ModernCraftLauncher"
                         };
@@ -205,6 +210,7 @@ namespace MCL_Dev
                                 {
                                     MaxMemory = Convert.ToInt32(maxMem.Text),
                                 },
+                                WorkingFolder = new("q"),
                                 NativesFolder = null,//一般可以无视这个选项
                                 LauncherName = "ModernCraftLauncher"
                             };
@@ -255,6 +261,7 @@ namespace MCL_Dev
                                 {
                                     MaxMemory = Convert.ToInt32(maxMem.Text),
                                 },
+                                WorkingFolder = new("q"),
                                 NativesFolder = null,//一般可以无视这个选项
                                 LauncherName = "ModernCraftLauncher"
                             };
@@ -295,6 +302,7 @@ namespace MCL_Dev
                                 {
                                     MaxMemory = Convert.ToInt32(maxMem.Text),
                                 },
+                                WorkingFolder = new("q"),
                                 NativesFolder = null,//一般可以无视这个选项
                                 LauncherName = "ModernCraftLauncher"
                             };
