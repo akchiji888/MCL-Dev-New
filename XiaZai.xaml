@@ -33,13 +33,20 @@
                     <ProgressBar x:Name="optInstallProgress" HorizontalAlignment="Left" Height="10" Margin="10,144,0,0" VerticalAlignment="Top" Width="224" Foreground="#FF0067FF"/>
                     <ComboBox x:Name="opt_game_verBox" HorizontalAlignment="Left" Margin="129,45,0,0" VerticalAlignment="Top" Width="156" Foreground="#FF0067FF" FontSize="16" Height="23" DisplayMemberPath="Id" Cursor="IBeam" DropDownClosed="opt_game_verBox_DropDownClosed"/>
                     <TextBlock HorizontalAlignment="Left" Margin="10,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF" FontSize="16" Text="tips:若下拉框中无任何版本，请再次打开下拉框"></TextBlock>
-                    <TextBlock HorizontalAlignment="Left" Margin="10,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF" FontSize="16"><Run Text="Optfine版本"/><Run Language="zh-cn" Text=": "/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF" FontSize="16"><Run Text="Optfine版本"/><Run Language="zh-cn" Text=": "/></TextBlock>
                     <ComboBox x:Name="opt_game_verBox_Copy" HorizontalAlignment="Left" Margin="114,73,0,0" VerticalAlignment="Top" Width="204" Foreground="#FF0067FF" FontSize="14" Height="23" DisplayMemberPath="FileName" Cursor="IBeam" SelectionChanged="opt_game_verBox_Copy_SelectionChanged"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Forge与Optifine安装">
-                <Grid>
-
+            <TabItem Header="Forge安装">
+                <Grid Margin="0,0,0,-371">
+                    <TextBlock HorizontalAlignment="Left" Margin="10,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF" FontSize="16"><Run Text="Minecraft版本"/><Run Language="zh-cn" Text=": "/></TextBlock>
+                    <Button Content="下载" x:Name="ForgeInstall_start" Silver:ButtonHelper.CornerRadius="5,5,5,5" Silver:ButtonHelper.HoverBrush="{x:Null}" Silver:ButtonHelper.ButtonStyle="Hollow" Silver:ButtonHelper.ClickStyle="Sink" Margin="10,96,0,0" FontSize="18" Background="{x:Null}" Foreground="#FF0096FF" BorderBrush="#FF0096FF" HorizontalAlignment="Left" Width="97" Height="36" VerticalAlignment="Top" Click="ForgeInstall_start_Click"/>
+                    <TextBox x:Name="ForgeDownLoadLog" HorizontalAlignment="Left" Margin="10,152,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="224" Height="176" Foreground="#FF0067FF" Cursor="IBeam"/>
+                    <ProgressBar x:Name="ForgeInstallProgress" HorizontalAlignment="Left" Height="10" Margin="10,137,0,0" VerticalAlignment="Top" Width="224" Foreground="#FF0067FF"/>
+                    <ComboBox x:Name="Forge_game_verBox" HorizontalAlignment="Left" Margin="129,45,0,0" VerticalAlignment="Top" Width="156" Foreground="#FF0067FF" FontSize="16" Height="23" DisplayMemberPath="Id" Cursor="IBeam" DropDownClosed="Forge_game_verBox_DropDownClosed"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF" FontSize="16" Text="tips:若下拉框中无任何版本，请再次打开下拉框"></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF" FontSize="16"><Run Text="Forge版本"/><Run Language="zh-cn" Text=": "/></TextBlock>
+                    <ComboBox x:Name="Forge_game_verBox_Copy" HorizontalAlignment="Left" Margin="114,71,0,0" VerticalAlignment="Top" Width="204" Foreground="#FF0067FF" FontSize="14" Height="23" DisplayMemberPath="ForgeVersion" Cursor="IBeam"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Fabric安装">
@@ -48,10 +55,10 @@
                     <Button Content="下载" x:Name="fabricInstall_start" Silver:ButtonHelper.CornerRadius="5,5,5,5" Silver:ButtonHelper.HoverBrush="{x:Null}" Silver:ButtonHelper.ButtonStyle="Hollow" Silver:ButtonHelper.ClickStyle="Sink" Margin="10,103,0,0" FontSize="18" Background="{x:Null}" Foreground="#FF0096FF" BorderBrush="#FF0096FF" HorizontalAlignment="Left" Width="97" Height="36" VerticalAlignment="Top" Click="fabricInstall_start_Click"/>
                     <TextBox x:Name="fabricDownLoadLog" HorizontalAlignment="Left" Margin="10,159,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="224" Height="169" Foreground="#FF0067FF" Cursor="IBeam"/>
                     <ProgressBar x:Name="fabricInstallProgress" HorizontalAlignment="Left" Height="10" Margin="10,144,0,0" VerticalAlignment="Top" Width="224" Foreground="#FF0067FF"/>
-                    <ComboBox x:Name="fabric_game_verBox" HorizontalAlignment="Left" Margin="129,45,0,0" VerticalAlignment="Top" Width="156" Foreground="#FF0067FF" FontSize="16" Height="23" DisplayMemberPath="Id" Cursor="IBeam" DropDownClosed="fabric_game_verBox_DropDownClosed_1"/>
+                    <ComboBox x:Name="fabric_game_verBox" HorizontalAlignment="Left" Margin="129,45,0,0" VerticalAlignment="Top" Width="156" Foreground="#FF0067FF" FontSize="16" Height="23" DisplayMemberPath="Id" Cursor="IBeam" DropDownClosed="fabric_game_verBox_DropDownClosed"/>
                     <TextBlock HorizontalAlignment="Left" Margin="10,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF" FontSize="16" Text="tips:若下拉框中无任何版本，请再次打开下拉框"></TextBlock>
                     <TextBlock HorizontalAlignment="Left" Margin="10,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF" FontSize="16"><Run Text="Fabric版本"/><Run Language="zh-cn" Text=": "/></TextBlock>
-                    <ComboBox x:Name="fabric_game_verBox_Copy" HorizontalAlignment="Left" Margin="102,71,0,0" VerticalAlignment="Top" Width="244" Foreground="#FF0067FF" FontSize="14" Height="23" DisplayMemberPath="Loader.Maven" Cursor="IBeam"/>
+                    <ComboBox x:Name="fabric_game_verBox_Copy" HorizontalAlignment="Left" Margin="102,71,0,0" VerticalAlignment="Top" Width="244" Foreground="#FF0067FF" FontSize="14" Height="23" DisplayMemberPath="Loader.Maven" Cursor="IBeam" DropDownOpened="fabric_game_verBox_Copy_DropDownOpened"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Java安装">

@@ -15,8 +15,7 @@ namespace MCL_Dev
             InitializeComponent();
 
             ZhuYe zhuye = new ZhuYe();
-            
-            
+
             page.Content = new Frame()
             {
                 Content = zhuye

@@ -32,11 +32,11 @@ namespace MCL_Dev
             verBox.ItemsSource = MCList.Cores;
             opt_game_verBox.ItemsSource = MCList.Cores;
             fabric_game_verBox.ItemsSource = MCList.Cores;
+            Forge_game_verBox.ItemsSource = MCList.Cores;
+
         }
         public GameCoreInstaller installer;
-#pragma warning disable CS8618 // 在退出构造函数时，不可为 null 的字段必须包含非 null 值。请考虑声明为可以为 null。
         public XiaZai()
-#pragma warning restore CS8618 // 在退出构造函数时，不可为 null 的字段必须包含非 null 值。请考虑声明为可以为 null。
         {
             InitializeComponent();
             GetMcVersionList();
@@ -177,11 +177,69 @@ namespace MCL_Dev
             }
         }
 
-        private async void fabric_game_verBox_DropDownClosed_1(object sender, EventArgs e)
+        private async void fabric_game_verBox_DropDownClosed(object sender, EventArgs e)
         {
             string selectedGameV = (fabric_game_verBox.SelectedItem as MinecraftLaunch.Modules.Models.Install.GameCoreEmtity).Id;
             var FabricList = await FabricInstaller.GetFabricBuildsByVersionAsync(selectedGameV);
             fabric_game_verBox_Copy.ItemsSource = FabricList;
+        }
+        private async void Forge_game_verBox_DropDownClosed(object sender, EventArgs e)
+        {
+            if(Forge_game_verBox.Text != "")
+            {
+                string selectedGameV = (Forge_game_verBox.SelectedItem as MinecraftLaunch.Modules.Models.Install.GameCoreEmtity).Id;
+                var ForgeList = await ForgeInstaller.GetForgeBuildsOfVersionAsync(selectedGameV);
+                Forge_game_verBox_Copy.ItemsSource = ForgeList;
+            }
+            
+        }
+
+        private async void ForgeInstall_start_Click(object sender, RoutedEventArgs e)
+        {
+            if (Forge_game_verBox_Copy.Text != "" && Forge_game_verBox.Text != "")
+            {
+                ForgeInstallProgress.IsIndeterminate = true;
+                string version = Forge_game_verBox.Text;
+                string Forge_version = Forge_game_verBox_Copy.Text;
+                var javaList = JavaToolkit.GetJavas();
+                var v = new GameCoreToolkit(gameFolder);
+                MinecraftLaunch.Modules.Models.Install.ForgeInstallEntity Forge = Forge_game_verBox_Copy.SelectedItem as MinecraftLaunch.Modules.Models.Install.ForgeInstallEntity;
+                List<string> javas = new List<string>();
+                foreach (var a in javaList)
+                {
+                    javas.Add(a.JavaPath);
+                }
+                await Task.Run(async () =>
+                {
+                    var Forge_installer = new ForgeInstaller(v, Forge, javas[0], name);
+                    await Forge_installer.InstallAsync((e) =>
+                    {
+                        this.Dispatcher.Invoke(new Action(() =>
+                        {
+                            ForgeDownLoadLog.AppendText($"[{DateTime.Now}]{e.Item2} 进度:{e.Item1.ToString("P")}\n");
+                            ForgeDownLoadLog.ScrollToEnd();
+                        }));
+                    });
+                });
+
+
+                ForgeInstallProgress.IsIndeterminate = false;
+                MessageBoxX.Show("下载完成！", "MCL启动器");
+                //
+            }
+            else
+            {
+                MessageBoxX.Show("尚有信息未输入！", "MCL启动器");
+                ForgeInstallProgress.IsIndeterminate = false;
+            }
+        }
+
+        private async void fabric_game_verBox_Copy_DropDownOpened(object sender, EventArgs e)
+        {
+            if(fabric_game_verBox.Text != "" && fabric_game_verBox_Copy.Text == "")
+            {
+                fabric_game_verBox_Copy.ItemsSource = await FabricInstaller.GetFabricBuildsByVersionAsync(fabric_game_verBox.Text);
+            }
         }
     }
 }

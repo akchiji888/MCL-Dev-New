@@ -48,6 +48,7 @@ namespace MCL_Dev
         /// <summary>
         /// 
         /// </summary>
+        
         private async void startGame()
         {
             if (maxMem.Text != "" && mode != 114514 && versionCombo.Text != "")
@@ -123,7 +124,7 @@ namespace MCL_Dev
                                     NativesFolder = null,//一般可以无视这个选项
                                     LauncherName = "ModernCraftLauncher"
                                 };
-                                JavaClientLauncher clientLauncher = new(lc,gToolkit);
+                                JavaClientLauncher clientLauncher = new(lc,gToolkit,true);
                                 launchLog.Text = "";
                                 using var res = await clientLauncher.LaunchTaskAsync(versionCombo.Text,x =>
                                 {
@@ -179,7 +180,7 @@ namespace MCL_Dev
                             NativesFolder = null,//一般可以无视这个选项
                             LauncherName = "ModernCraftLauncher"
                         };
-                        JavaClientLauncher javaClientLauncher = new(lc, core);
+                        JavaClientLauncher javaClientLauncher = new(lc, core,true);
                         using var res = await javaClientLauncher.LaunchTaskAsync(versionCombo.Text, x =>
                         {
                             launchLog.AppendText($"[{DateTime.Now}]{x.Item2} 进度:{x.Item1.ToString("P")}\n");
@@ -214,7 +215,7 @@ namespace MCL_Dev
                                 NativesFolder = null,//一般可以无视这个选项
                                 LauncherName = "ModernCraftLauncher"
                             };
-                            JavaClientLauncher javaClientLauncher = new(lc, core);
+                            JavaClientLauncher javaClientLauncher = new(lc, core, true);
                             using var res = await javaClientLauncher.LaunchTaskAsync(versionCombo.Text, x =>
                             {
                                 launchLog.AppendText($"[{DateTime.Now}]{x.Item2} 进度:{x.Item1.ToString("P")}\n");
@@ -265,7 +266,7 @@ namespace MCL_Dev
                                 NativesFolder = null,//一般可以无视这个选项
                                 LauncherName = "ModernCraftLauncher"
                             };
-                            JavaClientLauncher javaClientLauncher = new(launchConfig,new(gameFolder));
+                            JavaClientLauncher javaClientLauncher = new(launchConfig,new(gameFolder),true);
                             using var res =await javaClientLauncher.LaunchTaskAsync(versionCombo.Text, x =>
                             {
                                 launchLog.AppendText($"[{DateTime.Now}]{x.Item2} 进度:{x.Item1.ToString("P")}\n");
@@ -306,7 +307,7 @@ namespace MCL_Dev
                                 NativesFolder = null,//一般可以无视这个选项
                                 LauncherName = "ModernCraftLauncher"
                             };
-                            JavaClientLauncher javaClientLauncher = new(launchConfig,new(gameFolder));
+                            JavaClientLauncher javaClientLauncher = new(launchConfig,new(gameFolder), true);
                             using var res = await javaClientLauncher.LaunchTaskAsync(versionCombo.Text, x =>
                             {
                                 launchLog.AppendText($"[{DateTime.Now}]{x.Item2} 进度:{x.Item1.ToString("P")}\n");

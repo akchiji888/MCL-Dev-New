@@ -1,0 +1,4 @@
+[12:10:20] [INFO] [FabricLoader/GameProvider]: Loading Minecraft 1.16.5 with Fabric Loader 0.14.12
+[12:10:20] [INFO] [FabricLoader/GameRemap]: Fabric is preparing JARs on first launch, this may take a few seconds...
+[12:11:23] [ERROR] [FabricLoader/]: Uncaught exception in thread "main"
+java.lang.OutOfMemoryError: Java heap space
