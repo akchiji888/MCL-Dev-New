@@ -72,6 +72,20 @@
 
                 </Grid>
             </TabItem>
+            <TabItem Header="Quilt安装">
+                <Grid>
+                    <Grid Margin="0,0,0,-371">
+                        <TextBlock HorizontalAlignment="Left" Margin="10,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF" FontSize="16"><Run Text="Minecraft版本"/><Run Language="zh-cn" Text=": "/></TextBlock>
+                        <Button Content="下载" x:Name="QuiltInstall_start" Silver:ButtonHelper.CornerRadius="5,5,5,5" Silver:ButtonHelper.HoverBrush="{x:Null}" Silver:ButtonHelper.ButtonStyle="Hollow" Silver:ButtonHelper.ClickStyle="Sink" Margin="10,103,0,0" FontSize="18" Background="{x:Null}" Foreground="#FF0096FF" BorderBrush="#FF0096FF" HorizontalAlignment="Left" Width="97" Height="36" VerticalAlignment="Top" Click="QuiltInstall_start_Click"/>
+                        <TextBox x:Name="QuiltDownLoadLog" HorizontalAlignment="Left" Margin="10,159,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="224" Height="169" Foreground="#FF0067FF" Cursor="IBeam"/>
+                        <ProgressBar x:Name="QuiltInstallProgress" HorizontalAlignment="Left" Height="10" Margin="10,144,0,0" VerticalAlignment="Top" Width="224" Foreground="#FF0067FF"/>
+                        <ComboBox x:Name="Quilt_game_verBox" HorizontalAlignment="Left" Margin="129,45,0,0" VerticalAlignment="Top" Width="156" Foreground="#FF0067FF" FontSize="16" Height="23" DisplayMemberPath="Id" Cursor="IBeam" DropDownClosed="Quilt_game_verBox_DropDownClosed"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="10,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF" FontSize="16" Text="tips:若下拉框中无任何版本，请再次打开下拉框"></TextBlock>
+                        <TextBlock HorizontalAlignment="Left" Margin="10,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF0067FF" FontSize="16"><Run Text="Quilt版本"/><Run Language="zh-cn" Text=": "/></TextBlock>
+                        <ComboBox x:Name="Quilt_game_verBox_Copy" HorizontalAlignment="Left" Margin="93,70,0,0" VerticalAlignment="Top" Width="244" Foreground="#FF0067FF" FontSize="14" Height="23" DisplayMemberPath="Loader.Maven" Cursor="IBeam" DropDownOpened="Quilt_game_verBox_Copy_DropDownOpened"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
         </TabControl>
 
 

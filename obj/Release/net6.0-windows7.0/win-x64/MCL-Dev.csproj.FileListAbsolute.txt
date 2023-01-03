@@ -60,7 +60,6 @@ E:\repos\MCL-Dev\obj\Release\net6.0-windows7.0\win-x64\WeiRuan.g.cs
 E:\repos\MCL-Dev\obj\Release\net6.0-windows7.0\win-x64\XiaZai.g.cs
 E:\repos\MCL-Dev\obj\Release\net6.0-windows7.0\win-x64\ZhuYe.g.cs
 E:\repos\MCL-Dev\obj\Release\net6.0-windows7.0\win-x64\App.g.cs
-E:\repos\MCL-Dev\obj\Release\net6.0-windows7.0\win-x64\MCL-Dev_Content.g.cs
 E:\repos\MCL-Dev\obj\Release\net6.0-windows7.0\win-x64\MCL-Dev_MarkupCompile.cache
 E:\repos\MCL-Dev\obj\Release\net6.0-windows7.0\win-x64\MCL-Dev_MarkupCompile.lref
 E:\repos\MCL-Dev\obj\Release\net6.0-windows7.0\win-x64\App.baml

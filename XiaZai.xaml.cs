@@ -33,7 +33,7 @@ namespace MCL_Dev
             opt_game_verBox.ItemsSource = MCList.Cores;
             fabric_game_verBox.ItemsSource = MCList.Cores;
             Forge_game_verBox.ItemsSource = MCList.Cores;
-
+            Quilt_game_verBox.ItemsSource = MCList.Cores;
         }
         public GameCoreInstaller installer;
         public XiaZai()
@@ -56,11 +56,17 @@ namespace MCL_Dev
                 {
                     installer = new(v, version);
                 });
-                await installer.InstallAsync((e) =>
+                await Task.Run(async () =>
                 {
-                    downloadLog.AppendText($"[{DateTime.Now}]{e.Item2} 进度:{e.Item1.ToString("P")}\n");
-                    downloadLog.ScrollToEnd();
-                });
+                    await installer.InstallAsync((e) =>
+                    {
+                        this.Dispatcher.Invoke(new Action(() =>
+                        {
+                            downloadLog.AppendText($"[{DateTime.Now}]{e.Item2} 进度:{e.Item1.ToString("P")}\n");
+                            downloadLog.ScrollToEnd();
+                        }));                        
+                    });
+                });                
                 progress.IsIndeterminate = false;
                 MessageBoxX.Show("下载完成！", "MCL启动器");
             }
@@ -144,6 +150,7 @@ namespace MCL_Dev
                         }));
                     });
                 });
+                javaInstallProgress.IsIndeterminate = false;
                 MessageBoxX.Show("安装完成！", "MCL启动器");
             }
         }
@@ -179,9 +186,12 @@ namespace MCL_Dev
 
         private async void fabric_game_verBox_DropDownClosed(object sender, EventArgs e)
         {
-            string selectedGameV = (fabric_game_verBox.SelectedItem as MinecraftLaunch.Modules.Models.Install.GameCoreEmtity).Id;
-            var FabricList = await FabricInstaller.GetFabricBuildsByVersionAsync(selectedGameV);
-            fabric_game_verBox_Copy.ItemsSource = FabricList;
+            if(fabric_game_verBox.Text != "")
+            {
+                string selectedGameV = (fabric_game_verBox.SelectedItem as MinecraftLaunch.Modules.Models.Install.GameCoreEmtity).Id;
+                var FabricList = await FabricInstaller.GetFabricBuildsByVersionAsync(selectedGameV);
+                fabric_game_verBox_Copy.ItemsSource = FabricList;
+            }            
         }
         private async void Forge_game_verBox_DropDownClosed(object sender, EventArgs e)
         {
@@ -239,6 +249,53 @@ namespace MCL_Dev
             if(fabric_game_verBox.Text != "" && fabric_game_verBox_Copy.Text == "")
             {
                 fabric_game_verBox_Copy.ItemsSource = await FabricInstaller.GetFabricBuildsByVersionAsync(fabric_game_verBox.Text);
+            }
+        }
+
+        private async void Quilt_game_verBox_Copy_DropDownOpened(object sender, EventArgs e)
+        {
+            if (Quilt_game_verBox.Text != "" && Quilt_game_verBox_Copy.Text == "")
+            {
+                Quilt_game_verBox_Copy.ItemsSource = await QuiltInstaller.GetQuiltBuildsByVersionAsync(Quilt_game_verBox.Text);
+            }
+        }
+
+        private async void Quilt_game_verBox_DropDownClosed(object sender, EventArgs e)
+        {
+            if(Quilt_game_verBox.Text != "")
+            {
+                string selectedGameV = (Quilt_game_verBox.SelectedItem as MinecraftLaunch.Modules.Models.Install.GameCoreEmtity).Id;
+                var QuiltList = await QuiltInstaller.GetQuiltBuildsByVersionAsync(selectedGameV);
+                Quilt_game_verBox_Copy.ItemsSource = QuiltList;
+            }
+        }
+
+        private async void QuiltInstall_start_Click(object sender, RoutedEventArgs e)
+        {
+            QuiltInstallProgress.IsIndeterminate = true;
+            if (Quilt_game_verBox.Text != "" && Quilt_game_verBox_Copy.Text != "")
+            {
+                var QuiltBuild = Quilt_game_verBox_Copy.SelectedItem as QuiltInstallBuild;
+                var v = new GameCoreToolkit(gameFolder);
+                var fi = new QuiltInstaller(v, QuiltBuild);
+                await Task.Run(async () =>
+                {
+                    await fi.InstallAsync((e) =>
+                    {
+                        this.Dispatcher.Invoke(new Action(() =>
+                        {
+                            QuiltDownLoadLog.AppendText($"[{DateTime.Now}]{e.Item2} 进度:{e.Item1.ToString("P")}\n");
+                            QuiltDownLoadLog.ScrollToEnd();
+                        }));
+                    });
+                });
+                QuiltInstallProgress.IsIndeterminate = false;
+                MessageBoxX.Show("下载完成！", "MCL启动器");
+            }
+            else
+            {
+                MessageBoxX.Show("尚有信息未输入！", "MCL启动器");
+                QuiltInstallProgress.IsIndeterminate = false;
             }
         }
     }
