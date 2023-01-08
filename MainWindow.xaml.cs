@@ -795,5 +795,10 @@ namespace MCL_Dev
             }
         }
         #endregion
+
+        private void ModSearch_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

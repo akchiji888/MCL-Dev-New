@@ -57,7 +57,7 @@
             <TabItem Height="243" pu:TabItemHelper.Icon="&#xf0ed;" Header="下载" pu:IconHelper.FontSize="20" pu:IconHelper.FontFamily="{StaticResource Awesome}">
                 <Grid>
                     <TabControl TabStripPlacement="Right" Foreground="#FF33B4F5" BorderBrush="{x:Null}">
-                        <TabItem Height="80" Header="原版安装">
+                        <TabItem Height="68.57" Header="原版安装">
                             <Grid>
                                 <TextBlock HorizontalAlignment="Left" Margin="10,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF33B4F5" FontSize="16"><Run Text="版本"/><Run Language="zh-cn" Text=":"/></TextBlock>
                                 <Button puthe:ButtonStylist.Style="ColorBorder" BorderThickness="1" Content="下载" x:Name="VanilaStart" pu:ButtonHelper.CornerRadius="5,5,5,5" Margin="10,81,0,0" FontSize="18" Width="97" Height="36" Click="VanilaStart_Click"/>
@@ -67,7 +67,7 @@
                                 <TextBlock HorizontalAlignment="Left" Margin="10,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF33B4F5" FontSize="16" Text="tips:若下拉框中无任何版本，请再次打开下拉框"></TextBlock>
                             </Grid>
                         </TabItem>
-                        <TabItem Height="80" Header="Optfine安装">
+                        <TabItem Height="68.57" Header="Optfine安装">
                             <Grid>
                                 <TextBlock HorizontalAlignment="Left" Margin="10,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF33B4F5" FontSize="16"><Run Text="Minecraft版本"/><Run Language="zh-cn" Text=": "/></TextBlock>
                                 <Button BorderThickness="1" Content="下载" pu:ButtonHelper.CornerRadius="5,5,5,5" x:Name="optInstall_start" Margin="10,114,0,0" FontSize="18" Background="{x:Null}" puthe:ButtonStylist.Style="ColorBorder" Width="97" Height="36" Click="optInstall_start_Click"/>
@@ -79,7 +79,7 @@
                                 <ComboBox puthe:ComboBoxStylist.Style="Border" x:Name="opt_game_verBox_Copy" HorizontalAlignment="Left" Margin="108,77,0,0" Width="204" Foreground="#FF33B4F5" Height="32" DisplayMemberPath="FileName" Cursor="IBeam"/>
                             </Grid>
                         </TabItem>
-                        <TabItem Height="80" Header="Forge安装">
+                        <TabItem Height="68.57" Header="Forge安装">
                             <Grid>
                                 <TextBlock HorizontalAlignment="Left" Margin="8,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF33B4F5" FontSize="16"><Run Text="Minecraft版本"/><Run Language="zh-cn" Text=": "/></TextBlock>
                                 <Button BorderThickness="1" Content="下载" x:Name="ForgeInstall_start" pu:ButtonHelper.CornerRadius="5,5,5,5" Margin="8,110,0,0" FontSize="18" puthe:ButtonStylist.Style="ColorBorder" Width="97" Height="36" Click="ForgeInstall_start_Click"/>
@@ -91,7 +91,7 @@
                                 <ComboBox x:Name="Forge_game_verBox_Copy" HorizontalAlignment="Left" Margin="100,69,0,0" Width="204" Foreground="#FF33B4F5" Height="32" DisplayMemberPath="ForgeVersion" Cursor="IBeam"/>
                             </Grid>
                         </TabItem>
-                        <TabItem Height="80" Header="Fabric安装">
+                        <TabItem Height="68.57" Header="Fabric安装">
                             <Grid>
                                 <TextBlock HorizontalAlignment="Left" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF33B4F5" FontSize="16"><Run Text="Minecraft版本"/><Run Language="zh-cn" Text=": "/></TextBlock>
                                 <Button puthe:ButtonStylist.Style="ColorBorder" BorderThickness="1" Content="下载" x:Name="fabricInstall_start" pu:ButtonHelper.CornerRadius="5,5,5,5" Margin="10,111,0,0" FontSize="18" Background="{x:Null}" Width="97" Height="36" Click="fabricInstall_start_Click"/>
@@ -103,7 +103,7 @@
                                 <ComboBox x:Name="fabric_game_verBox_Copy" HorizontalAlignment="Left" Margin="102,72,0,0" Width="244" Foreground="#FF33B4F5" Height="32" DisplayMemberPath="Loader.Maven" Cursor="IBeam" DropDownOpened="fabric_game_verBox_Copy_DropDownOpened"/>
                             </Grid>
                         </TabItem>
-                        <TabItem Height="80" Header="Java安装">
+                        <TabItem Height="68.57" Header="Java安装">
                             <Grid>
                                 <Button puthe:ButtonStylist.Style="ColorBorder" BorderThickness="1" Content="下载" x:Name="javaInstall_start" pu:ButtonHelper.CornerRadius="5,5,5,5" Margin="10,86,0,0" FontSize="18" Width="97" Height="36" Click="javaInstall_start_Click"/>
                                 <TextBox x:Name="javaDownLoadLog" HorizontalAlignment="Left" Margin="10,144,0,0" TextWrapping="Wrap" Text="" Width="224" Height="331" Foreground="#FF33B4F5" Cursor="IBeam"/>
@@ -113,7 +113,7 @@
                                 <TextBlock HorizontalAlignment="Left" Margin="10,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF33B4F5" FontSize="16"><Run Text="Java版本"/><Run Language="zh-cn" Text=": "/></TextBlock>
                             </Grid>
                         </TabItem>
-                        <TabItem Height="80" Header="Quilt安装">
+                        <TabItem Height="68.57" Header="Quilt安装">
                             <Grid>
                                 <TextBlock HorizontalAlignment="Left" Margin="10,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF33B4F5" FontSize="16"><Run Text="Minecraft版本"/><Run Language="zh-cn" Text=": "/></TextBlock>
                                 <Button puthe:ButtonStylist.Style="ColorBorder" BorderThickness="1" Content="下载" x:Name="QuiltInstall_start" pu:ButtonHelper.CornerRadius="5,5,5,5" Margin="10,114,0,0" FontSize="18" Background="{x:Null}" Width="97" Height="36" Click="QuiltInstall_start_Click"/>
@@ -124,6 +124,16 @@
                                 <TextBlock HorizontalAlignment="Left" Margin="10,78,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF33B4F5" FontSize="16"><Run Text="Quilt版本"/><Run Language="zh-cn" Text=": "/></TextBlock>
                                 <ComboBox x:Name="Quilt_game_verBox_Copy" HorizontalAlignment="Left" Margin="93,72,0,0" Width="244" Foreground="#FF33B4F5" Height="32" DisplayMemberPath="Loader.Maven" Cursor="IBeam" DropDownOpened="Quilt_game_verBox_Copy_DropDownOpened"/>
                             </Grid>
+                        </TabItem>
+                        <TabItem Header="Mod安装" Height="68.57">
+                            <ScrollViewer>
+                                <Grid>
+                                    <TextBlock HorizontalAlignment="Left" Margin="10,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF33B4F5" FontSize="16" Text="搜索Mod："/>
+                                    <Button puthe:ButtonStylist.Style="ColorBorder" BorderThickness="1" Content="&#xf002;" FontFamily="{StaticResource Awesome}" x:Name="ModSearch" pu:ButtonHelper.CornerRadius="5,5,5,5" Margin="304,33,0,0" FontSize="18"  Width="55" Height="36" Click="ModSearch_Click" BorderBrush="{x:Null}"/>
+                                    <TextBox Width="200" x:Name="ModInput" pu:TextBoxHelper.CornerRadius="5" pu:TextBoxHelper.Watermark="请输入Mod的名字" puthe:TextBoxStylist.Style="Border" Margin="99,34,333,0" />
+                                    <StackPanel x:Name="ModPanel" Margin="0,74,0,0"></StackPanel>
+                                </Grid>
+                            </ScrollViewer>
                         </TabItem>
                     </TabControl>
                 </Grid>
