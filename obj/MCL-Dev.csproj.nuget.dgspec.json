@@ -48,9 +48,13 @@
               "target": "Package",
               "version": "[1.7.0, )"
             },
-            "Panuon.UI.Silver": {
+            "Panuon.WPF.UI": {
               "target": "Package",
-              "version": "[1.1.3.4, )"
+              "version": "[1.1.7, )"
+            },
+            "Panuon.WPF.UI.Themes": {
+              "target": "Package",
+              "version": "[0.1.0-alpha, )"
             },
             "System.Management": {
               "target": "Package",
@@ -63,7 +67,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -75,7 +80,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

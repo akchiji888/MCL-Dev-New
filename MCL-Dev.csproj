@@ -14,9 +14,11 @@
 
   <ItemGroup>
     <None Remove="App.config" />
+    <None Remove="Resources\fontawesome.ttf" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\fontawesome.ttf" />
     <Resource Include="Resources\logo (1).ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -29,7 +31,8 @@
   <ItemGroup>
     <PackageReference Include="MinecraftLaunch" Version="1.6.0" />
     <PackageReference Include="MinecraftOAuth" Version="1.7.0" />
-    <PackageReference Include="Panuon.UI.Silver" Version="1.1.3.4" />
+    <PackageReference Include="Panuon.WPF.UI" Version="1.1.7" />
+    <PackageReference Include="Panuon.WPF.UI.Themes" Version="0.1.0-alpha" />
     <PackageReference Include="System.Management" Version="7.0.0" />
   </ItemGroup>
 

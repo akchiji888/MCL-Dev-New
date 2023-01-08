@@ -2,33 +2,6 @@
   "version": 3,
   "targets": {
     "net6.0-windows7.0": {
-      "Microsoft.NETCore.Platforms/5.0.0": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard1.0/_._": {}
-        },
-        "runtime": {
-          "lib/netstandard1.0/_._": {}
-        }
-      },
-      "Microsoft.Win32.SystemEvents/5.0.0": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "5.0.0"
-        },
-        "compile": {
-          "ref/netstandard2.0/_._": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Win32.SystemEvents.dll": {}
-        },
-        "runtimeTargets": {
-          "runtimes/win/lib/netcoreapp3.0/Microsoft.Win32.SystemEvents.dll": {
-            "assetType": "runtime",
-            "rid": "win"
-          }
-        }
-      },
       "MinecraftLaunch/1.6.0": {
         "type": "package",
         "dependencies": {
@@ -70,59 +43,81 @@
       "Newtonsoft.Json/13.0.2": {
         "type": "package",
         "compile": {
-          "lib/net6.0/Newtonsoft.Json.dll": {}
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net6.0/Newtonsoft.Json.dll": {}
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
         }
       },
-      "Panuon.UI.Silver/1.1.3.4": {
+      "Panuon.WPF/1.0.1": {
         "type": "package",
-        "dependencies": {
-          "System.Drawing.Common": "5.0.0"
-        },
         "compile": {
-          "lib/netcoreapp3.1/Panuon.UI.Silver.dll": {}
+          "lib/net6.0-windows/Panuon.WPF.dll": {
+            "related": ".pdb"
+          }
         },
         "runtime": {
-          "lib/netcoreapp3.1/Panuon.UI.Silver.dll": {}
+          "lib/net6.0-windows/Panuon.WPF.dll": {
+            "related": ".pdb"
+          }
+        }
+      },
+      "Panuon.WPF.UI/1.1.7": {
+        "type": "package",
+        "dependencies": {
+          "Panuon.WPF": "1.0.1"
         },
-        "frameworkReferences": [
-          "Microsoft.WindowsDesktop.App.WPF"
-        ]
+        "compile": {
+          "lib/net6.0-windows/Panuon.WPF.UI.dll": {
+            "related": ".pdb"
+          }
+        },
+        "runtime": {
+          "lib/net6.0-windows/Panuon.WPF.UI.dll": {
+            "related": ".pdb"
+          }
+        }
+      },
+      "Panuon.WPF.UI.Themes/0.1.0-alpha": {
+        "type": "package",
+        "dependencies": {
+          "Panuon.WPF.UI": "1.1.7"
+        },
+        "compile": {
+          "lib/net6.0-windows/Panuon.WPF.UI.Themes.dll": {
+            "related": ".pdb"
+          },
+          "lib/net6.0-windows/Panuon.WPF.UI.dll": {
+            "related": ".pdb;.Themes.pdb"
+          }
+        },
+        "runtime": {
+          "lib/net6.0-windows/Panuon.WPF.UI.Themes.dll": {
+            "related": ".pdb"
+          },
+          "lib/net6.0-windows/Panuon.WPF.UI.dll": {
+            "related": ".pdb;.Themes.pdb"
+          }
+        }
       },
       "System.CodeDom/7.0.0": {
         "type": "package",
         "compile": {
-          "lib/net6.0/System.CodeDom.dll": {}
+          "lib/net6.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net6.0/System.CodeDom.dll": {}
+          "lib/net6.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
         },
         "build": {
           "buildTransitive/net6.0/_._": {}
-        }
-      },
-      "System.Drawing.Common/5.0.0": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.Win32.SystemEvents": "5.0.0"
-        },
-        "compile": {
-          "ref/netcoreapp3.0/System.Drawing.Common.dll": {}
-        },
-        "runtime": {
-          "lib/netcoreapp3.0/System.Drawing.Common.dll": {}
-        },
-        "runtimeTargets": {
-          "runtimes/unix/lib/netcoreapp3.0/System.Drawing.Common.dll": {
-            "assetType": "runtime",
-            "rid": "unix"
-          },
-          "runtimes/win/lib/netcoreapp3.0/System.Drawing.Common.dll": {
-            "assetType": "runtime",
-            "rid": "win"
-          }
         }
       },
       "System.Management/7.0.0": {
@@ -131,10 +126,14 @@
           "System.CodeDom": "7.0.0"
         },
         "compile": {
-          "lib/net6.0/System.Management.dll": {}
+          "lib/net6.0/System.Management.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net6.0/System.Management.dll": {}
+          "lib/net6.0/System.Management.dll": {
+            "related": ".xml"
+          }
         },
         "build": {
           "buildTransitive/net6.0/_._": {}
@@ -149,10 +148,14 @@
       "System.Threading.Tasks.Dataflow/6.0.0": {
         "type": "package",
         "compile": {
-          "lib/net6.0/System.Threading.Tasks.Dataflow.dll": {}
+          "lib/net6.0/System.Threading.Tasks.Dataflow.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net6.0/System.Threading.Tasks.Dataflow.dll": {}
+          "lib/net6.0/System.Threading.Tasks.Dataflow.dll": {
+            "related": ".xml"
+          }
         },
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
@@ -161,52 +164,6 @@
     }
   },
   "libraries": {
-    "Microsoft.NETCore.Platforms/5.0.0": {
-      "sha512": "VyPlqzH2wavqquTcYpkIIAQ6WdenuKoFN0BdYBbCWsclXacSOHNQn66Gt4z5NBqEYW0FAPm5rlvki9ZiCij5xQ==",
-      "type": "package",
-      "path": "microsoft.netcore.platforms/5.0.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Icon.png",
-        "LICENSE.TXT",
-        "THIRD-PARTY-NOTICES.TXT",
-        "lib/netstandard1.0/_._",
-        "microsoft.netcore.platforms.5.0.0.nupkg.sha512",
-        "microsoft.netcore.platforms.nuspec",
-        "runtime.json",
-        "useSharedDesignerContext.txt",
-        "version.txt"
-      ]
-    },
-    "Microsoft.Win32.SystemEvents/5.0.0": {
-      "sha512": "Bh6blKG8VAKvXiLe2L+sEsn62nc1Ij34MrNxepD2OCrS5cpCwQa9MeLyhVQPQ/R4Wlzwuy6wMK8hLb11QPDRsQ==",
-      "type": "package",
-      "path": "microsoft.win32.systemevents/5.0.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Icon.png",
-        "LICENSE.TXT",
-        "THIRD-PARTY-NOTICES.TXT",
-        "lib/net461/Microsoft.Win32.SystemEvents.dll",
-        "lib/net461/Microsoft.Win32.SystemEvents.xml",
-        "lib/netstandard2.0/Microsoft.Win32.SystemEvents.dll",
-        "lib/netstandard2.0/Microsoft.Win32.SystemEvents.xml",
-        "microsoft.win32.systemevents.5.0.0.nupkg.sha512",
-        "microsoft.win32.systemevents.nuspec",
-        "ref/net461/Microsoft.Win32.SystemEvents.dll",
-        "ref/net461/Microsoft.Win32.SystemEvents.xml",
-        "ref/netstandard2.0/Microsoft.Win32.SystemEvents.dll",
-        "ref/netstandard2.0/Microsoft.Win32.SystemEvents.xml",
-        "runtimes/win/lib/netcoreapp2.0/Microsoft.Win32.SystemEvents.dll",
-        "runtimes/win/lib/netcoreapp2.0/Microsoft.Win32.SystemEvents.xml",
-        "runtimes/win/lib/netcoreapp3.0/Microsoft.Win32.SystemEvents.dll",
-        "runtimes/win/lib/netcoreapp3.0/Microsoft.Win32.SystemEvents.xml",
-        "useSharedDesignerContext.txt",
-        "version.txt"
-      ]
-    },
     "MinecraftLaunch/1.6.0": {
       "sha512": "rU540bukyO3OBeuQb1qxB0hHLKIQUNtomCpISHm0EcTqwr9vAAba8y/qjn0CrTAj01lfV/uLseBpUHKHMA0eug==",
       "type": "package",
@@ -276,18 +233,99 @@
         "packageIcon.png"
       ]
     },
-    "Panuon.UI.Silver/1.1.3.4": {
-      "sha512": "KURGslfhVctESnoAUAvzYntfVRMBjo2CBfwCx8jG/FAV1UZPRqU3CzxYDboZ93/5S4smFab+emLtCEAxpV0zAQ==",
+    "Panuon.WPF/1.0.1": {
+      "sha512": "7vg7uSjYV54/dONsGEJJBID3BOwe7QL0zktiNIzrYhX+etqz0Sq8TnBQLC1h4OHyEuuB1FAiXff7ayKry157RQ==",
       "type": "package",
-      "path": "panuon.ui.silver/1.1.3.4",
+      "path": "panuon.wpf/1.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "lib/net40/Panuon.UI.Silver.dll",
-        "lib/net45/Panuon.UI.Silver.dll",
-        "lib/netcoreapp3.1/Panuon.UI.Silver.dll",
-        "panuon.ui.silver.1.1.3.4.nupkg.sha512",
-        "panuon.ui.silver.nuspec"
+        "lib/net45/Panuon.WPF.dll",
+        "lib/net45/Panuon.WPF.pdb",
+        "lib/net462/Panuon.WPF.dll",
+        "lib/net462/Panuon.WPF.pdb",
+        "lib/net472/Panuon.WPF.dll",
+        "lib/net472/Panuon.WPF.pdb",
+        "lib/net48/Panuon.WPF.dll",
+        "lib/net48/Panuon.WPF.pdb",
+        "lib/net5.0-windows/Panuon.WPF.dll",
+        "lib/net5.0-windows/Panuon.WPF.pdb",
+        "lib/net6.0-windows/Panuon.WPF.dll",
+        "lib/net6.0-windows/Panuon.WPF.pdb",
+        "lib/netcoreapp3.1/Panuon.WPF.dll",
+        "lib/netcoreapp3.1/Panuon.WPF.pdb",
+        "nuget.exe",
+        "panuon.wpf.1.0.1.nupkg.sha512",
+        "panuon.wpf.nuspec",
+        "批量复制.bat"
+      ]
+    },
+    "Panuon.WPF.UI/1.1.7": {
+      "sha512": "koAqKxPIEJnNFBnZz/ZKcrB3UTiAf8geYYydiB2lkpFCJgmfEBdW/aL5dgcoi4PIm8fjjOMBIFglghHZeXszhg==",
+      "type": "package",
+      "path": "panuon.wpf.ui/1.1.7",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/Panuon.WPF.UI.dll",
+        "lib/net45/Panuon.WPF.UI.pdb",
+        "lib/net462/Panuon.WPF.UI.dll",
+        "lib/net462/Panuon.WPF.UI.pdb",
+        "lib/net472/Panuon.WPF.UI.dll",
+        "lib/net472/Panuon.WPF.UI.pdb",
+        "lib/net48/Panuon.WPF.UI.dll",
+        "lib/net48/Panuon.WPF.UI.pdb",
+        "lib/net5.0-windows/Panuon.WPF.UI.dll",
+        "lib/net5.0-windows/Panuon.WPF.UI.pdb",
+        "lib/net6.0-windows/Panuon.WPF.UI.dll",
+        "lib/net6.0-windows/Panuon.WPF.UI.pdb",
+        "lib/netcoreapp3.1/Panuon.WPF.UI.dll",
+        "lib/netcoreapp3.1/Panuon.WPF.UI.pdb",
+        "nuget.exe",
+        "panuon.wpf.ui.1.1.7.nupkg.sha512",
+        "panuon.wpf.ui.nuspec",
+        "批量复制.bat"
+      ]
+    },
+    "Panuon.WPF.UI.Themes/0.1.0-alpha": {
+      "sha512": "yt+B8q/D0L2pHQ+Vu7ricDIUlol5LG0kqA3aEnlU3UxilJCOIoyogBT5Sc3NDH3NCik1zo96hkqjegHm0j/VEg==",
+      "type": "package",
+      "path": "panuon.wpf.ui.themes/0.1.0-alpha",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/Panuon.WPF.UI.Themes.dll",
+        "lib/net45/Panuon.WPF.UI.Themes.pdb",
+        "lib/net45/Panuon.WPF.UI.dll",
+        "lib/net45/Panuon.WPF.UI.pdb",
+        "lib/net462/Panuon.WPF.UI.Themes.dll",
+        "lib/net462/Panuon.WPF.UI.Themes.pdb",
+        "lib/net462/Panuon.WPF.UI.dll",
+        "lib/net462/Panuon.WPF.UI.pdb",
+        "lib/net472/Panuon.WPF.UI.Themes.dll",
+        "lib/net472/Panuon.WPF.UI.Themes.pdb",
+        "lib/net472/Panuon.WPF.UI.dll",
+        "lib/net472/Panuon.WPF.UI.pdb",
+        "lib/net48/Panuon.WPF.UI.Themes.dll",
+        "lib/net48/Panuon.WPF.UI.Themes.pdb",
+        "lib/net48/Panuon.WPF.UI.dll",
+        "lib/net48/Panuon.WPF.UI.pdb",
+        "lib/net5.0-windows/Panuon.WPF.UI.Themes.dll",
+        "lib/net5.0-windows/Panuon.WPF.UI.Themes.pdb",
+        "lib/net5.0-windows/Panuon.WPF.UI.dll",
+        "lib/net5.0-windows/Panuon.WPF.UI.pdb",
+        "lib/net6.0-windows/Panuon.WPF.UI.Themes.dll",
+        "lib/net6.0-windows/Panuon.WPF.UI.Themes.pdb",
+        "lib/net6.0-windows/Panuon.WPF.UI.dll",
+        "lib/net6.0-windows/Panuon.WPF.UI.pdb",
+        "lib/netcoreapp3.1/Panuon.WPF.UI.Themes.dll",
+        "lib/netcoreapp3.1/Panuon.WPF.UI.Themes.pdb",
+        "lib/netcoreapp3.1/Panuon.WPF.UI.dll",
+        "lib/netcoreapp3.1/Panuon.WPF.UI.pdb",
+        "nuget.exe",
+        "panuon.wpf.ui.themes.0.1.0-alpha.nupkg.sha512",
+        "panuon.wpf.ui.themes.nuspec",
+        "批量复制.bat"
       ]
     },
     "System.CodeDom/7.0.0": {
@@ -315,48 +353,6 @@
         "system.codedom.7.0.0.nupkg.sha512",
         "system.codedom.nuspec",
         "useSharedDesignerContext.txt"
-      ]
-    },
-    "System.Drawing.Common/5.0.0": {
-      "sha512": "SztFwAnpfKC8+sEKXAFxCBWhKQaEd97EiOL7oZJZP56zbqnLpmxACWA8aGseaUExciuEAUuR9dY8f7HkTRAdnw==",
-      "type": "package",
-      "path": "system.drawing.common/5.0.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Icon.png",
-        "LICENSE.TXT",
-        "THIRD-PARTY-NOTICES.TXT",
-        "lib/MonoAndroid10/_._",
-        "lib/MonoTouch10/_._",
-        "lib/net461/System.Drawing.Common.dll",
-        "lib/netcoreapp3.0/System.Drawing.Common.dll",
-        "lib/netcoreapp3.0/System.Drawing.Common.xml",
-        "lib/netstandard2.0/System.Drawing.Common.dll",
-        "lib/xamarinios10/_._",
-        "lib/xamarinmac20/_._",
-        "lib/xamarintvos10/_._",
-        "lib/xamarinwatchos10/_._",
-        "ref/MonoAndroid10/_._",
-        "ref/MonoTouch10/_._",
-        "ref/net461/System.Drawing.Common.dll",
-        "ref/netcoreapp3.0/System.Drawing.Common.dll",
-        "ref/netcoreapp3.0/System.Drawing.Common.xml",
-        "ref/netstandard2.0/System.Drawing.Common.dll",
-        "ref/xamarinios10/_._",
-        "ref/xamarinmac20/_._",
-        "ref/xamarintvos10/_._",
-        "ref/xamarinwatchos10/_._",
-        "runtimes/unix/lib/netcoreapp2.0/System.Drawing.Common.dll",
-        "runtimes/unix/lib/netcoreapp3.0/System.Drawing.Common.dll",
-        "runtimes/unix/lib/netcoreapp3.0/System.Drawing.Common.xml",
-        "runtimes/win/lib/netcoreapp2.0/System.Drawing.Common.dll",
-        "runtimes/win/lib/netcoreapp3.0/System.Drawing.Common.dll",
-        "runtimes/win/lib/netcoreapp3.0/System.Drawing.Common.xml",
-        "system.drawing.common.5.0.0.nupkg.sha512",
-        "system.drawing.common.nuspec",
-        "useSharedDesignerContext.txt",
-        "version.txt"
       ]
     },
     "System.Management/7.0.0": {
@@ -417,7 +413,8 @@
     "net6.0-windows7.0": [
       "MinecraftLaunch >= 1.6.0",
       "MinecraftOAuth >= 1.7.0",
-      "Panuon.UI.Silver >= 1.1.3.4",
+      "Panuon.WPF.UI >= 1.1.7",
+      "Panuon.WPF.UI.Themes >= 0.1.0-alpha",
       "System.Management >= 7.0.0"
     ]
   },
@@ -468,9 +465,13 @@
             "target": "Package",
             "version": "[1.7.0, )"
           },
-          "Panuon.UI.Silver": {
+          "Panuon.WPF.UI": {
             "target": "Package",
-            "version": "[1.1.3.4, )"
+            "version": "[1.1.7, )"
+          },
+          "Panuon.WPF.UI.Themes": {
+            "target": "Package",
+            "version": "[0.1.0-alpha, )"
           },
           "System.Management": {
             "target": "Package",
@@ -483,7 +484,8 @@
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -495,7 +497,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }
