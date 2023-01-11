@@ -1,11 +1,14 @@
 ﻿using MinecaftOAuth.Module.Models;
 using MinecraftLaunch.Modules.Models.Auth;
+using MinecraftLaunch.Modules.Models.Download;
 using MinecraftLaunch.Modules.Toolkits;
 using Natsurainko.Toolkits.Network;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace MCL_Dev
 {
@@ -17,6 +20,13 @@ namespace MCL_Dev
         public static string waizhi_password;
         public static string offlineName;
         public static int waizhi_selectedplayer = 114514;
+        public class Mod
+        {
+            public BitmapImage image { set; get; }
+            public string Name { set; get; }
+            public string Version { set; get; }
+            public Dictionary<string, List<CurseForgeModpackFileInfo>> Files { set; get; }
+        }
         public static string waizhi_selectedUsr;
         public class YggdrasilAuthenticator
         {

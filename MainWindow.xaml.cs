@@ -15,6 +15,12 @@ using MinecraftLaunch.Modules.Enum;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MinecraftLaunch.Modules.Models.Install;
+using Panuon.WPF.UI.Themes;
+using System.Windows.Media.Imaging;
+using Newtonsoft.Json.Linq;
+using System.Linq;
+using System.Data;
+using System.Windows.Markup;
 
 namespace MCL_Dev
 {
@@ -23,21 +29,43 @@ namespace MCL_Dev
     /// </summary>
     public partial class MainWindow : WindowX
     {
+        CurseForgeToolkit ModToolkit = new("$2a$10$CUT15u9CIECXHsa8q2NDqO.5zl3lNjg/5Xw5kYVX.ClujkvAir09K");
         #region 公共变量与void声明
         private async void GetMcVersionList()
         {
-            var v = new GameCoreToolkit(gameFolder);
-            var MCList = await GameCoreInstaller.GetGameCoresAsync();
-            verBox.ItemsSource = MCList.Cores;
-            opt_game_verBox.ItemsSource = MCList.Cores;
-            fabric_game_verBox.ItemsSource = MCList.Cores;
-            Forge_game_verBox.ItemsSource = MCList.Cores;
-            Quilt_game_verBox.ItemsSource = MCList.Cores;
-            java_verBox.Items.Add(OpenJdkType.OpenJdk8);
-            java_verBox.Items.Add(OpenJdkType.OpenJdk11);
-            java_verBox.Items.Add(OpenJdkType.OpenJdk17);
-            java_verBox.Items.Add(OpenJdkType.OpenJdk18);
+            if (IsMCListInitialize == false)
+            {
+                ModSpin.IsSpinning = true;
+                ModLoadingText.Visibility = Visibility.Visible;
+                var v = new GameCoreToolkit(gameFolder);
+                var MCList = await GameCoreInstaller.GetGameCoresAsync();
+                verBox.ItemsSource = MCList.Cores;
+                opt_game_verBox.ItemsSource = MCList.Cores;
+                fabric_game_verBox.ItemsSource = MCList.Cores;
+                Forge_game_verBox.ItemsSource = MCList.Cores;
+                Quilt_game_verBox.ItemsSource = MCList.Cores;
+                java_verBox.Items.Add(OpenJdkType.OpenJdk8);
+                java_verBox.Items.Add(OpenJdkType.OpenJdk11);
+                java_verBox.Items.Add(OpenJdkType.OpenJdk17);
+                java_verBox.Items.Add(OpenJdkType.OpenJdk18);
+                var res = await ModToolkit.GetFeaturedModpacksAsync();
+                IsMCListInitialize = true;
+                List<Mod> mods = new();
+                res.ForEach(x =>
+                {
+                    Mod modItem = new();
+                    modItem.image = new(new System.Uri(x.IconUrl));
+                    modItem.Name = x.Name;
+                    modItem.Version = $"{x.SupportedVersions.Last()}-{x.SupportedVersions[0]}";
+                    modItem.Files = x.Files;
+                    mods.Add(modItem);
+                });
+                ModGrid.ItemsSource = mods;
+                ModSpin.IsSpinning = false;
+                ModLoadingText.Visibility = Visibility.Hidden;
+            }
         }
+        bool IsMCListInitialize = false;
         #endregion
         public GameCoreInstaller installer;
         #region 全局变量声明
@@ -51,7 +79,7 @@ namespace MCL_Dev
         public MainWindow()
         {
             InitializeComponent();
-            GetMcVersionList();
+
             #region 控件初始化
             var core = new GameCoreToolkit(gameFolder);
             versionCombo.ItemsSource = core.GetGameCores();
@@ -796,9 +824,65 @@ namespace MCL_Dev
         }
         #endregion
 
-        private void ModSearch_Click(object sender, RoutedEventArgs e)
+        private async void ModSearch_Click(object sender, RoutedEventArgs e)
         {
+            ModGrid.ItemsSource = null;
+            List<Mod> mods = new();
+            ModSpin.IsSpinning = true;
+            ModLoadingText.Visibility = Visibility.Visible;
+            if(ModInput.Text != "")
+            {
+                var res = await ModToolkit.SearchModpacksAsync(ModInput.Text);
+                res.ForEach(x =>
+                {
+                    Mod modItem = new();
+                    modItem.image = new(new System.Uri(x.IconUrl));
+                    modItem.Name = x.Name;
+                    modItem.Version = $"{x.SupportedVersions.Last()}-{x.SupportedVersions[0]}";
+                    modItem.Files = x.Files;
+                    mods.Add(modItem);
+                });
+            }
+            else
+            {                
+                var res = await ModToolkit.GetFeaturedModpacksAsync();
+                res.ForEach(x =>
+                {
+                    Mod modItem = new();
+                    modItem.image = new(new System.Uri(x.IconUrl));
+                    modItem.Name = x.Name;
+                    modItem.Version = $"{x.SupportedVersions.Last()}-{x.SupportedVersions[0]}";
+                    modItem.Files = x.Files;
+                    mods.Add(modItem);
+                });
+            }
+            if(mods.Count > 0)
+            {
+                ModGrid.ItemsSource = mods;
+            }
+            else
+            {
+                ModGrid.ItemsSource = null;
+            }
+            ModSpin.IsSpinning = false;
+            ModLoadingText.Visibility = Visibility.Hidden;
+        }
+        private void PageChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch (Page.SelectedIndex)
+            {
+                case 0:
+                    break;
+                case 1:
+                    GetMcVersionList();
+                    break;
+            }
+        }
 
+        private void ModGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var item = ModGrid.SelectedItem as Mod;
+            
         }
     }
 }

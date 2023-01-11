@@ -14,7 +14,7 @@
                       CornerRadius="15"/>
     </WindowChrome.WindowChrome>
     <Grid>
-        <TabControl TabStripPlacement="Left" Foreground="#FF33B4F5" FontSize="12">
+        <TabControl x:Name="Page" SelectionChanged="PageChanged" TabStripPlacement="Left" Foreground="#FF33B4F5" FontSize="12">
             <TabItem Height="243" Header="主页" pu:TabItemHelper.Icon="&#xf015;" pu:IconHelper.FontSize="20" pu:IconHelper.FontFamily="{StaticResource Awesome}">
                 <Grid>
                     <Button Content="启动游戏" x:Name="start" Width="310" Height="50" Click="start_Click" Margin="46,419,0,0" FontSize="20" Foreground="White"/>
@@ -131,7 +131,26 @@
                                     <TextBlock HorizontalAlignment="Left" Margin="10,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF33B4F5" FontSize="16" Text="搜索Mod："/>
                                     <Button puthe:ButtonStylist.Style="ColorBorder" BorderThickness="1" Content="&#xf002;" FontFamily="{StaticResource Awesome}" x:Name="ModSearch" pu:ButtonHelper.CornerRadius="5,5,5,5" Margin="304,33,0,0" FontSize="18"  Width="55" Height="36" Click="ModSearch_Click" BorderBrush="{x:Null}"/>
                                     <TextBox Width="200" x:Name="ModInput" pu:TextBoxHelper.CornerRadius="5" pu:TextBoxHelper.Watermark="请输入Mod的名字" puthe:TextBoxStylist.Style="Border" Margin="99,34,333,0" />
-                                    <StackPanel x:Name="ModPanel" Margin="0,74,0,0"></StackPanel>
+                                    <StackPanel Margin="0,66,0,0">
+                                        <Grid>
+                                            <Image x:Name="ModInfoImage" Height="128" Width="128" Margin="0,0,503,0"/>
+                                        </Grid>
+                                    </StackPanel>
+                                    <DataGrid Visibility="Hidden" MouseDoubleClick="ModGrid_MouseDoubleClick" CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False" CanUserResizeColumns="False" CanUserReorderColumns="False" puthe:DataGridStylist.Style="Solid" AutoGenerateColumns="False" x:Name="ModGrid" Margin="0,74,0,0">
+                                        <DataGrid.Columns>
+                                            <DataGridTemplateColumn Width="64" Header="Icon">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Image Source="{Binding image}" />
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTextColumn CanUserSort="False" FontSize="12" Header="Mod名字" IsReadOnly="True" Width="300" Binding="{Binding Name}" ElementStyle="{StaticResource DataGrid_TextStyle}"/>
+                                            <DataGridTextColumn FontSize="12" CanUserSort="False" IsReadOnly="True" Header="支持的版本" Width="200" Binding="{Binding Version}" ElementStyle="{StaticResource DataGrid_TextStyle}"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                    <pu:Spin x:Name="ModSpin" SpinStyle="Ring2" Width="32" Height="32" GlyphBrush="#FF33B4F5" Margin="254,282,346,207" />
+                                    <TextBlock Text="正在加载中…" x:Name="ModLoadingText" TextAlignment="Center" VerticalAlignment="Top" FontSize="16" Foreground="#FF33B4F5" Margin="291,287,237,0"/>
                                 </Grid>
                             </ScrollViewer>
                         </TabItem>

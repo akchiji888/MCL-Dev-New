@@ -10,6 +10,12 @@
                 <ResourceDictionary>
                     <FontFamily x:Key="Awesome">/Resources/#fontawesome</FontFamily>
                 </ResourceDictionary>
+                <ResourceDictionary>
+                    <Style x:Key="DataGrid_TextStyle" TargetType="TextBlock">
+                        <Setter Property="TextAlignment" Value="Center"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                    </Style>
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>        
     </Application.Resources>

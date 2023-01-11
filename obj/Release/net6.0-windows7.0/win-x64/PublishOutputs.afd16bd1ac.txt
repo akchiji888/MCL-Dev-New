@@ -1,2 +1,0 @@
-C:\Users\wodes\source\repos\MCL-Dev\bin\Release\net6.0-windows7.0\publish\win-x64\MCL-Dev.pdb
-C:\Users\wodes\source\repos\MCL-Dev\bin\Release\net6.0-windows7.0\publish\win-x64\MCL-Dev.exe
