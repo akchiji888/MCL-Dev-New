@@ -15,12 +15,10 @@ using MinecraftLaunch.Modules.Enum;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MinecraftLaunch.Modules.Models.Install;
-using Panuon.WPF.UI.Themes;
-using System.Windows.Media.Imaging;
-using Newtonsoft.Json.Linq;
 using System.Linq;
-using System.Data;
-using System.Windows.Markup;
+using MinecraftLaunch.Modules.Models.Download;
+using Microsoft.WindowsAPICodePack.Dialogs;
+using System.Runtime.InteropServices;
 
 namespace MCL_Dev
 {
@@ -33,37 +31,47 @@ namespace MCL_Dev
         #region 公共变量与void声明
         private async void GetMcVersionList()
         {
-            if (IsMCListInitialize == false)
+            try
             {
-                ModSpin.IsSpinning = true;
-                ModLoadingText.Visibility = Visibility.Visible;
-                var v = new GameCoreToolkit(gameFolder);
-                var MCList = await GameCoreInstaller.GetGameCoresAsync();
-                verBox.ItemsSource = MCList.Cores;
-                opt_game_verBox.ItemsSource = MCList.Cores;
-                fabric_game_verBox.ItemsSource = MCList.Cores;
-                Forge_game_verBox.ItemsSource = MCList.Cores;
-                Quilt_game_verBox.ItemsSource = MCList.Cores;
-                java_verBox.Items.Add(OpenJdkType.OpenJdk8);
-                java_verBox.Items.Add(OpenJdkType.OpenJdk11);
-                java_verBox.Items.Add(OpenJdkType.OpenJdk17);
-                java_verBox.Items.Add(OpenJdkType.OpenJdk18);
-                var res = await ModToolkit.GetFeaturedModpacksAsync();
-                IsMCListInitialize = true;
-                List<Mod> mods = new();
-                res.ForEach(x =>
+                if (IsMCListInitialize == false)
                 {
-                    Mod modItem = new();
-                    modItem.image = new(new System.Uri(x.IconUrl));
-                    modItem.Name = x.Name;
-                    modItem.Version = $"{x.SupportedVersions.Last()}-{x.SupportedVersions[0]}";
-                    modItem.Files = x.Files;
-                    mods.Add(modItem);
-                });
-                ModGrid.ItemsSource = mods;
-                ModSpin.IsSpinning = false;
-                ModLoadingText.Visibility = Visibility.Hidden;
+                    ModSpin.IsSpinning = true;
+                    ModLoadingText.Visibility = Visibility.Visible;
+                    var v = new GameCoreToolkit(gameFolder);
+                    var MCList = await GameCoreInstaller.GetGameCoresAsync();
+                    verBox.ItemsSource = MCList.Cores;
+                    opt_game_verBox.ItemsSource = MCList.Cores;
+                    fabric_game_verBox.ItemsSource = MCList.Cores;
+                    Forge_game_verBox.ItemsSource = MCList.Cores;
+                    Quilt_game_verBox.ItemsSource = MCList.Cores;
+                    java_verBox.Items.Add(OpenJdkType.OpenJdk8);
+                    java_verBox.Items.Add(OpenJdkType.OpenJdk11);
+                    java_verBox.Items.Add(OpenJdkType.OpenJdk17);
+                    java_verBox.Items.Add(OpenJdkType.OpenJdk18);
+                    var res = await ModToolkit.GetFeaturedModpacksAsync();
+                    IsMCListInitialize = true;
+                    List<Mod> mods = new();
+                    res.ForEach(x =>
+                    {
+                        Mod modItem = new();
+                        modItem.Description= x.Description;
+                        modItem.image = new(new System.Uri(x.IconUrl));
+                        modItem.Name = x.Name;
+                        modItem.Version = $"{x.SupportedVersions.Last()}-{x.SupportedVersions[0]}";
+                        modItem.Files = x.Files;
+                        mods.Add(modItem);
+                    });
+                    ModGrid.ItemsSource = mods;
+                    ModSpin.IsSpinning = false;
+                    ModLoadingText.Visibility = Visibility.Hidden;
+                }
             }
+            catch
+            {
+                IsMCListInitialize = false;
+                MessageBox.Show("无法获取下载信息！请检查电脑是否连接了互联网！", "MCL启动器", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
         }
         bool IsMCListInitialize = false;
         #endregion
@@ -73,13 +81,15 @@ namespace MCL_Dev
         public string name;
         public string uuid;
         public string accessToken;
+        private string modName;
         public static string gameFolder = System.AppDomain.CurrentDomain.BaseDirectory + ".minecraft";
         int mode = 114514;//homo特有的变量（喜）
         #endregion
         public MainWindow()
         {
             InitializeComponent();
-
+            ModGrid.Visibility= Visibility.Visible;
+            ModPage.Visibility = Visibility.Hidden;
             #region 控件初始化
             var core = new GameCoreToolkit(gameFolder);
             versionCombo.ItemsSource = core.GetGameCores();
@@ -827,42 +837,39 @@ namespace MCL_Dev
         private async void ModSearch_Click(object sender, RoutedEventArgs e)
         {
             ModGrid.ItemsSource = null;
-            List<Mod> mods = new();
             ModSpin.IsSpinning = true;
             ModLoadingText.Visibility = Visibility.Visible;
-            if(ModInput.Text != "")
-            {
-                var res = await ModToolkit.SearchModpacksAsync(ModInput.Text);
-                res.ForEach(x =>
-                {
-                    Mod modItem = new();
-                    modItem.image = new(new System.Uri(x.IconUrl));
-                    modItem.Name = x.Name;
-                    modItem.Version = $"{x.SupportedVersions.Last()}-{x.SupportedVersions[0]}";
-                    modItem.Files = x.Files;
-                    mods.Add(modItem);
-                });
-            }
-            else
+            if (ModInput.Text != "")
             {                
-                var res = await ModToolkit.GetFeaturedModpacksAsync();
+                var res = await ModToolkit.SearchModpacksAsync(ModInput.Text);
+                List<Mod> mods = new();
                 res.ForEach(x =>
                 {
                     Mod modItem = new();
+                    modItem.Description = x.Description;
                     modItem.image = new(new System.Uri(x.IconUrl));
                     modItem.Name = x.Name;
                     modItem.Version = $"{x.SupportedVersions.Last()}-{x.SupportedVersions[0]}";
                     modItem.Files = x.Files;
                     mods.Add(modItem);
                 });
-            }
-            if(mods.Count > 0)
-            {
                 ModGrid.ItemsSource = mods;
             }
             else
             {
-                ModGrid.ItemsSource = null;
+                var res = await ModToolkit.GetFeaturedModpacksAsync();
+                List<Mod> mods = new();
+                res.ForEach(x =>
+                {
+                    Mod modItem = new();
+                    modItem.Description = x.Description;
+                    modItem.image = new(new System.Uri(x.IconUrl));
+                    modItem.Name = x.Name;
+                    modItem.Version = $"{x.SupportedVersions.Last()}-{x.SupportedVersions[0]}";
+                    modItem.Files = x.Files;
+                    mods.Add(modItem);
+                });
+                ModGrid.ItemsSource = mods;
             }
             ModSpin.IsSpinning = false;
             ModLoadingText.Visibility = Visibility.Hidden;
@@ -880,8 +887,79 @@ namespace MCL_Dev
         }
 
         private void ModGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
+        {            
             var item = ModGrid.SelectedItem as Mod;
+            modName = item.Name;
+            ModGrid.Visibility = Visibility.Hidden;
+            ModPage.Visibility = Visibility.Visible;
+            ModDownLoad_Back.Visibility = Visibility.Visible;
+            ModInfoImage.Source = item.image;
+            ModDescribe.Text = item.Description;
+            ModName.Text = item.Name;
+            var items = item.Files;
+            foreach(var file in items )
+            {
+                if (file.Value[0].SupportedVersion == null)
+                {
+                    items.Remove(file.Key);
+                }
+            }
+            ModDownloadFile.Items.Clear();
+            foreach(var file in items)
+            {                
+                int item_count = file.Value.Count;
+                for(int temp = 0;temp < item_count; temp++)
+                {
+                    CurseForgeModpackFileInfo modinfo = new();
+                    modinfo.FileId = file.Value[temp].FileId;
+                    modinfo.DownloadUrl= file.Value[temp].DownloadUrl;
+                    modinfo.SupportedVersion = file.Value[temp].SupportedVersion;
+                    modinfo.FileName= file.Value[temp].FileName;
+                    modinfo.ModLoaderType = file.Value[temp].ModLoaderType;
+                    ModDownloadFile.Items.Add(modinfo);
+                }
+            }
+        }
+
+        private void ModDownLoad_Back_Click(object sender, RoutedEventArgs e)
+        {
+            ModGrid.Visibility = Visibility.Visible;
+            ModPage.Visibility = Visibility.Hidden;
+            ModDownLoad_Back.Visibility = Visibility.Hidden;
+        }
+
+        private void Mod_ChooseFolder_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new CommonOpenFileDialog();
+            dlg.IsFolderPicker = true;
+            string sPath = AppDomain.CurrentDomain.BaseDirectory + "MCL\\DownLoads\\Mods";
+            if (!Directory.Exists(sPath))
+            {
+                Directory.CreateDirectory(sPath);
+            }
+            dlg.InitialDirectory = sPath;
+            string mod_saveFolder;
+            if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                mod_saveFolder = dlg.FileName;
+                Mod_SaveFolderText.Text = mod_saveFolder;
+            }            
+        }
+
+        private async void ModDownloadFile_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var mod = ModDownloadFile.SelectedItem as CurseForgeModpackFileInfo;
+            if (Mod_SaveFolderText.Text != "")
+            {
+                ModDownloadFile.Visibility = Visibility.Hidden;
+                await HttpToolkit.HttpDownloadAsync(mod.DownloadUrl, Mod_SaveFolderText.Text);
+                MessageBoxX.Show($"{modName}下载完成！","MCL启动器",MessageBoxButton.OK,MessageBoxIcon.Success);
+                ModDownloadFile.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                MessageBoxX.Show("未设置保存目录！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Error);
+            }
             
         }
     }

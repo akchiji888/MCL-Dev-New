@@ -34,6 +34,7 @@
     <PackageReference Include="Panuon.WPF.UI" Version="1.1.7" />
     <PackageReference Include="Panuon.WPF.UI.Themes" Version="0.1.0-alpha" />
     <PackageReference Include="System.Management" Version="7.0.0" />
+    <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
   </ItemGroup>
 
   <ItemGroup>

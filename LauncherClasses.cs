@@ -22,6 +22,7 @@ namespace MCL_Dev
         public static int waizhi_selectedplayer = 114514;
         public class Mod
         {
+            public string Description { get; set; }
             public BitmapImage image { set; get; }
             public string Name { set; get; }
             public string Version { set; get; }
