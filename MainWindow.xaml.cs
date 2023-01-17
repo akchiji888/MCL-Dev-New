@@ -1,24 +1,25 @@
-﻿using System.Windows;
+﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using MinecaftOAuth;
+using MinecraftLaunch.Launch;
+using MinecraftLaunch.Modules.Enum;
+using MinecraftLaunch.Modules.Installer;
+using MinecraftLaunch.Modules.Models.Auth;
+using MinecraftLaunch.Modules.Models.Download;
+using MinecraftLaunch.Modules.Models.Install;
+using MinecraftLaunch.Modules.Models.Launch;
+using MinecraftLaunch.Modules.Toolkits;
+using Panuon.WPF.UI;
+using Panuon.WPF.UI.Configurations;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using static MCL_Dev.LauncherClasses;
-using MinecraftLaunch.Modules.Toolkits;
-using MinecraftLaunch.Launch;
-using MinecaftOAuth;
-using MinecraftLaunch.Modules.Models.Auth;
-using System;
-using MinecraftLaunch.Modules.Models.Launch;
-using Panuon.WPF.UI;
-using System.IO;
-using MinecraftLaunch.Modules.Installer;
-using System.Diagnostics;
-using MinecraftLaunch.Modules.Enum;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using MinecraftLaunch.Modules.Models.Install;
-using System.Linq;
-using MinecraftLaunch.Modules.Models.Download;
-using Microsoft.WindowsAPICodePack.Dialogs;
-using System.Runtime.InteropServices;
 
 namespace MCL_Dev
 {
@@ -27,6 +28,7 @@ namespace MCL_Dev
     /// </summary>
     public partial class MainWindow : WindowX
     {
+        private viewStyle ShiTu = viewStyle.Night;
         CurseForgeToolkit ModToolkit = new("$2a$10$CUT15u9CIECXHsa8q2NDqO.5zl3lNjg/5Xw5kYVX.ClujkvAir09K");
         #region 公共变量与void声明
         private async void GetMcVersionList()
@@ -54,7 +56,7 @@ namespace MCL_Dev
                     res.ForEach(x =>
                     {
                         Mod modItem = new();
-                        modItem.Description= x.Description;
+                        modItem.Description = x.Description;
                         modItem.image = new(new System.Uri(x.IconUrl));
                         modItem.Name = x.Name;
                         modItem.Version = $"{x.SupportedVersions.Last()}-{x.SupportedVersions[0]}";
@@ -71,7 +73,7 @@ namespace MCL_Dev
                 IsMCListInitialize = false;
                 MessageBox.Show("无法获取下载信息！请检查电脑是否连接了互联网！", "MCL启动器", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            
+
         }
         bool IsMCListInitialize = false;
         #endregion
@@ -88,7 +90,7 @@ namespace MCL_Dev
         public MainWindow()
         {
             InitializeComponent();
-            ModGrid.Visibility= Visibility.Visible;
+            ModGrid.Visibility = Visibility.Visible;
             ModPage.Visibility = Visibility.Hidden;
             #region 控件初始化
             var core = new GameCoreToolkit(gameFolder);
@@ -102,7 +104,60 @@ namespace MCL_Dev
             }
             javaCombo.SelectedIndex = 0;
             #endregion
+            var FirstTime = !Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "MCL");            
+            
+            Task.Run(() =>
+            {
+                Thread.Sleep(500);
+                if (FirstTime == true)
+                {
+                    var setting = Application.Current.FindResource("YongHuXieYi") as MessageBoxXSetting;
+                    Dispatcher.Invoke(new Action(() =>
+                    {
+                        var XieYiMessage = MessageBoxX.Show(null, "使用MCL启动器就代表您同意《用户协议与免责声明》", "MCL启动器", MessageBoxButton.OKCancel, MessageBoxIcon.Info, setting);
+                        if (XieYiMessage == MessageBoxResult.OK)
+                        {
+                            Process.Start(new ProcessStartInfo("https://docs.qq.com/doc/DUklrU3VJTm92SnFG")
+                            {
+                                UseShellExecute = true,
+                                CreateNoWindow = true
+                            });
+                        }
+                        else
+                        {
 
+                        }
+                    }));                    
+                    DirectoryInfo directoryInfo = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory + "MCL");
+                    directoryInfo.Create();
+                }
+            });
+            Task.Run(new Action(() =>
+            {
+                try
+                {
+                    UpdateD.Update updated = new UpdateD.Update();
+                    var HaveHigherVersion = updated.GetUpdate("4386F97F6C36488887EBA723C4C99C83", LauncherVersion);
+                    if (HaveHigherVersion == true)
+                    {
+                        NoticeBox.Show("启动器有新版本可供更新，可前往【设置】进行更新！", "MCL启动器", MessageBoxIcon.Info);
+                        Thread.Sleep(3000);
+                        NoticeBox.DestroyInstance();
+                    }
+                    else
+                    {
+                        NoticeBox.Show("启动器已是最新版本！", "MCL启动器", MessageBoxIcon.Success);
+                        Thread.Sleep(3000);
+                        NoticeBox.DestroyInstance();
+                    }
+                }
+                catch
+                {
+                    NoticeBox.Show("无法检测是否有更新！", "MCL启动器", MessageBoxIcon.Error);
+                    Thread.Sleep(3000);
+                    NoticeBox.DestroyInstance();
+                }
+            }));
         }
         #region 启动游戏(void)
         private async void startGame()
@@ -587,7 +642,7 @@ namespace MCL_Dev
             };
         }
         #endregion
-        #region 事件
+        #region 下载事件
         private async void VanilaStart_Click(object sender, RoutedEventArgs e)
         {
             progress.Value = 0;
@@ -611,7 +666,13 @@ namespace MCL_Dev
                         }));
                     });
                 });
-                MessageBoxX.Show("下载完成！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Success);
+                var setting = Application.Current.FindResource("CustomNoticeSetting") as NoticeBoxSetting;
+                var handler = NoticeBox.Show("下载完成！", "MCL启动器", MessageBoxIcon.Success, true, setting);
+                await Task.Run(() =>
+                {
+                    Thread.Sleep(1500);
+                });
+                NoticeBox.DestroyInstance();
             }
             else
             {
@@ -647,7 +708,13 @@ namespace MCL_Dev
                         }));
                     });
                 });
-                MessageBoxX.Show("下载完成！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Success);
+                var setting = Application.Current.FindResource("CustomNoticeSetting") as NoticeBoxSetting;
+                var handler = NoticeBox.Show("下载完成！", "MCL启动器", MessageBoxIcon.Success, true, setting);
+                await Task.Run(() =>
+                {
+                    Thread.Sleep(1500);
+                });
+                NoticeBox.DestroyInstance();
                 //
             }
             else
@@ -686,7 +753,13 @@ namespace MCL_Dev
                         }));
                     });
                 });
-                MessageBoxX.Show("安装完成！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Success);
+                var setting = Application.Current.FindResource("CustomNoticeSetting") as NoticeBoxSetting;
+                var handler = NoticeBox.Show("安装完成！", "MCL启动器", MessageBoxIcon.Success, true, setting);
+                await Task.Run(() =>
+                {
+                    Thread.Sleep(1500);
+                });
+                NoticeBox.DestroyInstance();
             }
             else
             {
@@ -713,7 +786,13 @@ namespace MCL_Dev
                             fabricInstallProgress.Value = e.Item1;
                         }));
                     });
-                    MessageBoxX.Show("下载完成！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Success);
+                    var setting = Application.Current.FindResource("CustomNoticeSetting") as NoticeBoxSetting;
+                    var handler = NoticeBox.Show("下载完成！", "MCL启动器", MessageBoxIcon.Success, true, setting);
+                    await Task.Run(() =>
+                    {
+                        Thread.Sleep(1500);
+                    });
+                    NoticeBox.DestroyInstance();
                 });
             }
             else
@@ -770,7 +849,13 @@ namespace MCL_Dev
                         }));
                     });
                 });
-                MessageBoxX.Show("下载完成！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Success);
+                var setting = Application.Current.FindResource("CustomNoticeSetting") as NoticeBoxSetting;
+                var handler = NoticeBox.Show("下载完成！", "MCL启动器", MessageBoxIcon.Success, true, setting);
+                await Task.Run(() =>
+                {
+                    Thread.Sleep(1500);
+                });
+                NoticeBox.DestroyInstance();
 
             }
             else
@@ -825,7 +910,13 @@ namespace MCL_Dev
                         }));
                     });
                 });
-                MessageBoxX.Show("下载完成！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Success);
+                var setting = Application.Current.FindResource("CustomNoticeSetting") as NoticeBoxSetting;
+                var handler = NoticeBox.Show("下载完成！", "MCL启动器", MessageBoxIcon.Success, true, setting);
+                await Task.Run(() =>
+                {
+                    Thread.Sleep(1500);
+                });
+                NoticeBox.DestroyInstance();
             }
             else
             {
@@ -840,7 +931,7 @@ namespace MCL_Dev
             ModSpin.IsSpinning = true;
             ModLoadingText.Visibility = Visibility.Visible;
             if (ModInput.Text != "")
-            {                
+            {
                 var res = await ModToolkit.SearchModpacksAsync(ModInput.Text);
                 List<Mod> mods = new();
                 res.ForEach(x =>
@@ -887,7 +978,7 @@ namespace MCL_Dev
         }
 
         private void ModGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {            
+        {
             var item = ModGrid.SelectedItem as Mod;
             modName = item.Name;
             ModGrid.Visibility = Visibility.Hidden;
@@ -897,7 +988,7 @@ namespace MCL_Dev
             ModDescribe.Text = item.Description;
             ModName.Text = item.Name;
             var items = item.Files;
-            foreach(var file in items )
+            foreach (var file in items)
             {
                 if (file.Value[0].SupportedVersion == null)
                 {
@@ -905,16 +996,16 @@ namespace MCL_Dev
                 }
             }
             ModDownloadFile.Items.Clear();
-            foreach(var file in items)
-            {                
+            foreach (var file in items)
+            {
                 int item_count = file.Value.Count;
-                for(int temp = 0;temp < item_count; temp++)
+                for (int temp = 0; temp < item_count; temp++)
                 {
                     CurseForgeModpackFileInfo modinfo = new();
                     modinfo.FileId = file.Value[temp].FileId;
-                    modinfo.DownloadUrl= file.Value[temp].DownloadUrl;
+                    modinfo.DownloadUrl = file.Value[temp].DownloadUrl;
                     modinfo.SupportedVersion = file.Value[temp].SupportedVersion;
-                    modinfo.FileName= file.Value[temp].FileName;
+                    modinfo.FileName = file.Value[temp].FileName;
                     modinfo.ModLoaderType = file.Value[temp].ModLoaderType;
                     ModDownloadFile.Items.Add(modinfo);
                 }
@@ -943,7 +1034,7 @@ namespace MCL_Dev
             {
                 mod_saveFolder = dlg.FileName;
                 Mod_SaveFolderText.Text = mod_saveFolder;
-            }            
+            }
         }
 
         private async void ModDownloadFile_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -953,14 +1044,62 @@ namespace MCL_Dev
             {
                 ModDownloadFile.Visibility = Visibility.Hidden;
                 await HttpToolkit.HttpDownloadAsync(mod.DownloadUrl, Mod_SaveFolderText.Text);
-                MessageBoxX.Show($"{modName}下载完成！","MCL启动器",MessageBoxButton.OK,MessageBoxIcon.Success);
+                var handler = NoticeBox.Show($"{modName}下载完成！", "MCL启动器", MessageBoxIcon.Success, true);
                 ModDownloadFile.Visibility = Visibility.Visible;
+                await Task.Run(() =>
+                {
+                    Thread.Sleep(1500);
+                });
+                NoticeBox.DestroyInstance();
             }
             else
             {
                 MessageBoxX.Show("未设置保存目录！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Error);
             }
-            
+
+        }
+
+        private async void CheckUpdateButton_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateSpin.IsSpinning = true;
+            UpdateTextblock.Visibility = Visibility.Visible;
+            UpdateD.Update updated = new UpdateD.Update();
+            var HaveHigherVersion = updated.GetUpdate("4386F97F6C36488887EBA723C4C99C83", LauncherVersion);
+            UpdateSpin.IsSpinning = false;
+            UpdateTextblock.Visibility = Visibility.Hidden;
+            if(HaveHigherVersion == true)
+            {
+                var DownLoadLink = updated.GetUpdateFile("4386F97F6C36488887EBA723C4C99C83"); 
+                var GengXinNeiRong = updated.GetUpdateRem("4386F97F6C36488887EBA723C4C99C83");
+                var setting = Application.Current.FindResource("UpdateMessage") as MessageBoxXSetting;
+                var WantToUpdate = MessageBoxX.Show(null,$"有新版本可更新！\n更新内容:\n{GengXinNeiRong}","MCL启动器",MessageBoxButton.OKCancel,MessageBoxIcon.Info,setting);
+                if(WantToUpdate == MessageBoxResult.OK)
+                {
+                    Process.Start(new ProcessStartInfo(DownLoadLink)
+                    {
+                        UseShellExecute = true,
+                        CreateNoWindow = true
+                    });
+                }                
+            }
+            else
+            {
+                var handler = NoticeBox.Show("启动器已是最新版本", "MCL启动器", MessageBoxIcon.Success, true);
+                await Task.Run(() =>
+                {
+                    Thread.Sleep(1500);
+                });
+                NoticeBox.DestroyInstance();
+            }
+        }
+
+        private void XieYiButton_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo("https://docs.qq.com/doc/DUklrU3VJTm92SnFG")
+            {
+                UseShellExecute = true,
+                CreateNoWindow = true
+            });
         }
     }
 }

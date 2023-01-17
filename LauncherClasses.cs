@@ -14,6 +14,7 @@ namespace MCL_Dev
 {
     internal class LauncherClasses
     {
+        public const string LauncherVersion = "1.2.1"; 
         public static YggdrasilAccount yggdrasilAccount;
         public static MicrosoftAccount microsoftaccount = new();
         public static string waizhi_email;
@@ -27,6 +28,11 @@ namespace MCL_Dev
             public string Name { set; get; }
             public string Version { set; get; }
             public Dictionary<string, List<CurseForgeModpackFileInfo>> Files { set; get; }
+        }
+        public enum viewStyle
+        {
+            Day = 1,
+            Night = 2
         }
         public static string waizhi_selectedUsr;
         public class YggdrasilAuthenticator
