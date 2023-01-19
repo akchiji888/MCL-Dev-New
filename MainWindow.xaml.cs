@@ -974,6 +974,9 @@ namespace MCL_Dev
                 case 1:
                     GetMcVersionList();
                     break;
+                case 2:
+                    GetMcVersions();
+                    break;
             }
         }
 
@@ -1057,6 +1060,49 @@ namespace MCL_Dev
                 MessageBoxX.Show("未设置保存目录！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Error);
             }
 
+        }
+        private void GetMcVersions()
+        {
+            var core = new GameCoreToolkit(gameFolder);
+            var mcVersions = core.GetGameCores();
+            List<MinecraftVersion> YouXiBanBen = new List<MinecraftVersion>();
+            foreach (var mcVersion in mcVersions)
+            {
+                MinecraftVersion minecraftVersion = new MinecraftVersion();
+                minecraftVersion.Id = mcVersion.Id;
+                var ModLoaderInfomation = mcVersion.ModLoaderInfos.ToList();
+                switch (mcVersion.HasModLoader)
+                {
+                    case true:
+                        minecraftVersion.Description = $"继承自{mcVersion.InheritsFrom}，{ModLoaderInfomation[0].ModLoaderType}客户端";
+                        switch (ModLoaderInfomation[0].ModLoaderType)
+                        {
+                            case ModLoaderType.Any:
+                                minecraftVersion.bitmapImage = new(new Uri("/Resources/images/normal.png"));
+                                break;
+                        }
+                        break;
+                    case false:
+                        switch (mcVersion.Type)
+                        {
+                            case "release":
+                                minecraftVersion.Description = $"正式版 {mcVersion.Id}";
+                                break;
+                            case "snapshot":
+                                minecraftVersion.Description = $"快照版 {mcVersion.Id}";
+                                break;
+                            case "old_alpha":
+                                minecraftVersion.Description = $"远古Alpha测试版 {mcVersion.Id}";
+                                break;
+                            case "old_beta":
+                                minecraftVersion.Description = $"远古Beta测试版 {mcVersion.Id}";
+                                break;
+                        }
+                        break;
+                }                
+                YouXiBanBen.Add(minecraftVersion);
+            }
+            GameVersionData.ItemsSource = YouXiBanBen;
         }
 
         private async void CheckUpdateButton_Click(object sender, RoutedEventArgs e)

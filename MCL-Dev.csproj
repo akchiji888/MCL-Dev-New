@@ -26,6 +26,11 @@
   <ItemGroup>
     <None Remove="App.config" />
     <None Remove="Resources\fontawesome.ttf" />
+    <None Remove="Resources\Images\fabric.png" />
+    <None Remove="Resources\Images\forge.png" />
+    <None Remove="Resources\Images\normal.png" />
+    <None Remove="Resources\Images\optfine.png" />
+    <None Remove="Resources\Images\quilt.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +42,11 @@
 
   <ItemGroup>
     <EmbeddedResource Include="App.config" />
+    <EmbeddedResource Include="Resources\Images\fabric.png" />
+    <EmbeddedResource Include="Resources\Images\forge.png" />
+    <EmbeddedResource Include="Resources\Images\normal.png" />
+    <EmbeddedResource Include="Resources\Images\optfine.png" />
+    <EmbeddedResource Include="Resources\Images\quilt.png" />
   </ItemGroup>
 
   <ItemGroup>

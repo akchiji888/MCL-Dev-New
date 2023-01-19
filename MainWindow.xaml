@@ -193,7 +193,27 @@
                                 <Button x:Name="XieYiButton" puthe:ButtonStylist.Style="ColorBorder" Content="查看《用户协议与免责声明》" Margin="10,108,0,0" Height="28" Click="XieYiButton_Click"/>
                                 <TextBlock Text="Copyright © 8倍ak吃鸡(akchiji888) 2023.All Rights Reserved" Margin="10,141,272,281" Foreground="#FF33B4F5" FontSize="12" Background="{x:Null}"/>
                             </Grid>
-                        </TabItem>                        
+                        </TabItem>
+                        <TabItem Header="管理版本" Height="100" pu:TabItemHelper.Icon="&#xf1b3;" pu:IconHelper.FontFamily="{DynamicResource Awesome}">
+                            <Grid>
+                                <StackPanel x:Name="GameVersion" Margin="0,73,0,10">
+
+                                </StackPanel>
+                                <DataGrid IsReadOnly="True"  CanUserResizeColumns="False" CanUserDeleteRows="False" CanUserAddRows="False" SelectionMode="Single" CanUserReorderColumns="False" AutoGenerateColumns="False" x:Name="GameVersionData">
+                                    <DataGrid.Columns>
+                                        <DataGridTemplateColumn Width="64">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Image Source="{Binding bitmapImage}" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTextColumn Width="250" Header="版本" Binding="{Binding Id}"/>
+                                        <DataGridTextColumn Width="250" Header="描述" Binding="{Binding Description}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                        </TabItem>
                     </TabControl>                    
                 </Grid>
             </TabItem>

@@ -29,6 +29,12 @@ namespace MCL_Dev
             public string Version { set; get; }
             public Dictionary<string, List<CurseForgeModpackFileInfo>> Files { set; get; }
         }
+        public class MinecraftVersion
+        {
+            public BitmapImage bitmapImage { get; set; }
+            public string Description { get; set; }
+            public string Id { get; set; }
+        }
         public enum viewStyle
         {
             Day = 1,
