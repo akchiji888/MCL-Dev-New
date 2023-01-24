@@ -16,13 +16,11 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <WindowChrome.WindowChrome>
-        <WindowChrome ResizeBorderThickness="5"
-                      GlassFrameThickness="0"
-                      CornerRadius="15"/>
-    </WindowChrome.WindowChrome>
+    <pu:WindowX.Effect>
+        <pu:AcrylicWindowXEffect AccentColor="AliceBlue" />
+    </pu:WindowX.Effect>
     <Grid x:Name="MainGrid">
-        <TabControl x:Name="Page" SelectionChanged="PageChanged" TabStripPlacement="Left" Foreground="#FF33B4F5" FontSize="12" BorderBrush="{x:Null}" >
+        <TabControl Background="{x:Null}" x:Name="Page" SelectionChanged="PageChanged" TabStripPlacement="Left" Foreground="#FF33B4F5" FontSize="12" BorderBrush="{x:Null}" >
             <TabItem x:Name="ZhuYe_TabItem"  Height="162" Header="主页" pu:TabItemHelper.Icon="&#xe942;" pu:IconHelper.FontSize="20" pu:IconHelper.FontFamily="{DynamicResource PanuonIconFont}">
                 <Grid>
                     <Button Content="启动游戏" x:Name="start" Width="310" Height="50" Click="start_Click" Margin="46,419,0,0" FontSize="20" Foreground="White"/>
@@ -64,7 +62,7 @@
             </TabItem>
             <TabItem  Height="162" pu:TabItemHelper.Icon="&#xf0ed;" Header="下载" pu:IconHelper.FontSize="20" pu:IconHelper.FontFamily="{DynamicResource Awesome}">
                 <Grid>
-                    <TabControl TabStripPlacement="Right" Foreground="#FF33B4F5" BorderBrush="{x:Null}" >
+                    <TabControl Background="{x:Null}" TabStripPlacement="Right" Foreground="#FF33B4F5" BorderBrush="{x:Null}" >
                         <TabItem  Height="68.57" Header="原版安装">
                             <Grid x:Name="DownLoadGrid">
                                 <TextBlock HorizontalAlignment="Left" Margin="10,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF33B4F5" FontSize="16"><Run Text="版本"/><Run Language="zh-cn" Text=":"/></TextBlock>
@@ -81,7 +79,7 @@
                                 <Button BorderThickness="1" Content="下载" pu:ButtonHelper.CornerRadius="5,5,5,5" x:Name="optInstall_start" Margin="10,114,0,0" FontSize="18" Background="{x:Null}" puthe:ButtonStylist.Style="ColorBorder" Width="97" Height="36" Click="optInstall_start_Click"/>
                                 <TextBox x:Name="optDownLoadLog" HorizontalAlignment="Left" Margin="10,172,0,0" TextWrapping="Wrap" Text="" Width="224" Height="304" Foreground="#FF33B4F5" Cursor="IBeam"/>
                                 <ProgressBar x:Name="optInstallProgress" HorizontalAlignment="Left" Height="12" Margin="10,155,0,0" Maximum="1" Width="224" Foreground="#FF33B4F5"/>
-                                <ComboBox puthe:ComboBoxStylist.Style="Border" x:Name="opt_game_verBox" HorizontalAlignment="Left" Margin="129,40,0,0" Width="189" Foreground="#FF33B4F5" Height="32" DisplayMemberPath="Id" Cursor="IBeam" DropDownClosed="opt_game_verBox_DropDownClosed"/>
+                                <ComboBox puthe:ComboBoxStylist.Style="Border" x:Name="opt_game_verBox" HorizontalAlignment="Left" Margin="129,40,0,0" Width="189" Foreground="#FF33B4F5" Height="32" Cursor="IBeam" DropDownClosed="opt_game_verBox_DropDownClosed"/>
                                 <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF33B4F5" FontSize="16" Text="tips:若下拉框中无任何版本，请再次打开下拉框"></TextBlock>
                                 <TextBlock HorizontalAlignment="Left" Margin="9,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF33B4F5" FontSize="16"><Run Text="Optfine版本"/><Run Language="zh-cn" Text=": "/></TextBlock>
                                 <ComboBox puthe:ComboBoxStylist.Style="Border" x:Name="opt_game_verBox_Copy" HorizontalAlignment="Left" Margin="108,77,0,0" Width="204" Foreground="#FF33B4F5" Height="32" DisplayMemberPath="FileName" Cursor="IBeam"/>
@@ -93,7 +91,7 @@
                                 <Button BorderThickness="1" Content="下载" x:Name="ForgeInstall_start" pu:ButtonHelper.CornerRadius="5,5,5,5" Margin="8,110,0,0" FontSize="18" puthe:ButtonStylist.Style="ColorBorder" Width="97" Height="36" Click="ForgeInstall_start_Click"/>
                                 <TextBox x:Name="ForgeDownLoadLog" HorizontalAlignment="Left" Margin="8,168,0,0" TextWrapping="Wrap" Text="" Width="224" Height="309" Foreground="#FF33B4F5" Cursor="IBeam"/>
                                 <ProgressBar Maximum="1" x:Name="ForgeInstallProgress" HorizontalAlignment="Left" Height="12" Margin="8,151,0,0" Width="224" Foreground="#FF33B4F5"/>
-                                <ComboBox x:Name="Forge_game_verBox" HorizontalAlignment="Left" Margin="127,32,0,0" Width="177" Foreground="#FF33B4F5" Height="32" DisplayMemberPath="Id" Cursor="IBeam" DropDownClosed="Forge_game_verBox_DropDownClosed"/>
+                                <ComboBox x:Name="Forge_game_verBox" HorizontalAlignment="Left" Margin="127,32,0,0" Width="177" Foreground="#FF33B4F5" Height="32" Cursor="IBeam" DropDownClosed="Forge_game_verBox_DropDownClosed"/>
                                 <TextBlock HorizontalAlignment="Left" Margin="8,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF33B4F5" FontSize="16" Text="tips:若下拉框中无任何版本，请再次打开下拉框"></TextBlock>
                                 <TextBlock HorizontalAlignment="Left" Margin="8,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF33B4F5" FontSize="16"><Run Text="Forge版本"/><Run Language="zh-cn" Text=": "/></TextBlock>
                                 <ComboBox x:Name="Forge_game_verBox_Copy" HorizontalAlignment="Left" Margin="100,69,0,0" Width="204" Foreground="#FF33B4F5" Height="32" DisplayMemberPath="ForgeVersion" Cursor="IBeam"/>
@@ -105,7 +103,7 @@
                                 <Button puthe:ButtonStylist.Style="ColorBorder" BorderThickness="1" Content="下载" x:Name="fabricInstall_start" pu:ButtonHelper.CornerRadius="5,5,5,5" Margin="10,111,0,0" FontSize="18" Background="{x:Null}" Width="97" Height="36" Click="fabricInstall_start_Click"/>
                                 <TextBox x:Name="fabricDownLoadLog" HorizontalAlignment="Left" Margin="10,169,0,0" TextWrapping="Wrap" Text="" Width="224" Height="306" Foreground="#FF33B4F5" Cursor="IBeam"/>
                                 <ProgressBar x:Name="fabricInstallProgress" HorizontalAlignment="Left" Height="12" Margin="10,152,0,0" Width="224" Foreground="#FF33B4F5"/>
-                                <ComboBox x:Name="fabric_game_verBox" HorizontalAlignment="Left" Margin="129,35,0,0" Width="217" Foreground="#FF33B4F5" Height="32" DisplayMemberPath="Id" Cursor="IBeam" DropDownClosed="fabric_game_verBox_DropDownClosed"/>
+                                <ComboBox x:Name="fabric_game_verBox" HorizontalAlignment="Left" Margin="129,35,0,0" Width="217" Foreground="#FF33B4F5" Height="32" Cursor="IBeam" DropDownClosed="fabric_game_verBox_DropDownClosed"/>
                                 <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF33B4F5" FontSize="16" Text="tips:若下拉框中无任何版本，请再次打开下拉框"></TextBlock>
                                 <TextBlock HorizontalAlignment="Left" Margin="10,78,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF33B4F5" FontSize="16"><Run Text="Fabric版本"/><Run Language="zh-cn" Text=": "/></TextBlock>
                                 <ComboBox x:Name="fabric_game_verBox_Copy" HorizontalAlignment="Left" Margin="102,72,0,0" Width="244" Foreground="#FF33B4F5" Height="32" DisplayMemberPath="Loader.Maven" Cursor="IBeam" DropDownOpened="fabric_game_verBox_Copy_DropDownOpened"/>
@@ -127,7 +125,7 @@
                                 <Button puthe:ButtonStylist.Style="ColorBorder" BorderThickness="1" Content="下载" x:Name="QuiltInstall_start" pu:ButtonHelper.CornerRadius="5,5,5,5" Margin="10,114,0,0" FontSize="18" Background="{x:Null}" Width="97" Height="36" Click="QuiltInstall_start_Click"/>
                                 <TextBox x:Name="QuiltDownLoadLog" HorizontalAlignment="Left" Margin="10,172,0,0" TextWrapping="Wrap" Text="" Width="224" Height="302" Foreground="#FF33B4F5" Cursor="IBeam"/>
                                 <ProgressBar x:Name="QuiltInstallProgress" HorizontalAlignment="Left" Height="12" Margin="10,155,0,0" Width="224" Foreground="#FF33B4F5"/>
-                                <ComboBox x:Name="Quilt_game_verBox" HorizontalAlignment="Left" Margin="129,35,0,0" Width="208" Foreground="#FF33B4F5" Height="32" DisplayMemberPath="Id" Cursor="IBeam" DropDownClosed="Quilt_game_verBox_DropDownClosed"/>
+                                <ComboBox x:Name="Quilt_game_verBox" HorizontalAlignment="Left" Margin="129,35,0,0" Width="208" Foreground="#FF33B4F5" Height="32" Cursor="IBeam" DropDownClosed="Quilt_game_verBox_DropDownClosed"/>
                                 <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF33B4F5" FontSize="16" Text="tips:若下拉框中无任何版本，请再次打开下拉框"></TextBlock>
                                 <TextBlock HorizontalAlignment="Left" Margin="10,78,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF33B4F5" FontSize="16"><Run Text="Quilt版本"/><Run Language="zh-cn" Text=": "/></TextBlock>
                                 <ComboBox x:Name="Quilt_game_verBox_Copy" HorizontalAlignment="Left" Margin="93,72,0,0" Width="244" Foreground="#FF33B4F5" Height="32" DisplayMemberPath="Loader.Maven" Cursor="IBeam" DropDownOpened="Quilt_game_verBox_Copy_DropDownOpened"/>
@@ -182,26 +180,26 @@
             </TabItem>
             <TabItem Height="162" pu:TabItemHelper.Icon="&#xf013;" Header="设置" pu:IconHelper.FontSize="20" pu:IconHelper.FontFamily="{DynamicResource Awesome}">
                 <Grid>
-                    <TabControl FontSize="12" TabStripPlacement="Right" Foreground="#FF33B4F5" BorderBrush="{x:Null}">
-                        <TabItem pu:TabItemHelper.Icon="&#xe92f;" Header="关于启动器" Height="100" pu:IconHelper.FontFamily="{DynamicResource PanuonIconFont}">
-                            <Grid>
-                                <TextBlock Text="关于启动器" Margin="10,10,457,411" Foreground="#FF33B4F5" FontSize="32" Background="{x:Null}"/>
-                                <TextBlock Text="当前版本：Release1.2.1" Margin="10,50,448,389" Foreground="#FF33B4F5" FontSize="16" Background="{x:Null}"/>
-                                <Button x:Name="CheckUpdateButton" Content="检查更新" Margin="10,75,0,0" Height="28" Click="CheckUpdateButton_Click"/>
-                                <pu:Spin x:Name="UpdateSpin" IsSpinning="False" MaxHeight="24" VerticalAlignment="Top" Width="24" SpinStyle="Ring2" GlyphBrush="#FF33B4F5" Margin="10,108,696,0" Height="123"/>
-                                <TextBlock Text="检查更新中…" x:Name="UpdateTextblock" Visibility="Hidden" Margin="39,110,589,346" Foreground="#FF33B4F5" FontSize="16"/>
-                                <Button x:Name="XieYiButton" puthe:ButtonStylist.Style="ColorBorder" Content="查看《用户协议与免责声明》" Margin="10,108,0,0" Height="28" Click="XieYiButton_Click"/>
-                                <TextBlock Text="Copyright © 8倍ak吃鸡(akchiji888) 2023.All Rights Reserved" Margin="10,141,272,281" Foreground="#FF33B4F5" FontSize="12" Background="{x:Null}"/>
-                            </Grid>
-                        </TabItem>
+                    <TabControl Background="{x:Null}" FontSize="12" TabStripPlacement="Right" Foreground="#FF33B4F5" BorderBrush="{x:Null}">
                         <TabItem Header="管理版本" Height="100" pu:TabItemHelper.Icon="&#xf1b3;" pu:IconHelper.FontFamily="{DynamicResource Awesome}">
                             <Grid>
-                                <StackPanel x:Name="GameVersion" Margin="0,73,0,10">
-
+                                <StackPanel x:Name="GameVersion">
+                                    <Grid Height="500">
+                                        <Image Width="80" x:Name="GameVersionImage" Margin="10,10,0,0" HorizontalAlignment="Left" Height="80" VerticalAlignment="Top"/>
+                                        <Label Content="1.14.514" x:Name="GameID" FontSize="32" Foreground="#FF33B4F5" Margin="94,0,17,443" Background="{x:Null}"/>
+                                        <Label Content="恶臭正式版" Foreground="Gray" x:Name="GameDescription" Background="{x:Null}" Margin="100,57,10,410"/>
+                                        <TextBlock Foreground="#FF33B4F5" Text="路径：" x:Name="GamePath" Margin="10,95,148,385" FontSize="14"/>
+                                        <TextBlock Foreground="#FF33B4F5" Text="大小：" x:Name="GameSize" Margin="10,115,148,365" FontSize="14"/>
+                                        <TextBlock Foreground="#FF33B4F5" Text="依赖库：" x:Name="GameLibrary" Margin="10,135,148,346" FontSize="14"/>
+                                        <TextBlock Foreground="#FF33B4F5" Text="依赖资源：" x:Name="GameAssets" Margin="10,154,148,327" FontSize="14"/>
+                                        <Button x:Name="openVersionFolder" puthe:ButtonStylist.Style="ColorBorder" Content="打开文件夹" Margin="0,178,0,0" Width="210" HorizontalAlignment="Center" Click="openVersionFolder_Click"/>
+                                        <Button x:Name="deleteVersion" puthe:GeneralStylist.Feature="DangerColor" Content="删除该核心" Margin="421,178,0,0" Width="210" Click="deleteVersion_Click"/>
+                                        <Button x:Name="GameVersion_back" Content="返回" Width="210" Margin="0,178,0,0" Click="GameVersion_back_Click"/>
+                                    </Grid>
                                 </StackPanel>
-                                <DataGrid IsReadOnly="True"  CanUserResizeColumns="False" CanUserDeleteRows="False" CanUserAddRows="False" SelectionMode="Single" CanUserReorderColumns="False" AutoGenerateColumns="False" x:Name="GameVersionData">
+                                <DataGrid IsHitTestVisible="True" IsReadOnly="True" SelectionMode="Single" MouseDoubleClick="GameVersionData_MouseDoubleClick" CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False" CanUserResizeColumns="False" CanUserReorderColumns="False" AutoGenerateColumns="False" Background="{x:Null}" x:Name="GameVersionData">
                                     <DataGrid.Columns>
-                                        <DataGridTemplateColumn Width="64">
+                                        <DataGridTemplateColumn>
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <Image Source="{Binding bitmapImage}" />
@@ -214,7 +212,18 @@
                                 </DataGrid>
                             </Grid>
                         </TabItem>
-                    </TabControl>                    
+                        <TabItem pu:TabItemHelper.Icon="&#xe92f;" Header="关于启动器" Height="100" pu:IconHelper.FontFamily="{DynamicResource PanuonIconFont}">
+                            <Grid>
+                                <TextBlock Text="关于启动器" Margin="10,10,457,411" Foreground="#FF33B4F5" FontSize="32" Background="{x:Null}"/>
+                                <TextBlock Text="当前版本：Release1.2.2" Margin="10,50,448,389" Foreground="#FF33B4F5" FontSize="16" Background="{x:Null}"/>
+                                <Button x:Name="CheckUpdateButton" Content="检查更新" Margin="10,75,0,0" Height="28" Click="CheckUpdateButton_Click"/>
+                                <pu:Spin x:Name="UpdateSpin" IsSpinning="False" MaxHeight="24" VerticalAlignment="Top" Width="24" SpinStyle="Ring2" GlyphBrush="#FF33B4F5" Margin="10,108,696,0" Height="123"/>
+                                <TextBlock Text="检查更新中…" x:Name="UpdateTextblock" Visibility="Hidden" Margin="39,110,589,346" Foreground="#FF33B4F5" FontSize="16"/>
+                                <Button x:Name="XieYiButton" puthe:ButtonStylist.Style="ColorBorder" Content="查看《用户协议与免责声明》" Margin="10,108,0,0" Height="28" Click="XieYiButton_Click"/>
+                                <TextBlock Text="Copyright © 8倍ak吃鸡(akchiji888) 2023.All Rights Reserved" Margin="10,141,272,281" Foreground="#FF33B4F5" FontSize="12" Background="{x:Null}"/>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
                 </Grid>
             </TabItem>
         </TabControl>

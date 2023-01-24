@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,7 +29,6 @@ namespace MCL_Dev
     /// </summary>
     public partial class MainWindow : WindowX
     {
-        private viewStyle ShiTu = viewStyle.Night;
         CurseForgeToolkit ModToolkit = new("$2a$10$CUT15u9CIECXHsa8q2NDqO.5zl3lNjg/5Xw5kYVX.ClujkvAir09K");
         #region 公共变量与void声明
         private async void GetMcVersionList()
@@ -41,15 +41,17 @@ namespace MCL_Dev
                     ModLoadingText.Visibility = Visibility.Visible;
                     var v = new GameCoreToolkit(gameFolder);
                     var MCList = await GameCoreInstaller.GetGameCoresAsync();
+                    var MCReleaseList = MCList.Cores.Where(x => x.Type == "release").Select(x => x.Id).ToList();
                     verBox.ItemsSource = MCList.Cores;
-                    opt_game_verBox.ItemsSource = MCList.Cores;
-                    fabric_game_verBox.ItemsSource = MCList.Cores;
-                    Forge_game_verBox.ItemsSource = MCList.Cores;
-                    Quilt_game_verBox.ItemsSource = MCList.Cores;
-                    java_verBox.Items.Add(OpenJdkType.OpenJdk8);
-                    java_verBox.Items.Add(OpenJdkType.OpenJdk11);
-                    java_verBox.Items.Add(OpenJdkType.OpenJdk17);
-                    java_verBox.Items.Add(OpenJdkType.OpenJdk18);
+                    opt_game_verBox.ItemsSource = MCReleaseList;
+                    fabric_game_verBox.ItemsSource = MCReleaseList;
+                    Forge_game_verBox.ItemsSource = MCReleaseList;
+                    Quilt_game_verBox.ItemsSource = MCReleaseList;
+                    List<OpenJdkType> jdkTypes = new()
+                    {
+                        OpenJdkType.OpenJdk8,OpenJdkType.OpenJdk11,OpenJdkType.OpenJdk17,OpenJdkType.OpenJdk18
+                    };
+                    java_verBox.ItemsSource = jdkTypes;
                     var res = await ModToolkit.GetFeaturedModpacksAsync();
                     IsMCListInitialize = true;
                     List<Mod> mods = new();
@@ -76,20 +78,53 @@ namespace MCL_Dev
 
         }
         bool IsMCListInitialize = false;
+        /// <summary>
+        /// 将序列化的json字符串内容写入Json文件，并且保存
+        /// </summary>
+        /// <param name="path">路径</param>
+        /// <param name="jsonConents">Json内容</param>
+        private static void WriteJsonFile(string path, string jsonConents)
+        {
+            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite, FileShare.ReadWrite))
+            {
+                fs.Seek(0, SeekOrigin.Begin);
+                fs.SetLength(0);
+                using (StreamWriter sw = new StreamWriter(fs, Encoding.UTF8))
+                {
+                    sw.WriteLine(jsonConents);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取到本地的Json文件并且解析返回对应的json字符串
+        /// </summary>
+        /// <param name="filepath">文件路径</param>
+        /// <returns>Json内容</returns>
+        private string GetJsonFile(string filepath)
+        {
+            string json = string.Empty;
+            using (FileStream fs = new FileStream(filepath, FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite, FileShare.ReadWrite))
+            {
+                using (StreamReader sr = new StreamReader(fs, Encoding.UTF8))
+                {
+                    json = sr.ReadToEnd().ToString();
+                }
+            }
+            return json;
+        }
         #endregion
-        public GameCoreInstaller installer;
+        private GameCoreInstaller installer;
         #region 全局变量声明
-        public bool waizhi_refresh_exists;
-        public string name;
-        public string uuid;
-        public string accessToken;
         private string modName;
-        public static string gameFolder = System.AppDomain.CurrentDomain.BaseDirectory + ".minecraft";
+        private static string gameFolder = System.AppDomain.CurrentDomain.BaseDirectory + ".minecraft";
         int mode = 114514;//homo特有的变量（喜）
         #endregion
         public MainWindow()
         {
             InitializeComponent();
+            GetMcVersions();
+            GameVersion.Visibility = Visibility.Hidden;
             ModGrid.Visibility = Visibility.Visible;
             ModPage.Visibility = Visibility.Hidden;
             #region 控件初始化
@@ -104,8 +139,8 @@ namespace MCL_Dev
             }
             javaCombo.SelectedIndex = 0;
             #endregion
-            var FirstTime = !Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "MCL");            
-            
+            var FirstTime = !Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "MCL");
+
             Task.Run(() =>
             {
                 Thread.Sleep(500);
@@ -123,11 +158,7 @@ namespace MCL_Dev
                                 CreateNoWindow = true
                             });
                         }
-                        else
-                        {
-
-                        }
-                    }));                    
+                    }));
                     DirectoryInfo directoryInfo = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory + "MCL");
                     directoryInfo.Create();
                 }
@@ -137,7 +168,7 @@ namespace MCL_Dev
                 try
                 {
                     UpdateD.Update updated = new UpdateD.Update();
-                    var HaveHigherVersion = updated.GetUpdate("4386F97F6C36488887EBA723C4C99C83", LauncherVersion);
+                    var HaveHigherVersion = updated.GetUpdate(APIKey_2018k, LauncherVersion);
                     if (HaveHigherVersion == true)
                     {
                         NoticeBox.Show("启动器有新版本可供更新，可前往【设置】进行更新！", "MCL启动器", MessageBoxIcon.Info);
@@ -654,6 +685,7 @@ namespace MCL_Dev
                 {
                     installer = new(v, version);
                 });
+                downloadLog.Text = "";
                 await Task.Run(async () =>
                 {
                     await installer.InstallAsync((e) =>
@@ -666,8 +698,8 @@ namespace MCL_Dev
                         }));
                     });
                 });
-                var setting = Application.Current.FindResource("CustomNoticeSetting") as NoticeBoxSetting;
-                var handler = NoticeBox.Show("下载完成！", "MCL启动器", MessageBoxIcon.Success, true, setting);
+
+                var handler = NoticeBox.Show("下载完成！", "MCL启动器", MessageBoxIcon.Success, true);
                 await Task.Run(() =>
                 {
                     Thread.Sleep(1500);
@@ -695,6 +727,7 @@ namespace MCL_Dev
                 {
                     javas.Add(a.JavaPath);
                 }
+                optDownLoadLog.Text = "";
                 await Task.Run(async () =>
                 {
                     var opt_installer = new OptiFineInstaller(v, OPT, javas[0]);
@@ -708,8 +741,8 @@ namespace MCL_Dev
                         }));
                     });
                 });
-                var setting = Application.Current.FindResource("CustomNoticeSetting") as NoticeBoxSetting;
-                var handler = NoticeBox.Show("下载完成！", "MCL启动器", MessageBoxIcon.Success, true, setting);
+
+                var handler = NoticeBox.Show("下载完成！", "MCL启动器", MessageBoxIcon.Success, true);
                 await Task.Run(() =>
                 {
                     Thread.Sleep(1500);
@@ -740,6 +773,7 @@ namespace MCL_Dev
             if (java_verBox.Text != "")
             {
                 var jv = (OpenJdkType)java_verBox.SelectedItem;
+                javaDownLoadLog.Text = "";
                 JavaInstaller java = new(JdkDownloadSource.JdkJavaNet, jv, Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
                 await Task.Run(async () =>
                 {
@@ -753,8 +787,8 @@ namespace MCL_Dev
                         }));
                     });
                 });
-                var setting = Application.Current.FindResource("CustomNoticeSetting") as NoticeBoxSetting;
-                var handler = NoticeBox.Show("安装完成！", "MCL启动器", MessageBoxIcon.Success, true, setting);
+
+                var handler = NoticeBox.Show("安装完成！", "MCL启动器", MessageBoxIcon.Success, true);
                 await Task.Run(() =>
                 {
                     Thread.Sleep(1500);
@@ -772,6 +806,7 @@ namespace MCL_Dev
             fabricInstallProgress.Value = 0;
             if (fabric_game_verBox.Text != "" && fabric_game_verBox_Copy.Text != "")
             {
+                fabricDownLoadLog.Text = "";
                 var FabricBuild = fabric_game_verBox_Copy.SelectedItem as FabricInstallBuild;
                 var v = new GameCoreToolkit(gameFolder);
                 var fi = new FabricInstaller(v, FabricBuild);
@@ -786,8 +821,8 @@ namespace MCL_Dev
                             fabricInstallProgress.Value = e.Item1;
                         }));
                     });
-                    var setting = Application.Current.FindResource("CustomNoticeSetting") as NoticeBoxSetting;
-                    var handler = NoticeBox.Show("下载完成！", "MCL启动器", MessageBoxIcon.Success, true, setting);
+
+                    var handler = NoticeBox.Show("下载完成！", "MCL启动器", MessageBoxIcon.Success, true);
                     await Task.Run(() =>
                     {
                         Thread.Sleep(1500);
@@ -836,6 +871,7 @@ namespace MCL_Dev
                 {
                     javas.Add(a.JavaPath);
                 }
+                ForgeDownLoadLog.Text = "";
                 await Task.Run(async () =>
                 {
                     var Forge_installer = new ForgeInstaller(v, Forge, javas[0]);
@@ -849,8 +885,8 @@ namespace MCL_Dev
                         }));
                     });
                 });
-                var setting = Application.Current.FindResource("CustomNoticeSetting") as NoticeBoxSetting;
-                var handler = NoticeBox.Show("下载完成！", "MCL启动器", MessageBoxIcon.Success, true, setting);
+
+                var handler = NoticeBox.Show("下载完成！", "MCL启动器", MessageBoxIcon.Success, true);
                 await Task.Run(() =>
                 {
                     Thread.Sleep(1500);
@@ -894,6 +930,7 @@ namespace MCL_Dev
         {
             if (Quilt_game_verBox.Text != "" && Quilt_game_verBox_Copy.Text != "")
             {
+                QuiltDownLoadLog.Text = "";
                 QuiltInstallProgress.Value = 0;
                 var QuiltBuild = Quilt_game_verBox_Copy.SelectedItem as QuiltInstallBuild;
                 var v = new GameCoreToolkit(gameFolder);
@@ -910,8 +947,8 @@ namespace MCL_Dev
                         }));
                     });
                 });
-                var setting = Application.Current.FindResource("CustomNoticeSetting") as NoticeBoxSetting;
-                var handler = NoticeBox.Show("下载完成！", "MCL启动器", MessageBoxIcon.Success, true, setting);
+
+                var handler = NoticeBox.Show("下载完成！", "MCL启动器", MessageBoxIcon.Success, true);
                 await Task.Run(() =>
                 {
                     Thread.Sleep(1500);
@@ -972,10 +1009,11 @@ namespace MCL_Dev
                 case 0:
                     break;
                 case 1:
+                    GameVersionData.Items.Clear();
+                    GetMcVersions();
                     GetMcVersionList();
                     break;
                 case 2:
-                    GetMcVersions();
                     break;
             }
         }
@@ -1063,9 +1101,9 @@ namespace MCL_Dev
         }
         private void GetMcVersions()
         {
+            GameVersionData.Items.Clear();
             var core = new GameCoreToolkit(gameFolder);
-            var mcVersions = core.GetGameCores();
-            List<MinecraftVersion> YouXiBanBen = new List<MinecraftVersion>();
+            var mcVersions = core.GetGameCores();            
             foreach (var mcVersion in mcVersions)
             {
                 MinecraftVersion minecraftVersion = new MinecraftVersion();
@@ -1077,8 +1115,17 @@ namespace MCL_Dev
                         minecraftVersion.Description = $"继承自{mcVersion.InheritsFrom}，{ModLoaderInfomation[0].ModLoaderType}客户端";
                         switch (ModLoaderInfomation[0].ModLoaderType)
                         {
-                            case ModLoaderType.Any:
-                                minecraftVersion.bitmapImage = new(new Uri("/Resources/images/normal.png"));
+                            case ModLoaderType.OptiFine:
+                                minecraftVersion.bitmapImage = new(new Uri("/Resources/images/optfine.png", UriKind.Relative));
+                                break;
+                            case ModLoaderType.Fabric:
+                                minecraftVersion.bitmapImage = new(new Uri("/Resources/images/fabric.png", UriKind.Relative));
+                                break;
+                            case ModLoaderType.Forge:
+                                minecraftVersion.bitmapImage = new(new Uri("/Resources/images/forge.png", UriKind.Relative));
+                                break;
+                            case ModLoaderType.Quilt:
+                                minecraftVersion.bitmapImage = new(new Uri("/Resources/images/quilt.png", UriKind.Relative));
                                 break;
                         }
                         break;
@@ -1098,44 +1145,51 @@ namespace MCL_Dev
                                 minecraftVersion.Description = $"远古Beta测试版 {mcVersion.Id}";
                                 break;
                         }
+                        minecraftVersion.bitmapImage = new(new Uri("/Resources/images/normal.png", UriKind.Relative));
                         break;
-                }                
-                YouXiBanBen.Add(minecraftVersion);
+                }
+                GameVersionData.Items.Add(minecraftVersion);
             }
-            GameVersionData.ItemsSource = YouXiBanBen;
         }
 
         private async void CheckUpdateButton_Click(object sender, RoutedEventArgs e)
         {
-            UpdateSpin.IsSpinning = true;
-            UpdateTextblock.Visibility = Visibility.Visible;
-            UpdateD.Update updated = new UpdateD.Update();
-            var HaveHigherVersion = updated.GetUpdate("4386F97F6C36488887EBA723C4C99C83", LauncherVersion);
-            UpdateSpin.IsSpinning = false;
-            UpdateTextblock.Visibility = Visibility.Hidden;
-            if(HaveHigherVersion == true)
+            try
             {
-                var DownLoadLink = updated.GetUpdateFile("4386F97F6C36488887EBA723C4C99C83"); 
-                var GengXinNeiRong = updated.GetUpdateRem("4386F97F6C36488887EBA723C4C99C83");
-                var setting = Application.Current.FindResource("UpdateMessage") as MessageBoxXSetting;
-                var WantToUpdate = MessageBoxX.Show(null,$"有新版本可更新！\n更新内容:\n{GengXinNeiRong}","MCL启动器",MessageBoxButton.OKCancel,MessageBoxIcon.Info,setting);
-                if(WantToUpdate == MessageBoxResult.OK)
+                UpdateSpin.IsSpinning = true;
+                UpdateTextblock.Visibility = Visibility.Visible;
+                UpdateD.Update updated = new UpdateD.Update();
+                var HaveHigherVersion = updated.GetUpdate(APIKey_2018k, LauncherVersion);
+                UpdateSpin.IsSpinning = false;
+                UpdateTextblock.Visibility = Visibility.Hidden;
+                if (HaveHigherVersion == true)
                 {
-                    Process.Start(new ProcessStartInfo(DownLoadLink)
+                    var DownLoadLink = updated.GetUpdateFile(APIKey_2018k);
+                    var GengXinNeiRong = updated.GetUpdateRem(APIKey_2018k);
+                    var setting = Application.Current.FindResource("UpdateMessage") as MessageBoxXSetting;
+                    var WantToUpdate = MessageBoxX.Show(null, $"有新版本可更新！\n更新内容:\n{GengXinNeiRong}", "MCL启动器", MessageBoxButton.OKCancel, MessageBoxIcon.Info, setting);
+                    if (WantToUpdate == MessageBoxResult.OK)
                     {
-                        UseShellExecute = true,
-                        CreateNoWindow = true
-                    });
-                }                
-            }
-            else
-            {
-                var handler = NoticeBox.Show("启动器已是最新版本", "MCL启动器", MessageBoxIcon.Success, true);
-                await Task.Run(() =>
+                        Process.Start(new ProcessStartInfo(DownLoadLink)
+                        {
+                            UseShellExecute = true,
+                            CreateNoWindow = true
+                        });
+                    }
+                }
+                else
                 {
-                    Thread.Sleep(1500);
-                });
-                NoticeBox.DestroyInstance();
+                    var handler = NoticeBox.Show("启动器已是最新版本", "MCL启动器", MessageBoxIcon.Success, true);
+                    await Task.Run(() =>
+                    {
+                        Thread.Sleep(1500);
+                    });
+                    NoticeBox.DestroyInstance();
+                }
+            }
+            catch
+            {
+                MessageBoxX.Show("获取版本更新失败！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1146,6 +1200,61 @@ namespace MCL_Dev
                 UseShellExecute = true,
                 CreateNoWindow = true
             });
+        }
+
+        private async void GameVersionData_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (GameVersionData.SelectedItem != null)
+            {
+                var GridItem = GameVersionData.SelectedItem;
+                var SelectedGame = GridItem as MinecraftVersion;
+                GameVersionData.Visibility = Visibility.Hidden;
+                GameVersion.Visibility = Visibility.Visible;
+                var toolkit = new GameCoreToolkit(gameFolder);
+                GameVersionImage.Source = SelectedGame.bitmapImage;
+                GamePath.Text = $"路径：{gameFolder}";                
+                GameID.Content = SelectedGame.Id;
+                GameDescription.Content = SelectedGame.Description;
+                var core = toolkit.GetGameCore(SelectedGame.Id);
+                var res = await ResourceInstaller.GetAssetFilesAsync(core);
+                GameAssets.Text = $"依赖文件：共计{res.Count}个";
+                GameSize.Text = $"大小：{GetTotalSize(core)}MB";
+                GameLibrary.Text = $"依赖库：共计{core.LibraryResources.Count}个";
+            }            
+        }
+        private void GameVersion_back_Click(object sender, RoutedEventArgs e)
+        {
+            GameVersion.Visibility = Visibility.Hidden;
+            GameVersionData.Visibility = Visibility.Visible;
+        }
+
+        private void openVersionFolder_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(gameFolder)
+            {
+                UseShellExecute = true,
+                CreateNoWindow = true
+            });
+        }
+
+        private async void deleteVersion_Click(object sender, RoutedEventArgs e)
+        {
+            var gameName = GameID.Content.ToString();
+            var res = MessageBoxX.Show($"确定要删除{gameName}吗？", "MCL启动器", MessageBoxButton.OKCancel, MessageBoxIcon.Question);
+            if(res == MessageBoxResult.OK)
+            {
+                var toolkit = new GameCoreToolkit(gameFolder);
+                toolkit.Delete(gameName);
+                GameVersion.Visibility = Visibility.Hidden;
+                GameVersionData.Visibility = Visibility.Visible;
+                GetMcVersions();
+                await Task.Run(() =>
+                {
+                    NoticeBox.Show($"已删除核心{gameName}", "MCL启动器", MessageBoxIcon.Success);
+                    Thread.Sleep(3000);
+                    NoticeBox.DestroyInstance();
+                });                
+            }
         }
     }
 }

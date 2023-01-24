@@ -1,11 +1,15 @@
 ﻿using MinecaftOAuth.Module.Models;
+using MinecraftLaunch.Modules.Installer;
 using MinecraftLaunch.Modules.Models.Auth;
 using MinecraftLaunch.Modules.Models.Download;
+using MinecraftLaunch.Modules.Models.Launch;
 using MinecraftLaunch.Modules.Toolkits;
 using Natsurainko.Toolkits.Network;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -14,12 +18,10 @@ namespace MCL_Dev
 {
     internal class LauncherClasses
     {
-        public const string LauncherVersion = "1.2.1"; 
+        public const string LauncherVersion = "1.2.2";
+        public const string APIKey_2018k = "4386F97F6C36488887EBA723C4C99C83";
         public static YggdrasilAccount yggdrasilAccount;
         public static MicrosoftAccount microsoftaccount = new();
-        public static string waizhi_email;
-        public static string waizhi_password;
-        public static string offlineName;
         public static int waizhi_selectedplayer = 114514;
         public class Mod
         {
@@ -29,12 +31,78 @@ namespace MCL_Dev
             public string Version { set; get; }
             public Dictionary<string, List<CurseForgeModpackFileInfo>> Files { set; get; }
         }
+        public static string GetTotalSize(GameCore id)
+        {
+            double total = 0;
+            foreach (var library in id.LibraryResources)
+            {
+                if (library.Size != 0)
+                    total += library.Size;
+                else if (library.Size == 0 && library.ToFileInfo().Exists)
+                    total += library.ToFileInfo().Length;
+            }
+
+            try
+            {
+                var assets = new ResourceInstaller(new()).GetAssetResourcesAsync().Result;
+
+                foreach (var asset in assets)
+                {
+                    if (asset.Size != 0)
+                        total += asset.Size;
+                    else if (asset.Size == 0 && asset.ToFileInfo().Exists)
+                        total += asset.ToFileInfo().Length;
+                }
+            }
+            catch { }
+
+            return $"{double.Parse(((double)total / (1024 * 1024)).ToString("0.00"))}";
+        }
         public class MinecraftVersion
         {
             public BitmapImage bitmapImage { get; set; }
             public string Description { get; set; }
             public string Id { get; set; }
         }
+        /*
+        public static float GetRAM()//分配逻辑是直接从PCL2那儿拿来的
+        {
+            PerformanceCounter ramCounter = new PerformanceCounter("Memory", "Available MBytes");
+            var RamAvailable = (ramCounter.NextValue())/1024;
+            var minRam = 0.75;//最低内存
+            float RamT1 = 1.5f;
+            float RamT2 = 2.5f;
+            float RamT3 = 4;//T1代表勉强能跑起来的RAM，T2代表能流畅跑起来的RAM,T3的用处我不到啊（均为原版）（带Mod的懒得弄了）
+            if (RamAvailable <= RamT1)
+            {
+                return RamAvailable * 1024;
+            }
+            else if (RamAvailable < RamT2)
+            {
+                return (RamAvailable + 1.25f) / 2 * 1024;
+            }
+            else if ((RamAvailable - RamT2) < 0.5f)
+            {
+                return RamT2 * 1024;
+            }
+            else if (RamAvailable <= RamT3)
+            {
+                return (RamAvailable + 2) / 2;
+            }
+            else if ((RamAvailable - RamT3) < 0.8)
+            {
+                return RamT3 * 1024;
+            }
+            else if (RamAvailable <= 8&&RamAvailable >= RamT3+0.8f)
+            {
+                return (RamT3 + (RamAvailable - RamT3) / 3) * 1024;
+            }
+            else
+            {
+                return 8096;
+            }
+        }
+        */
         public enum viewStyle
         {
             Day = 1,
