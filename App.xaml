@@ -9,6 +9,11 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="/Themes/Day.xaml"/>
+                    </ResourceDictionary.MergedDictionaries>
+                </ResourceDictionary>
+                <ResourceDictionary>
                     <puconfig:MessageBoxXSetting x:Key="UpdateMessage"
                              OKButtonContent="赶紧带爷去下载！"
                              YesButtonContent="好"

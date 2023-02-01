@@ -8,21 +8,25 @@ using Natsurainko.Toolkits.Network;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using Microsoft.VisualBasic;
+using System.Windows.Media;
 
 namespace MCL_Dev
 {
     internal class LauncherClasses
-    {
+    {        
+        static BrushConverter brushConverter = new BrushConverter();
+        public static Brush PanuonLightBlue = (Brush)brushConverter.ConvertFromString("#FF33B4F5");
         public const string LauncherVersion = "1.2.2";
         public const string APIKey_2018k = "4386F97F6C36488887EBA723C4C99C83";
         public static YggdrasilAccount yggdrasilAccount;
         public static MicrosoftAccount microsoftaccount = new();
         public static int waizhi_selectedplayer = 114514;
+        public static List<Account> gameAccountsList = new();
         public class Mod
         {
             public string Description { get; set; }
@@ -30,6 +34,12 @@ namespace MCL_Dev
             public string Name { set; get; }
             public string Version { set; get; }
             public Dictionary<string, List<CurseForgeModpackFileInfo>> Files { set; get; }
+        }
+        public class LauncherSetting
+        {
+            public int maxRam { get; set; }
+            public int JavaSelectedItemIndex { get; set; }
+            public int GameComboSelectedIndex { get; set; }
         }
         public static string GetTotalSize(GameCore id)
         {
@@ -63,46 +73,7 @@ namespace MCL_Dev
             public BitmapImage bitmapImage { get; set; }
             public string Description { get; set; }
             public string Id { get; set; }
-        }
-        /*
-        public static float GetRAM()//分配逻辑是直接从PCL2那儿拿来的
-        {
-            PerformanceCounter ramCounter = new PerformanceCounter("Memory", "Available MBytes");
-            var RamAvailable = (ramCounter.NextValue())/1024;
-            var minRam = 0.75;//最低内存
-            float RamT1 = 1.5f;
-            float RamT2 = 2.5f;
-            float RamT3 = 4;//T1代表勉强能跑起来的RAM，T2代表能流畅跑起来的RAM,T3的用处我不到啊（均为原版）（带Mod的懒得弄了）
-            if (RamAvailable <= RamT1)
-            {
-                return RamAvailable * 1024;
-            }
-            else if (RamAvailable < RamT2)
-            {
-                return (RamAvailable + 1.25f) / 2 * 1024;
-            }
-            else if ((RamAvailable - RamT2) < 0.5f)
-            {
-                return RamT2 * 1024;
-            }
-            else if (RamAvailable <= RamT3)
-            {
-                return (RamAvailable + 2) / 2;
-            }
-            else if ((RamAvailable - RamT3) < 0.8)
-            {
-                return RamT3 * 1024;
-            }
-            else if (RamAvailable <= 8&&RamAvailable >= RamT3+0.8f)
-            {
-                return (RamT3 + (RamAvailable - RamT3) / 3) * 1024;
-            }
-            else
-            {
-                return 8096;
-            }
-        }
-        */
+        }       
         public enum viewStyle
         {
             Day = 1,
@@ -214,7 +185,6 @@ namespace MCL_Dev
             public YggdrasilAuthenticator(string email, string password)
             {
             }
-        }
-
+        }        
     }
 }

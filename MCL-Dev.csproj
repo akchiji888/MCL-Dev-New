@@ -50,7 +50,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MinecraftLaunch" Version="1.7.0" />
+    <PackageReference Include="MinecraftLaunch" Version="1.6.0" />
     <PackageReference Include="MinecraftOAuth" Version="1.7.0" />
     <PackageReference Include="Panuon.WPF.UI" Version="1.1.7" />
     <PackageReference Include="Panuon.WPF.UI.Themes" Version="0.1.0-alpha" />
@@ -61,6 +61,21 @@
 
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="MCL_MainSetting.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MCL_MainSetting.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="MCL_MainSetting.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>MCL_MainSetting.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

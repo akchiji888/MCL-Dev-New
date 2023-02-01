@@ -20,7 +20,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using static MCL_Dev.MCL_MainSetting;
 using static MCL_Dev.LauncherClasses;
+using System.Windows.Media.Imaging;
+using System.Drawing;
+using System.Windows.Media;
+using Newtonsoft.Json;
+using System.Windows.Documents;
 
 namespace MCL_Dev
 {
@@ -29,8 +35,12 @@ namespace MCL_Dev
     /// </summary>
     public partial class MainWindow : WindowX
     {
+        bool IsRamSliderInited = false;
         CurseForgeToolkit ModToolkit = new("$2a$10$CUT15u9CIECXHsa8q2NDqO.5zl3lNjg/5Xw5kYVX.ClujkvAir09K");
         #region 公共变量与void声明
+        List<string> MCReleaseList;
+        List<string> MCSnapshotList;
+        List<string> MCOldList;        
         private async void GetMcVersionList()
         {
             try
@@ -41,8 +51,10 @@ namespace MCL_Dev
                     ModLoadingText.Visibility = Visibility.Visible;
                     var v = new GameCoreToolkit(gameFolder);
                     var MCList = await GameCoreInstaller.GetGameCoresAsync();
-                    var MCReleaseList = MCList.Cores.Where(x => x.Type == "release").Select(x => x.Id).ToList();
-                    verBox.ItemsSource = MCList.Cores;
+                    MCReleaseList = MCList.Cores.Where(x => x.Type == "release").Select(x => x.Id).ToList();
+                    MCSnapshotList = MCList.Cores.Where(x => x.Type == "snapshot").Select(x => x.Id).ToList();
+                    MCOldList = MCList.Cores.Where(x => x.Type == "old_alpha" || x.Type == "old_beta").Select(x => x.Id).ToList();
+                    verBox.ItemsSource = MCReleaseList;
                     opt_game_verBox.ItemsSource = MCReleaseList;
                     fabric_game_verBox.ItemsSource = MCReleaseList;
                     Forge_game_verBox.ItemsSource = MCReleaseList;
@@ -78,256 +90,118 @@ namespace MCL_Dev
 
         }
         bool IsMCListInitialize = false;
-        /// <summary>
-        /// 将序列化的json字符串内容写入Json文件，并且保存
-        /// </summary>
-        /// <param name="path">路径</param>
-        /// <param name="jsonConents">Json内容</param>
-        private static void WriteJsonFile(string path, string jsonConents)
-        {
-            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite, FileShare.ReadWrite))
-            {
-                fs.Seek(0, SeekOrigin.Begin);
-                fs.SetLength(0);
-                using (StreamWriter sw = new StreamWriter(fs, Encoding.UTF8))
-                {
-                    sw.WriteLine(jsonConents);
-                }
-            }
-        }
-
-        /// <summary>
-        /// 获取到本地的Json文件并且解析返回对应的json字符串
-        /// </summary>
-        /// <param name="filepath">文件路径</param>
-        /// <returns>Json内容</returns>
-        private string GetJsonFile(string filepath)
-        {
-            string json = string.Empty;
-            using (FileStream fs = new FileStream(filepath, FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite, FileShare.ReadWrite))
-            {
-                using (StreamReader sr = new StreamReader(fs, Encoding.UTF8))
-                {
-                    json = sr.ReadToEnd().ToString();
-                }
-            }
-            return json;
-        }
-        #endregion
+        #endregion        
         private GameCoreInstaller installer;
         #region 全局变量声明
         private string modName;
         private static string gameFolder = System.AppDomain.CurrentDomain.BaseDirectory + ".minecraft";
-        int mode = 114514;//homo特有的变量（喜）
+        public static int mode = 114514;//homo特有的变量（喜）
         #endregion
         public MainWindow()
         {
-            InitializeComponent();
-            GetMcVersions();
-            GameVersion.Visibility = Visibility.Hidden;
-            ModGrid.Visibility = Visibility.Visible;
-            ModPage.Visibility = Visibility.Hidden;
-            #region 控件初始化
-            var core = new GameCoreToolkit(gameFolder);
-            versionCombo.ItemsSource = core.GetGameCores();
-            javaCombo.Items.Add("自动选择Java");
-            javaCombo.SelectedItem = 0;
-            var java = JavaToolkit.GetJavas();
-            foreach (var j in java)
-            {
-                javaCombo.Items.Add(j.JavaPath);
-            }
-            javaCombo.SelectedIndex = 0;
-            #endregion
-            var FirstTime = !Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "MCL");
-
-            Task.Run(() =>
-            {
-                Thread.Sleep(500);
-                if (FirstTime == true)
-                {
-                    var setting = Application.Current.FindResource("YongHuXieYi") as MessageBoxXSetting;
-                    Dispatcher.Invoke(new Action(() =>
-                    {
-                        var XieYiMessage = MessageBoxX.Show(null, "使用MCL启动器就代表您同意《用户协议与免责声明》", "MCL启动器", MessageBoxButton.OKCancel, MessageBoxIcon.Info, setting);
-                        if (XieYiMessage == MessageBoxResult.OK)
-                        {
-                            Process.Start(new ProcessStartInfo("https://docs.qq.com/doc/DUklrU3VJTm92SnFG")
-                            {
-                                UseShellExecute = true,
-                                CreateNoWindow = true
-                            });
-                        }
-                    }));
-                    DirectoryInfo directoryInfo = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory + "MCL");
-                    directoryInfo.Create();
-                }
-            });
-            Task.Run(new Action(() =>
-            {
-                try
-                {
-                    UpdateD.Update updated = new UpdateD.Update();
-                    var HaveHigherVersion = updated.GetUpdate(APIKey_2018k, LauncherVersion);
-                    if (HaveHigherVersion == true)
-                    {
-                        NoticeBox.Show("启动器有新版本可供更新，可前往【设置】进行更新！", "MCL启动器", MessageBoxIcon.Info);
-                        Thread.Sleep(3000);
-                        NoticeBox.DestroyInstance();
-                    }
-                    else
-                    {
-                        NoticeBox.Show("启动器已是最新版本！", "MCL启动器", MessageBoxIcon.Success);
-                        Thread.Sleep(3000);
-                        NoticeBox.DestroyInstance();
-                    }
-                }
-                catch
-                {
-                    NoticeBox.Show("无法检测是否有更新！", "MCL启动器", MessageBoxIcon.Error);
-                    Thread.Sleep(3000);
-                    NoticeBox.DestroyInstance();
-                }
-            }));
+            InitializeComponent();            
         }
         #region 启动游戏(void)
         private async void startGame()
         {
             progressBar.Value = 0;
-            if (maxMem.Text != "" && mode != 114514 && versionCombo.Text != "")
+            if (AccountCombo.Text != "" && versionCombo.Text != "")
             {
-                if (mode == 0) // offline
+                var account = AccountCombo.SelectedItem as Account;
+                switch (account.Type)
                 {
-                    if (NameCombo.Text != "")
+                    case AccountType.Microsoft:
+                        #region 登录
+                        var MSaccount = account as MicrosoftAccount;
+                        var auth = new MicrosoftAuthenticator();
+                        auth.ClientId = "dd09ec86-031b-4429-adb8-7fec6bc1fd79";
+                        auth.AuthType = MinecaftOAuth.Module.Enum.AuthType.Refresh;
+                        auth.RefreshToken = MSaccount.RefreshToken;                        
+                        try
+                        {
+                            var result = await auth.AuthAsync(x => { });
+                            var NeedToChange = gameAccountsList.Where(x => x == account).FirstOrDefault();
+                            NeedToChange = result;
+                            account = result;
+                        }
+                        catch
+                        {
+                            mode = 114514;
+                            MessageBoxX.Show(this, "微软登录失败！\n错误原因可能有:1.你没购买Minecraft\n2.微软的验证服务器炸了\n3.你没联网", "MCL启动器", MessageBoxIcon.Error);
+                        }
+                        #endregion
+                        break;                    
+                }
+                if (javaCombo.SelectedIndex != 0)
+                {
+                    var lc = new LaunchConfig()
                     {
-                        if (javaCombo.SelectedIndex != 0)
+                        Account = AccountCombo.SelectedItem as Account,
+                        GameWindowConfig = new GameWindowConfig()
                         {
-                            OfflineAuthenticator offline = new(NameCombo.Text);
-                            var lc = new LaunchConfig()
-                            {
-                                Account = offline.Auth(),
-                                GameWindowConfig = new GameWindowConfig()
-                                {
-                                    Width = 854,
-                                    Height = 480,
-                                    IsFullscreen = false
-                                },
-                                JvmConfig = new JvmConfig(javaCombo.Text)
-                                {
-                                    MaxMemory = Convert.ToInt32(maxMem.Text),
-                                },
-                                NativesFolder = null,//一般可以无视这个选项
-                                WorkingFolder = new("q"),
-                                LauncherName = "ModernCraftLauncher",
+                            Width = 854,
+                            Height = 480,
+                            IsFullscreen = false
+                        },
+                        JvmConfig = new JvmConfig(javaCombo.Text)
+                        {
+                            MaxMemory = Convert.ToInt32(maxMem.Value),
+                        },
+                        NativesFolder = null,//一般可以无视这个选项
+                        WorkingFolder = new("q"),
+                        LauncherName = "ModernCraftLauncher",
 
-                            };
-                            JavaClientLauncher clientLauncher = new(lc, new(gameFolder), true);
-                            launchLog.Text = "";
-                            using var res = await clientLauncher.LaunchTaskAsync(versionCombo.Text, x =>
-                            {
-                                launchLog.AppendText($"[{DateTime.Now}]{x.Item2} 进度:{x.Item1.ToString("P")}\n");
-                                launchLog.ScrollToEnd();
-                                progressBar.Value = x.Item1;
-                            });
-                            if (res.State is LaunchState.Succeess)
-                            {
-                                //启动成功的情况下会执行的代码块
-                                launchLog.AppendText($"[{DateTime.Now}]启动成功");
-                                progressBar.Value = 1;
-                            }
-                            else
-                            {
-                                //启动失败的情况下会执行的代码块
-                                launchLog.AppendText("启动失败\n");
-                                launchLog.AppendText("详细异常信息：" + res.Exception);
-                                progressBar.Value = 0;
-                            }
-                        }
-                        else
-                        {
-                            var javaList = JavaToolkit.GetJavas();
-                            var gCore = GameCoreToolkit.GetGameCore(gameFolder, versionCombo.Text);
-                            var gToolkit = new GameCoreToolkit(gameFolder);
-                            var java = JavaToolkit.GetCorrectOfGameJava(javaList, gCore);
-                            OfflineAuthenticator offline = new(NameCombo.Text);
-                            if (java != null)
-                            {
-                                var lc = new LaunchConfig()
-                                {
-                                    Account = offline.Auth(),
-                                    GameWindowConfig = new GameWindowConfig()
-                                    {
-                                        Width = 854,
-                                        Height = 480,
-                                        IsFullscreen = false
-                                    },
-                                    JvmConfig = new JvmConfig(java.JavaPath)
-                                    {
-                                        MaxMemory = Convert.ToInt32(maxMem.Text),
-                                    },
-                                    WorkingFolder = new("q"),
-                                    NativesFolder = null,//一般可以无视这个选项
-                                    LauncherName = "ModernCraftLauncher"
-                                };
-                                JavaClientLauncher clientLauncher = new(lc, gToolkit, true);
-                                launchLog.Text = "";
-                                using var res = await clientLauncher.LaunchTaskAsync(versionCombo.Text, x =>
-                                {
-                                    launchLog.AppendText($"[{DateTime.Now}]{x.Item2} 进度:{x.Item1.ToString("P")}\n");
-                                    launchLog.ScrollToEnd();
-                                    progressBar.Value = x.Item1;
-                                });
-                                if (res.State is LaunchState.Succeess)
-                                {
-                                    //启动成功的情况下会执行的代码块
-                                    launchLog.AppendText($"[{DateTime.Now}]启动成功");
-                                    progressBar.Value = 1;
-                                }
-                                else
-                                {
-                                    //启动失败的情况下会执行的代码块
-                                    launchLog.AppendText("启动失败");
-                                    launchLog.AppendText("详细异常信息：" + res.Exception);
-                                    progressBar.Value = 0;
-                                }
-                            }
-                            else
-                            {
-                                MessageBoxX.Show("启动失败！\n错误原因：未能找到合适的Java", "MCL启动器", MessageBoxIcon.Error);
-                            }
-                        }
+                    };
+                    JavaClientLauncher clientLauncher = new(lc, new(gameFolder), true);
+                    launchLog.Text = "";
+                    using var res = await clientLauncher.LaunchTaskAsync(versionCombo.Text, x =>
+                    {
+                        launchLog.AppendText($"[{DateTime.Now}]{x.Item2} 进度:{x.Item1.ToString("P")}\n");
+                        launchLog.ScrollToEnd();
+                        progressBar.Value = x.Item1;
+                    });
+                    if (res.State is LaunchState.Succeess)
+                    {
+                        //启动成功的情况下会执行的代码块
+                        launchLog.AppendText($"[{DateTime.Now}]启动成功");
+                        progressBar.Value = 1;
                     }
                     else
                     {
-                        MessageBoxX.Show("无法启动游戏！\n错误原因：参数缺失\n请检查是否设置了用户名", "MCL启动器", MessageBoxIcon.Error);
+                        //启动失败的情况下会执行的代码块
+                        launchLog.AppendText("启动失败\n");
+                        launchLog.AppendText("详细异常信息：" + res.Exception);
+                        progressBar.Value = 0;
                     }
                 }
-                else if (mode == 1) // microsoft
+                else
                 {
-                    var auth = new MinecaftOAuth.MicrosoftAuthenticator();
-                    var core = new GameCoreToolkit(gameFolder);
-                    if (javaCombo.SelectedIndex != 0)
+                    var javaList = JavaToolkit.GetJavas();
+                    var gCore = GameCoreToolkit.GetGameCore(gameFolder, versionCombo.Text);
+                    var gToolkit = new GameCoreToolkit(gameFolder);
+                    var java = JavaToolkit.GetCorrectOfGameJava(javaList, gCore);
+                    if (java != null)
                     {
                         var lc = new LaunchConfig()
                         {
-                            Account = microsoftaccount,
+                            Account = AccountCombo.SelectedItem as Account,
                             GameWindowConfig = new GameWindowConfig()
                             {
                                 Width = 854,
                                 Height = 480,
                                 IsFullscreen = false
                             },
-                            JvmConfig = new JvmConfig(javaCombo.Text)
+                            JvmConfig = new JvmConfig(java.JavaPath)
                             {
-                                MaxMemory = Convert.ToInt32(maxMem.Text),
+                                MaxMemory = Convert.ToInt32(maxMem.Value),
                             },
                             WorkingFolder = new("q"),
                             NativesFolder = null,//一般可以无视这个选项
                             LauncherName = "ModernCraftLauncher"
                         };
-                        JavaClientLauncher javaClientLauncher = new(lc, core, true);
+                        JavaClientLauncher clientLauncher = new(lc, gToolkit, true);
                         launchLog.Text = "";
-                        using var res = await javaClientLauncher.LaunchTaskAsync(versionCombo.Text, x =>
+                        using var res = await clientLauncher.LaunchTaskAsync(versionCombo.Text, x =>
                         {
                             launchLog.AppendText($"[{DateTime.Now}]{x.Item2} 进度:{x.Item1.ToString("P")}\n");
                             launchLog.ScrollToEnd();
@@ -342,164 +216,20 @@ namespace MCL_Dev
                         else
                         {
                             //启动失败的情况下会执行的代码块
-                            launchLog.AppendText("启动失败\n");
+                            launchLog.AppendText("启动失败");
                             launchLog.AppendText("详细异常信息：" + res.Exception);
                             progressBar.Value = 0;
                         }
                     }
                     else
                     {
-                        var javaList = JavaToolkit.GetJavas();
-                        var gameCore = GameCoreToolkit.GetGameCore(gameFolder, versionCombo.Text);
-                        var java = JavaToolkit.GetCorrectOfGameJava(javaList, gameCore).JavaPath;
-                        if (java == null)
-                        {
-                            MessageBoxX.Show("无法启动游戏！\n错误原因：参数缺失\n请检查是否设置了用户名", "MCL启动器", MessageBoxIcon.Error);
-                        }
-                        else
-                        {
-                            var lc = new LaunchConfig()
-                            {
-                                Account = microsoftaccount,
-                                GameWindowConfig = new GameWindowConfig()
-                                {
-                                    Width = 854,
-                                    Height = 480,
-                                    IsFullscreen = false
-                                },
-                                JvmConfig = new JvmConfig(java)
-                                {
-                                    MaxMemory = Convert.ToInt32(maxMem.Text),
-                                },
-                                WorkingFolder = new("q"),
-                                NativesFolder = null,//一般可以无视这个选项
-                                LauncherName = "ModernCraftLauncher"
-                            };
-                            launchLog.Text = "";
-                            JavaClientLauncher javaClientLauncher = new(lc, core, true);
-                            using var res = await javaClientLauncher.LaunchTaskAsync(versionCombo.Text, x =>
-                            {
-                                launchLog.AppendText($"[{DateTime.Now}]{x.Item2} 进度:{x.Item1.ToString("P")}\n");
-                                launchLog.ScrollToEnd();
-                                progressBar.Value = x.Item1;
-                            });
-                            if (res.State is LaunchState.Succeess)
-                            {
-                                //启动成功的情况下会执行的代码块
-                                launchLog.AppendText($"[{DateTime.Now}]启动成功");
-                                progressBar.Value = 1;
-                            }
-                            else
-                            {
-                                //启动失败的情况下会执行的代码块
-                                launchLog.AppendText("启动失败");
-                                launchLog.AppendText("详细异常信息：" + res.Exception);
-                                progressBar.Value = 0;
-                            }
-                        }
-
-                    }
-                }
-
-                else //外置登录
-                {
-                    if (players.SelectedIndex != -1)
-                    {
-                        if (javaCombo.SelectedIndex != 0)
-                        {
-                            var launchConfig = new LaunchConfig()
-                            {
-                                Account = players.SelectedItem as YggdrasilAccount,
-                                GameWindowConfig = new GameWindowConfig()
-                                {
-                                    Width = 854,
-                                    Height = 480,
-                                    IsFullscreen = false
-                                },
-                                JvmConfig = new JvmConfig(javaCombo.Text)
-                                {
-                                    MaxMemory = Convert.ToInt32(maxMem.Text),
-                                },
-                                WorkingFolder = new("q"),
-                                NativesFolder = null,//一般可以无视这个选项
-                                LauncherName = "ModernCraftLauncher"
-                            };
-                            JavaClientLauncher javaClientLauncher = new(launchConfig, new(gameFolder), true);
-                            launchLog.Text = "";
-                            using var res = await javaClientLauncher.LaunchTaskAsync(versionCombo.Text, x =>
-                            {
-                                launchLog.AppendText($"[{DateTime.Now}]{x.Item2} 进度:{x.Item1.ToString("P")}\n");
-                                launchLog.ScrollToEnd();
-                                progressBar.Value = x.Item1;
-                            });
-                            if (res.State is LaunchState.Succeess)
-                            {
-                                //启动成功的情况下会执行的代码块
-                                launchLog.AppendText($"[{DateTime.Now}]启动成功");
-                                progressBar.Value = 1;
-                            }
-                            else
-                            {
-                                //启动失败的情况下会执行的代码块
-                                launchLog.AppendText("启动失败");
-                                launchLog.AppendText("详细异常信息：" + res.Exception);
-                                progressBar.Value = 0;
-                            }
-                        }
-                        else
-                        {
-                            var javaList = JavaToolkit.GetJavas();
-                            var gameCore = GameCoreToolkit.GetGameCore(gameFolder, versionCombo.Text);
-                            var java = JavaToolkit.GetCorrectOfGameJava(javaList, gameCore).JavaPath;
-                            var launchConfig = new LaunchConfig()
-                            {
-                                Account = players.SelectedItem as YggdrasilAccount,
-                                GameWindowConfig = new GameWindowConfig()
-                                {
-                                    Width = 854,
-                                    Height = 480,
-                                    IsFullscreen = false
-                                },
-                                JvmConfig = new JvmConfig(java)
-                                {
-                                    MaxMemory = Convert.ToInt32(maxMem.Text),
-                                },
-                                WorkingFolder = new("q"),
-                                NativesFolder = null,//一般可以无视这个选项
-                                LauncherName = "ModernCraftLauncher"
-                            };
-                            JavaClientLauncher javaClientLauncher = new(launchConfig, new(gameFolder), true);
-                            launchLog.Text = "";
-                            using var res = await javaClientLauncher.LaunchTaskAsync(versionCombo.Text, x =>
-                            {
-                                launchLog.AppendText($"[{DateTime.Now}]{x.Item2} 进度:{x.Item1.ToString("P")}\n");
-                                launchLog.ScrollToEnd();
-                                progressBar.Value = x.Item1;
-                            });
-                            if (res.State is LaunchState.Succeess)
-                            {
-                                //启动成功的情况下会执行的代码块
-                                launchLog.AppendText($"[{DateTime.Now}]启动成功");
-                                progressBar.Value = 1;
-                            }
-                            else
-                            {
-                                //启动失败的情况下会执行的代码块
-                                launchLog.AppendText("启动失败");
-                                launchLog.AppendText("详细异常信息：" + res.Exception);
-                                progressBar.Value = 0;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        MessageBoxX.Show("无法启动游戏！\n错误原因：参数缺失\n请检查外置登录——角色一栏是否选择", "MCL启动器", MessageBoxIcon.Error);
+                        MessageBoxX.Show(this, "启动失败！\n错误原因：未能找到合适的Java", "MCL启动器", MessageBoxIcon.Error);
                     }
                 }
             }
             else
             {
-                MessageBoxX.Show("无法启动游戏！\n错误原因：参数缺失\n请检查Java、最大内存、登录方式等选项是否为空", "MCL启动器", MessageBoxIcon.Error);
+                MessageBoxX.Show(this, "无法启动游戏！\n错误原因：参数缺失\n请检查Java、最大内存、账号选择等选项是否为空\nJava、最大内存可前往[设置-游戏设置]中进行设置\n若无可用账号请去[设置-账户管理]中设置", "MCL启动器", MessageBoxIcon.Error);
             }
         }
         #endregion
@@ -507,170 +237,6 @@ namespace MCL_Dev
         private void start_Click(object sender, RoutedEventArgs e)
         {
             startGame();
-        }
-        #endregion
-        #region 登录UI
-        private async void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            switch (LoginTab.SelectedIndex)
-            {
-                case 0://offline
-                    mode = 0;
-                    break;
-                case 1:
-                    mode = 2;
-                    break;
-                case 2:
-                    mode = 1;
-                    var message = MessageBoxX.Show(null, "确认开始验证微软账户", "MCL启动器", MessageBoxButton.OKCancel, MessageBoxIcon.Info);
-                    if (message == MessageBoxResult.OK)
-                    {
-                        spin.IsSpinning = true;
-                        textBlock.Text = "正在登录中，请稍后";
-                        mode = 1;
-                        #region 登录
-                        MicrosoftAccount result = new();
-                        var auth = new MinecaftOAuth.MicrosoftAuthenticator();
-                        string filePath = System.AppDomain.CurrentDomain.BaseDirectory + "MCL";
-                        string refreshPath = filePath + "\\RefreshToken.txt";
-                        auth.ClientId = "dd09ec86-031b-4429-adb8-7fec6bc1fd79";
-                        bool file = System.IO.File.Exists(refreshPath);
-                        if (file != true)//无RefreshToken存在
-                        {
-                            auth.AuthType = MinecaftOAuth.Module.Enum.AuthType.Access;
-                            var code_1 = await auth.GetDeviceInfo();
-                            string usrCode = code_1.UserCode;
-                            Clipboard.SetDataObject(usrCode);
-                            MessageBoxX.Show(usrCode + "\n已复制该串字符到剪切板，请粘贴这串字符到弹出的网页中进行登录", "MCL启动器", MessageBoxIcon.Info);
-                            #region 打开网页
-                            Process.Start(new ProcessStartInfo(code_1.VerificationUrl)
-                            {
-                                UseShellExecute = true,
-                                CreateNoWindow = true
-                            });
-                            #endregion
-                            try
-                            {
-                                var Code_2 = await auth.GetTokenResponse(code_1);
-                                result = await auth.AuthAsync(x => { });
-                                #region 保存数据
-                                string configPath = System.AppDomain.CurrentDomain.BaseDirectory + "MCL";
-                                if (!Directory.Exists(configPath))
-                                {
-                                    Directory.CreateDirectory(configPath);
-                                }
-                                string fname = refreshPath;
-                                System.IO.File.WriteAllText(fname, string.Empty);
-                                FileInfo finfo = new FileInfo(fname);
-                                if (!finfo.Exists)
-                                {
-                                    FileStream fs;
-                                    fs = File.Create(fname);
-                                    fs.Close();
-                                    finfo = new FileInfo(fname);
-                                }
-                                using (FileStream fs = finfo.OpenWrite())
-                                {
-
-                                    StreamWriter w = new StreamWriter(fs);//根据上面创建的文件流创建写数据流
-                                    w.BaseStream.Seek(0, SeekOrigin.End);//设置写数据流的起始位置为文件流的末尾
-                                    w.Write(result.RefreshToken);//写入内容
-                                    w.Flush();//清空缓冲区内容，并把缓冲区内容写入基础流                       
-                                    w.Close();//关闭写数据流
-                                }
-                                #endregion
-                                textBlock.Text = "用户名：" + result.Name;
-                                spin.IsSpinning = false;
-                                microsoftaccount = result;
-                                MessageBoxX.Show("已完成登录！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Success);
-                            }
-                            catch
-                            {
-                                mode = 114514;
-                                MessageBoxX.Show("微软登录失败！\n错误原因可能有:1.你没购买Minecraft\n2.微软的验证服务器炸了\n3.你没联网", "MCL启动器", MessageBoxIcon.Error);
-                            }
-                        }
-                        else//存在RefreshToken
-                        {
-                            string strCon = string.Empty;
-                            // 创建一个 StreamReader 的实例来读取文件
-                            // using 语句也能关闭 StreamReader
-                            using (StreamReader sr = new StreamReader(refreshPath))
-                            {
-                                string line;
-                                // 从文件读取并显示行，直到文件的末尾 
-                                while ((line = sr.ReadLine()) != null)
-                                {
-                                    strCon += line + " ";
-                                }
-                            }
-                            auth.AuthType = MinecaftOAuth.Module.Enum.AuthType.Refresh;
-                            auth.RefreshToken = strCon;
-                            try
-                            {
-                                result = await auth.AuthAsync(x => { });
-                                #region 保存数据
-                                string fname = refreshPath;
-                                System.IO.File.WriteAllText(fname, string.Empty);
-                                FileInfo finfo = new FileInfo(fname);
-                                if (!finfo.Exists)
-                                {
-                                    FileStream fs;
-                                    fs = File.Create(fname);
-                                    fs.Close();
-                                    finfo = new FileInfo(fname);
-                                }
-                                using (FileStream fs = finfo.OpenWrite())
-                                {
-                                    StreamWriter w = new StreamWriter(fs);//根据上面创建的文件流创建写数据流
-                                    w.BaseStream.Seek(0, SeekOrigin.End);//设置写数据流的起始位置为文件流的末尾
-                                    w.Write(result.RefreshToken);//写入内容
-                                    w.Flush();//清空缓冲区内容，并把缓冲区内容写入基础流
-                                    w.Close();//关闭写数据流
-                                }
-                                #endregion
-                                textBlock.Text = "用户名：" + result.Name;
-                                microsoftaccount = result;
-                                spin.IsSpinning = false;
-                                MessageBoxX.Show("已完成登录！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Success);
-                            }
-                            catch
-                            {
-                                mode = 114514;
-                                MessageBoxX.Show("微软登录失败！\n错误原因可能有:1.你没购买Minecraft\n2.微软的验证服务器炸了\n3.你没联网", "MCL启动器", MessageBoxIcon.Error);
-                            }
-                        }
-                        #endregion
-
-                    }
-                    break;
-            }
-        }
-        #endregion
-        #region 事件
-        private async void Waizhi_start_Click(object sender, RoutedEventArgs e)
-        {
-            if (email.Text != "" && passwd.Password != "")
-            {
-                try
-                {
-                    MCL_Dev.LauncherClasses.YggdrasilAuthenticator ya = new(true, email.Text, passwd.Password);
-                    var res = await ya.AuthAsync(X => { });
-                    players.ItemsSource = res;
-                    MessageBoxX.Show("已完成登录", "MCL启动器", MessageBoxIcon.Success);
-                }
-                catch
-                {
-                    MessageBoxX.Show("登录失败！\n请检查密码是否输入正确", "MCL启动器", MessageBoxIcon.Error);
-                }
-
-
-
-            }
-            else
-            {
-                MessageBoxX.Show("信息未填写完整！", "MCL启动器", MessageBoxIcon.Error);
-            };
         }
         #endregion
         #region 下载事件
@@ -708,10 +274,9 @@ namespace MCL_Dev
             }
             else
             {
-                MessageBoxX.Show("下载版本未输入！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Error);
+                MessageBoxX.Show(this,"下载版本未输入！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Error);
             }
         }
-
         private async void optInstall_start_Click(object sender, RoutedEventArgs e)
         {
             optInstallProgress.Value = 0;
@@ -752,11 +317,9 @@ namespace MCL_Dev
             }
             else
             {
-                MessageBoxX.Show("尚有信息未输入！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Error);
+                MessageBoxX.Show(this,"尚有信息未输入！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Error);
             }
         }
-
-
         private async void opt_game_verBox_DropDownClosed(object sender, EventArgs e)
         {
             if (opt_game_verBox.Text != "")
@@ -766,7 +329,6 @@ namespace MCL_Dev
                 opt_game_verBox_Copy.ItemsSource = OptList;
             }
         }
-
         private async void javaInstall_start_Click(object sender, RoutedEventArgs e)
         {
             javaInstallProgress.Value = 0;
@@ -797,10 +359,9 @@ namespace MCL_Dev
             }
             else
             {
-                MessageBoxX.Show("尚有信息未输入！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Error);
+                MessageBoxX.Show(this,"尚有信息未输入！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Error);
             }
         }
-
         private async void fabricInstall_start_Click(object sender, RoutedEventArgs e)
         {
             fabricInstallProgress.Value = 0;
@@ -832,10 +393,9 @@ namespace MCL_Dev
             }
             else
             {
-                MessageBoxX.Show("尚有信息未输入！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Error);
+                MessageBoxX.Show(this,"尚有信息未输入！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Error);
             }
         }
-
         private async void fabric_game_verBox_DropDownClosed(object sender, EventArgs e)
         {
             if (fabric_game_verBox.Text != "")
@@ -855,7 +415,6 @@ namespace MCL_Dev
             }
 
         }
-
         private async void ForgeInstall_start_Click(object sender, RoutedEventArgs e)
         {
             ForgeInstallProgress.Value = 0;
@@ -896,10 +455,9 @@ namespace MCL_Dev
             }
             else
             {
-                MessageBoxX.Show("尚有信息未输入！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Error);
+                MessageBoxX.Show(this,"尚有信息未输入！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Error);
             }
         }
-
         private async void fabric_game_verBox_Copy_DropDownOpened(object sender, EventArgs e)
         {
             if (fabric_game_verBox.Text != "" && fabric_game_verBox_Copy.Text == "")
@@ -907,7 +465,6 @@ namespace MCL_Dev
                 fabric_game_verBox_Copy.ItemsSource = await FabricInstaller.GetFabricBuildsByVersionAsync(fabric_game_verBox.Text);
             }
         }
-
         private async void Quilt_game_verBox_Copy_DropDownOpened(object sender, EventArgs e)
         {
             if (Quilt_game_verBox.Text != "" && Quilt_game_verBox_Copy.Text == "")
@@ -915,7 +472,6 @@ namespace MCL_Dev
                 Quilt_game_verBox_Copy.ItemsSource = await QuiltInstaller.GetQuiltBuildsByVersionAsync(Quilt_game_verBox.Text);
             }
         }
-
         private async void Quilt_game_verBox_DropDownClosed(object sender, EventArgs e)
         {
             if (Quilt_game_verBox.Text != "")
@@ -925,7 +481,6 @@ namespace MCL_Dev
                 Quilt_game_verBox_Copy.ItemsSource = QuiltList;
             }
         }
-
         private async void QuiltInstall_start_Click(object sender, RoutedEventArgs e)
         {
             if (Quilt_game_verBox.Text != "" && Quilt_game_verBox_Copy.Text != "")
@@ -957,11 +512,11 @@ namespace MCL_Dev
             }
             else
             {
-                MessageBoxX.Show("尚有信息未输入！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Error);
+                MessageBoxX.Show(this,"尚有信息未输入！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Error);
             }
         }
         #endregion
-
+        #region 一堆void
         private async void ModSearch_Click(object sender, RoutedEventArgs e)
         {
             ModGrid.ItemsSource = null;
@@ -1007,6 +562,9 @@ namespace MCL_Dev
             switch (Page.SelectedIndex)
             {
                 case 0:
+                    var core = new GameCoreToolkit(gameFolder);
+                    versionCombo.ItemsSource = null;
+                    versionCombo.ItemsSource = core.GetGameCores();
                     break;
                 case 1:
                     GameVersionData.Items.Clear();
@@ -1017,7 +575,6 @@ namespace MCL_Dev
                     break;
             }
         }
-
         private void ModGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             var item = ModGrid.SelectedItem as Mod;
@@ -1052,14 +609,12 @@ namespace MCL_Dev
                 }
             }
         }
-
         private void ModDownLoad_Back_Click(object sender, RoutedEventArgs e)
         {
             ModGrid.Visibility = Visibility.Visible;
             ModPage.Visibility = Visibility.Hidden;
             ModDownLoad_Back.Visibility = Visibility.Hidden;
         }
-
         private void Mod_ChooseFolder_Click(object sender, RoutedEventArgs e)
         {
             var dlg = new CommonOpenFileDialog();
@@ -1077,7 +632,6 @@ namespace MCL_Dev
                 Mod_SaveFolderText.Text = mod_saveFolder;
             }
         }
-
         private async void ModDownloadFile_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             var mod = ModDownloadFile.SelectedItem as CurseForgeModpackFileInfo;
@@ -1095,7 +649,7 @@ namespace MCL_Dev
             }
             else
             {
-                MessageBoxX.Show("未设置保存目录！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Error);
+                MessageBoxX.Show(this,"未设置保存目录！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -1103,7 +657,7 @@ namespace MCL_Dev
         {
             GameVersionData.Items.Clear();
             var core = new GameCoreToolkit(gameFolder);
-            var mcVersions = core.GetGameCores();            
+            var mcVersions = core.GetGameCores();
             foreach (var mcVersion in mcVersions)
             {
                 MinecraftVersion minecraftVersion = new MinecraftVersion();
@@ -1151,23 +705,18 @@ namespace MCL_Dev
                 GameVersionData.Items.Add(minecraftVersion);
             }
         }
-
         private async void CheckUpdateButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                UpdateSpin.IsSpinning = true;
-                UpdateTextblock.Visibility = Visibility.Visible;
                 UpdateD.Update updated = new UpdateD.Update();
                 var HaveHigherVersion = updated.GetUpdate(APIKey_2018k, LauncherVersion);
-                UpdateSpin.IsSpinning = false;
-                UpdateTextblock.Visibility = Visibility.Hidden;
                 if (HaveHigherVersion == true)
                 {
                     var DownLoadLink = updated.GetUpdateFile(APIKey_2018k);
                     var GengXinNeiRong = updated.GetUpdateRem(APIKey_2018k);
                     var setting = Application.Current.FindResource("UpdateMessage") as MessageBoxXSetting;
-                    var WantToUpdate = MessageBoxX.Show(null, $"有新版本可更新！\n更新内容:\n{GengXinNeiRong}", "MCL启动器", MessageBoxButton.OKCancel, MessageBoxIcon.Info, setting);
+                    var WantToUpdate = MessageBoxX.Show(this, $"有新版本可更新！\n更新内容:\n{GengXinNeiRong}", "MCL启动器", MessageBoxButton.OKCancel, MessageBoxIcon.Info, setting);
                     if (WantToUpdate == MessageBoxResult.OK)
                     {
                         Process.Start(new ProcessStartInfo(DownLoadLink)
@@ -1189,10 +738,9 @@ namespace MCL_Dev
             }
             catch
             {
-                MessageBoxX.Show("获取版本更新失败！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Error);
+                MessageBoxX.Show(this,"获取版本更新失败！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Error);
             }
         }
-
         private void XieYiButton_Click(object sender, RoutedEventArgs e)
         {
             Process.Start(new ProcessStartInfo("https://docs.qq.com/doc/DUklrU3VJTm92SnFG")
@@ -1201,7 +749,6 @@ namespace MCL_Dev
                 CreateNoWindow = true
             });
         }
-
         private async void GameVersionData_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (GameVersionData.SelectedItem != null)
@@ -1212,22 +759,22 @@ namespace MCL_Dev
                 GameVersion.Visibility = Visibility.Visible;
                 var toolkit = new GameCoreToolkit(gameFolder);
                 GameVersionImage.Source = SelectedGame.bitmapImage;
-                GamePath.Text = $"路径：{gameFolder}";                
+                GamePath.Text = $"路径：{gameFolder}";
                 GameID.Content = SelectedGame.Id;
                 GameDescription.Content = SelectedGame.Description;
                 var core = toolkit.GetGameCore(SelectedGame.Id);
-                var res = await ResourceInstaller.GetAssetFilesAsync(core);
+                ResourceInstaller resourceInstaller = new(core);
+                var res = await resourceInstaller.GetAssetResourcesAsync();
                 GameAssets.Text = $"依赖文件：共计{res.Count}个";
                 GameSize.Text = $"大小：{GetTotalSize(core)}MB";
                 GameLibrary.Text = $"依赖库：共计{core.LibraryResources.Count}个";
-            }            
+            }
         }
         private void GameVersion_back_Click(object sender, RoutedEventArgs e)
         {
             GameVersion.Visibility = Visibility.Hidden;
             GameVersionData.Visibility = Visibility.Visible;
         }
-
         private void openVersionFolder_Click(object sender, RoutedEventArgs e)
         {
             Process.Start(new ProcessStartInfo(gameFolder)
@@ -1236,12 +783,11 @@ namespace MCL_Dev
                 CreateNoWindow = true
             });
         }
-
         private async void deleteVersion_Click(object sender, RoutedEventArgs e)
         {
             var gameName = GameID.Content.ToString();
-            var res = MessageBoxX.Show($"确定要删除{gameName}吗？", "MCL启动器", MessageBoxButton.OKCancel, MessageBoxIcon.Question);
-            if(res == MessageBoxResult.OK)
+            var res = MessageBoxX.Show(this,$"确定要删除{gameName}吗？", "MCL启动器", MessageBoxButton.OKCancel, MessageBoxIcon.Question);
+            if (res == MessageBoxResult.OK)
             {
                 var toolkit = new GameCoreToolkit(gameFolder);
                 toolkit.Delete(gameName);
@@ -1253,7 +799,246 @@ namespace MCL_Dev
                     NoticeBox.Show($"已删除核心{gameName}", "MCL启动器", MessageBoxIcon.Success);
                     Thread.Sleep(3000);
                     NoticeBox.DestroyInstance();
-                });                
+                });
+            }
+        }
+        private void ZhengShiButton_Checked(object sender, RoutedEventArgs e)
+        {
+            verBox.ItemsSource = null;
+            verBox.ItemsSource = MCReleaseList;
+        }
+        private void KuaiZhaoButton_Checked(object sender, RoutedEventArgs e)
+        {
+            verBox.ItemsSource = null;
+            verBox.ItemsSource = MCSnapshotList;
+        }
+        private void YuanGuButton_Checked(object sender, RoutedEventArgs e)
+        {
+            verBox.ItemsSource = null;
+            verBox.ItemsSource = MCOldList;
+        }        
+        private void maxMem_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if(IsRamSliderInited != false)
+            {
+                RamSliderText.Text = $"已设置内存{maxMem.Value}MB";
+            }            
+        }
+        private void ZanZhu_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo("https://afdian.net/a/mcl888")
+            {
+                UseShellExecute = true,
+                CreateNoWindow = true
+            });
+        }
+        #endregion
+        private void Window_closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Default.MaxMemory = Convert.ToInt32(maxMem.Value);
+            Default.JavaSelectedItemIndex = javaCombo.SelectedIndex;
+            if (MingXieMingDan.Text != "" || MingXieMingDan.Text != "获取鸣谢名单失败！请检查您是否连接上了互联网！")
+            {
+                Default.ZanZhuMingDan = MingXieMingDan.Text;
+            }
+            if (gameAccountsList.Count() > 0)
+            {
+                Default.gameAccountsList = JsonConvert.SerializeObject(gameAccountsList);
+            }
+            Default.Save();
+        }
+        private void AddAccountsButton_Click(object sender, RoutedEventArgs e)
+        {
+            Resources.AddAccount addAccount = new();
+            addAccount.ShowDialog();
+            accountsGrid.Children.Clear();
+            JieXiZhangHu();
+        }
+        private void JieXiZhangHu()
+        {
+            if(gameAccountsList.Count > 0)
+            {
+                AccountCombo.ItemsSource = gameAccountsList;
+                gameAccountsList.ForEach(x =>
+                {
+                    BrushConverter brushConverter = new BrushConverter();
+                    Brush brush_gray = (Brush)brushConverter.ConvertFromString("#FF808080");
+                    StackPanel stackPanel = new()
+                    {
+                        Width = 128,
+                        Height = 256
+                    };
+                    Image image = new()
+                    {
+                        Height = 128,
+                        Width = 128,
+                        Source = new BitmapImage(new Uri($"https://crafatar.com/avatars/{x.Uuid}", UriKind.Absolute))
+                    };
+                    TextBlock userName = new()
+                    {
+                        Text = x.Name,
+                        TextAlignment = TextAlignment.Left,
+                        Foreground = PanuonLightBlue,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        FontSize = 20
+                    };
+                    TextBlock AccountTypeText = new()
+                    {
+                        TextAlignment = TextAlignment.Left,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        FontSize = 12,
+                        Foreground = brush_gray
+                    };
+                    switch (x.Type)
+                    {
+                        case AccountType.Offline:
+                            AccountTypeText.Text = "离线登录账户";
+                            break;
+                        case AccountType.Microsoft:
+                            AccountTypeText.Text = "微软正版账户";
+                            break;
+                        case AccountType.Yggdrasil:
+                            AccountTypeText.Text = "外置登录账户";
+                            break;
+                    }
+                    stackPanel.Children.Add(image);
+                    stackPanel.Children.Add(userName);
+                    stackPanel.Children.Add(AccountTypeText);
+                    Border border = new()
+                    {
+                        BorderBrush = brush_gray,
+                        BorderThickness = new(3),
+                        CornerRadius = new(5),
+                        Height = 185,
+                        Width = 135
+                    };
+                    StackPanel TouMing = new()
+                    {
+                        Height = 185,
+                        Width = 175
+                    };                    
+                    border.Child = stackPanel;
+                    TouMing.Children.Add(border);
+                    accountsGrid.Children.Add(TouMing);
+                });
+            }            
+        }
+
+        private void settingPage_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch (settingPage.SelectedIndex)
+            {
+                case 0:
+                    accountsGrid.Children.Clear();
+                    JieXiZhangHu();
+                    break;
+            }
+
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            #region 控件初始化
+            var core = new GameCoreToolkit(gameFolder);
+            versionCombo.ItemsSource = core.GetGameCores();
+            javaCombo.Items.Add("自动选择Java");
+            javaCombo.SelectedItem = 0;
+            var java = JavaToolkit.GetJavas();
+            foreach (var j in java)
+            {
+                javaCombo.Items.Add(j.JavaPath);
+            }
+            javaCombo.SelectedIndex = 0;
+            #endregion
+            GetMcVersions();
+            if (Default.JavaSelectedItemIndex != -1)
+            {
+                javaCombo.SelectedIndex = Default.JavaSelectedItemIndex;
+            }
+            if (Default.GameComboSelectedIndex != -1)
+            {
+                versionCombo.SelectedIndex = Default.GameComboSelectedIndex;
+            }
+            maxMem.Value = Default.MaxMemory;
+            ZuiDaRAM.Text = $"已设置内存{maxMem.Value}MB";
+            if (Default.gameAccountsList != "")
+            {
+                gameAccountsList = JsonConvert.DeserializeObject<List<Account>>(Default.gameAccountsList);
+                JieXiZhangHu();
+            }
+            IsRamSliderInited = true;
+            GameVersion.Visibility = Visibility.Hidden;
+            ModGrid.Visibility = Visibility.Visible;
+            ModPage.Visibility = Visibility.Hidden;
+            var FirstTime = !Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "MCL");
+            Task.Run(() =>
+            {
+                Thread.Sleep(500);
+                if (FirstTime == true)
+                {
+                    var setting = Application.Current.FindResource("YongHuXieYi") as MessageBoxXSetting;
+                    Dispatcher.Invoke(new Action(() =>
+                    {
+                        var XieYiMessage = MessageBoxX.Show(this, "使用MCL启动器就代表您同意《用户协议与免责声明》", "MCL启动器", MessageBoxButton.OKCancel, MessageBoxIcon.Info, setting);
+                        if (XieYiMessage == MessageBoxResult.OK)
+                        {
+                            Process.Start(new ProcessStartInfo("https://docs.qq.com/doc/DUklrU3VJTm92SnFG")
+                            {
+                                UseShellExecute = true,
+                                CreateNoWindow = true
+                            });
+                        }
+                    }));
+                    DirectoryInfo directoryInfo = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory + "MCL");
+                    directoryInfo.Create();
+                }
+            });
+            Task.Run(new Action(() =>
+            {
+                try
+                {
+                    UpdateD.Update updated = new UpdateD.Update();
+                    var HaveHigherVersion = updated.GetUpdate(APIKey_2018k, LauncherVersion);
+                    if (HaveHigherVersion == true)
+                    {
+                        NoticeBox.Show("启动器有新版本可供更新，可前往【设置】进行更新！", "MCL启动器", MessageBoxIcon.Info);
+                        Thread.Sleep(3000);
+                        NoticeBox.DestroyInstance();
+                    }
+                    else
+                    {
+                        NoticeBox.Show("启动器已是最新版本！", "MCL启动器", MessageBoxIcon.Success);
+                        Thread.Sleep(3000);
+                        NoticeBox.DestroyInstance();
+                    }
+                }
+                catch
+                {
+                    NoticeBox.Show("无法检测是否有更新！", "MCL启动器", MessageBoxIcon.Error);
+                    Thread.Sleep(3000);
+                    NoticeBox.DestroyInstance();
+                }
+            }));
+            try
+            {
+                UpdateD.Update updated = new UpdateD.Update();
+                MingXieMingDan.Text = updated.GetUpdateNotice(APIKey_2018k);
+            }
+            catch
+            {
+                if (Default.ZanZhuMingDan != "")
+                {
+                    MingXieMingDan.Text = Default.ZanZhuMingDan;
+                }
+                else
+                {
+                    MingXieMingDan.Text = "获取鸣谢名单失败！请检查您是否连接上了互联网！";
+                }
             }
         }
     }

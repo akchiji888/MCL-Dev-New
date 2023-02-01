@@ -1,0 +1,40 @@
+﻿<Window x:Class="MCL_Dev.Resources.AddAccount"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MCL_Dev.Resources"
+        xmlns:pu="clr-namespace:Panuon.WPF.UI;assembly=Panuon.WPF.UI"
+        xmlns:puthe="clr-namespace:Panuon.WPF.UI.Themes;assembly=Panuon.WPF.UI.Themes"
+        mc:Ignorable="d"
+        Title="添加账户" Height="350" Width="354" Closing="WindowClosing">
+    <Grid>
+        <TabControl Background="{x:Null}" pu:IconHelper.Foreground="#FF33B4F5" x:Name="LoginTab" SelectionChanged="TabControl_SelectionChanged" Foreground="#FF33B4F5" FontSize="12" HorizontalAlignment="Center" Width="311" Height="270" VerticalAlignment="Center">
+            <TabItem   Width="97" pu:TabItemHelper.Icon="&#xe939;" Foreground="#FF33B4F5" pu:IconHelper.FontFamily="{DynamicResource PanuonIconFont}" pu:IconHelper.Foreground="#FF33B4F5" Header="离线登录">
+                <Grid>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF33B4F5" FontSize="16"><Run Language="zh-cn" Text="用户名："/></TextBlock>
+                    <TextBox x:FieldModifier="public" x:Name="NameBox" HorizontalAlignment="Left" Margin="74,39,0,0" TextWrapping="Wrap" Width="190" puthe:TextBoxStylist.Style="Border"/>
+                    <Button x:Name="OfflineButton" puthe:ButtonStylist.Style="ColorBorder" Content="确定" Width="100" Margin="0,82,0,0" HorizontalAlignment="Center" Click="OfflineButton_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem  Width="97" Header="外置登录" pu:TabItemHelper.Icon="&#xf2bb;" pu:IconHelper.FontFamily="{DynamicResource Awesome}">
+                <Grid>
+                    <TextBlock HorizontalAlignment="Left" Margin="0,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF33B4F5"><Run Language="zh-cn" Text="电子邮箱地址:"/></TextBlock>
+                    <TextBox puthe:TextBoxStylist.Style="Border" pu:TextBoxHelper.Watermark="请输入邮箱地址"  x:Name="email" x:FieldModifier="public" HorizontalAlignment="Left" Margin="80,47,0,0" TextWrapping="Wrap" Width="220" Cursor="IBeam" Height="32" FontSize="10"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="0,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF33B4F5"><Run Language="zh-cn" Text="密码:"/></TextBlock>
+                    <PasswordBox puthe:PasswordBoxStylist.Style="Border" pu:PasswordBoxHelper.Watermark="请输入密码" pu:PasswordBoxHelper.PlainButtonVisibility="VisibleOnFocused" x:Name="passwd" HorizontalAlignment="Left" Margin="32,82,0,0" Width="268" Cursor="IBeam" FontSize="10" Height="32"/>
+                    <Button puthe:ButtonStylist.Style="Border" BorderThickness="1" Content="确定" x:Name="Waizhi_start" FontSize="14" Foreground="#FF33B4F5" BorderBrush="#FF33B4F5" HorizontalAlignment="Center" Width="96" Height="32" Click="Waizhi_start_Click" pu:ButtonHelper.CornerRadius="5" Margin="0,117,0,0"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="0,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF33B4F5" FontSize="9" Text="PS:启动器不会保存您的关键信息（如密码、email地址等)"/>
+                    <TextBox puthe:TextBoxStylist.Style="Border" pu:TextBoxHelper.Watermark="请输入Yggdrasil API地址"  x:Name="serverUri" x:FieldModifier="public" HorizontalAlignment="Left" Margin="104,10,0,0" TextWrapping="Wrap" Width="196" Cursor="IBeam" Height="32" FontSize="10"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="0,18,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF33B4F5"><Run Language="zh-cn" Text="Yggdrasil API地址:"/></TextBlock>
+                </Grid>
+            </TabItem>
+            <TabItem  Width="97" pu:TabItemHelper.Icon="&#xf17a;" pu:IconHelper.FontFamily="{DynamicResource Awesome}" Header="微软登录">
+                <Grid>
+                    <TextBlock x:Name="textBlock" HorizontalAlignment="Center" Foreground="#FF33B4F5" TextWrapping="Wrap" Text="尚未开始进行登录" VerticalAlignment="Center"/>
+                    <pu:Spin pu:IsSpinning="False" x:Name="spin" GlyphBrush="#FF33B4F5" pu:SpinStyle="Ring2" MaxHeight="32" MaxWidth="32" Width="128" Margin="19,72,157,72" />
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
