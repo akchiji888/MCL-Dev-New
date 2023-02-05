@@ -19,9 +19,10 @@ namespace MCL_Dev
 {
     internal class LauncherClasses
     {        
+        //凑更新用
         static BrushConverter brushConverter = new BrushConverter();
         public static Brush PanuonLightBlue = (Brush)brushConverter.ConvertFromString("#FF33B4F5");
-        public const string LauncherVersion = "1.2.2";
+        public const string LauncherVersion = "1.2.3";
         public const string APIKey_2018k = "4386F97F6C36488887EBA723C4C99C83";
         public static YggdrasilAccount yggdrasilAccount;
         public static MicrosoftAccount microsoftaccount = new();
@@ -34,12 +35,6 @@ namespace MCL_Dev
             public string Name { set; get; }
             public string Version { set; get; }
             public Dictionary<string, List<CurseForgeModpackFileInfo>> Files { set; get; }
-        }
-        public class LauncherSetting
-        {
-            public int maxRam { get; set; }
-            public int JavaSelectedItemIndex { get; set; }
-            public int GameComboSelectedIndex { get; set; }
         }
         public static string GetTotalSize(GameCore id)
         {
