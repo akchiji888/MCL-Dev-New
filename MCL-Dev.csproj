@@ -13,11 +13,11 @@
 	 <Copyright>Copyright © 8倍ak吃鸡(akchiji888) 2023.All Rights Reserved</Copyright>
 	 <Description>ModernCraftLauncher启动器</Description>
 	 <Product>ModernCraftLauncher</Product>
-	 <Company>8倍ak吃鸡(akchiji888)</Company>
+	 <Company>ModernCraftLauncher</Company>
 	 <Authors>8倍ak吃鸡(akchiji888)</Authors>
-	 <AssemblyVersion>1.2.2.0</AssemblyVersion>
-	 <FileVersion>1.2.2.0</FileVersion>
-	 <Version>1.2.2.0</Version>
+	 <AssemblyVersion>1.2.3.0</AssemblyVersion>
+	 <FileVersion>1.2.3.0</FileVersion>
+	 <Version>1.2.3.0</Version>
 	 <PackageId>ModernCraftLauncher</PackageId>
 	 <Title>MCL</Title>
 	 <AssemblyName>ModernCraftLauncher</AssemblyName>
@@ -50,7 +50,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MinecraftLaunch" Version="1.6.0" />
+    <PackageReference Include="MinecraftLaunch" Version="1.8.0-preview2" />
     <PackageReference Include="MinecraftOAuth" Version="1.7.0" />
     <PackageReference Include="Panuon.WPF.UI" Version="1.1.7" />
     <PackageReference Include="Panuon.WPF.UI.Themes" Version="0.1.0-alpha" />

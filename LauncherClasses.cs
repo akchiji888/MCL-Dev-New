@@ -18,12 +18,13 @@ using System.Windows.Media;
 namespace MCL_Dev
 {
     internal class LauncherClasses
-    {        
-        //凑更新用
+    {
         static BrushConverter brushConverter = new BrushConverter();
         public static Brush PanuonLightBlue = (Brush)brushConverter.ConvertFromString("#FF33B4F5");
-        public const string LauncherVersion = "1.2.3";
-        public const string APIKey_2018k = "4386F97F6C36488887EBA723C4C99C83";
+        public const string LauncherVersion = "1.2.5";
+        public static string APIKey_2018k_release = "4386F97F6C36488887EBA723C4C99C83";
+        public static string APIKey_2018k_beta = "40A9B22012BE4B56A1ADA109A60BD545";
+        public const LauncherType MCLType = LauncherType.Release;
         public static YggdrasilAccount yggdrasilAccount;
         public static MicrosoftAccount microsoftaccount = new();
         public static int waizhi_selectedplayer = 114514;
@@ -73,6 +74,11 @@ namespace MCL_Dev
         {
             Day = 1,
             Night = 2
+        }
+        public enum LauncherType
+        {
+            Release,
+            Beta
         }
         public static string waizhi_selectedUsr;
         public class YggdrasilAuthenticator
@@ -180,6 +186,16 @@ namespace MCL_Dev
             public YggdrasilAuthenticator(string email, string password)
             {
             }
-        }        
+        }
+        public class ModrinthMod
+        {
+            public string Description { get; set; }
+            public BitmapImage image { set; get; }
+            public string Name { set; get; }
+            public string Version { set; get; }
+            public List<ModrinthFileInfo> Files { set; get; }
+            public List<string> Versions { set; get; }
+            public List<string> Loaders { set; get; }
+        }
     }
 }

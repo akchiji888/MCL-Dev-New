@@ -58,9 +58,12 @@ namespace MCL_Dev.Resources
                             var result = await auth.AuthAsync(x => { });
                             textBlock.Text = "用户名：" + result.Name;
                             spin.IsSpinning = false;
-                            microsoftaccount = result;
-                            gameAccountsList.Add(result);
-                            MessageBoxX.Show(mainWindow, "已完成登录！你可以关闭此窗口了", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Success);
+                            var tempAccount = result as Account;
+                            if (gameAccountsList.Exists(t => t == result) == false)
+                            {
+                                gameAccountsList.Add(result);
+                            }
+                            MessageBoxX.Show(this, "已完成登录！你可以关闭此窗口了", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Success);
                         }
                         catch
                         {
@@ -82,7 +85,10 @@ namespace MCL_Dev.Resources
                     var res = await ya.AuthAsync(X => { });
                     foreach (var yaccount in res)
                     {
-                        gameAccountsList.Add(yaccount);
+                        if (gameAccountsList.Exists(t => t == yaccount) == false)
+                        {
+                            gameAccountsList.Add(yaccount);
+                        }
                     }
                     MessageBoxX.Show(mainWindow, "已完成登录，你可以关闭此窗口了！", "MCL启动器", MessageBoxIcon.Success);
                 }
@@ -106,7 +112,10 @@ namespace MCL_Dev.Resources
             {
                 OfflineAuthenticator oa = new(NameBox.Text);
                 var offlinea = oa.Auth();
-                gameAccountsList.Add(offlinea);
+                if(gameAccountsList.Exists(t => t == offlinea) == false)
+                { 
+                    gameAccountsList.Add(offlinea);
+                }
                 MessageBoxX.Show(this, "创建完成！", "MCL启动器", MessageBoxButton.OK, MessageBoxIcon.Success);
             }
             else

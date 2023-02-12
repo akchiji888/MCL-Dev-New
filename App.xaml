@@ -14,6 +14,19 @@
                     </ResourceDictionary.MergedDictionaries>
                 </ResourceDictionary>
                 <ResourceDictionary>
+                    <pu:PendingBoxSettings x:Key="pendingSetting">
+                        <pu:PendingBoxSettings.SpinStyle>
+                            <Style BasedOn="{StaticResource {ComponentResourceKey ResourceId=SpinStyle, TypeInTargetAssembly={x:Type pu:PendingBox}}}"
+               TargetType="pu:Spin">
+                                <Setter Property="SpinStyle"
+                    Value="Ring2" />
+                                <Setter Property="GlyphBrush"
+                    Value="#FF33B4F5" />
+                            </Style>
+                        </pu:PendingBoxSettings.SpinStyle>
+                    </pu:PendingBoxSettings>
+                </ResourceDictionary>
+                <ResourceDictionary>
                     <puconfig:MessageBoxXSetting x:Key="UpdateMessage"
                              OKButtonContent="赶紧带爷去下载！"
                              YesButtonContent="好"
