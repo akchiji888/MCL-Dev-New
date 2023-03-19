@@ -1,4 +1,4 @@
-﻿using MinecaftOAuth.Module.Models;
+using MinecaftOAuth.Module.Models;
 using MinecraftLaunch.Modules.Installer;
 using MinecraftLaunch.Modules.Models.Auth;
 using MinecraftLaunch.Modules.Models.Download;
@@ -22,8 +22,8 @@ namespace MCL_Dev
         static BrushConverter brushConverter = new BrushConverter();
         public static Brush PanuonLightBlue = (Brush)brushConverter.ConvertFromString("#FF33B4F5");
         public const string LauncherVersion = "1.2.5";
-        public static string APIKey_2018k_release = "4386F97F6C36488887EBA723C4C99C83";
-        public static string APIKey_2018k_beta = "40A9B22012BE4B56A1ADA109A60BD545";
+        public static string APIKey_2018k_release = "前面的区域以后再来探索吧";
+        public static string APIKey_2018k_beta = "前面的区域以后再来探索吧";
         public const LauncherType MCLType = LauncherType.Release;
         public static YggdrasilAccount yggdrasilAccount;
         public static MicrosoftAccount microsoftaccount = new();
