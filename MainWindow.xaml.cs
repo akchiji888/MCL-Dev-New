@@ -38,7 +38,7 @@ namespace MCL_Dev
     {
         bool IsRamSliderInited = false;
         bool VersionComboNeedToBeUpdated = false;
-        CurseForgeToolkit ModToolkit_Forge = new("$2a$10$CUT15u9CIECXHsa8q2NDqO.5zl3lNjg/5Xw5kYVX.ClujkvAir09K");
+        CurseForgeToolkit ModToolkit_Forge = new("前面的区域，以后再来探索吧");
         #region 公共变量与void声明
         List<string> MCReleaseList;
         List<string> MCSnapshotList;
